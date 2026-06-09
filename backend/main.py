@@ -27,8 +27,8 @@ from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 from data import MOCK_MATCHES, MOCK_MATCH_DETAILS
 
-# HTML 文件路径（backend 目录的上级）
-HTML_FILE = Path(__file__).parent.parent / "worldcup-dashboard.html"
+# HTML 文件路径（与 main.py 同目录）
+HTML_FILE = Path(__file__).parent / "worldcup-dashboard.html"
 
 # ---------------------------------------------------------------------------
 # FastAPI 应用初始化

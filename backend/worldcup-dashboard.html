@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>2026 世界杯 AI 预测 & 体彩决策 Dashboard</title>
+<style>
+/* ============================================================
+   CSS Custom Properties & Reset
+   ============================================================ */
+:root {
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --slate-750: #283548;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-500: #64748b;
+  --slate-400: #94a3b8;
+  --slate-300: #cbd5e1;
+  --slate-200: #e2e8f0;
+  --white: #ffffff;
+  --emerald-500: #10b981;
+  --emerald-400: #34d399;
+  --emerald-300: #6ee7b7;
+  --emerald-900: #064e3b;
+  --red-500: #ef4444;
+  --red-400: #f87171;
+  --amber-400: #fbbf24;
+  --amber-500: #f59e0b;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-xs: 4px;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.3), 0 2px 4px -2px rgba(0,0,0,0.3);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+  background: var(--slate-900);
+  color: var(--slate-200);
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   Scrollbar
+   ============================================================ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--slate-900); }
+::-webkit-scrollbar-thumb { background: var(--slate-700); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--slate-600); }
+
+/* ============================================================
+   Typography
+   ============================================================ */
+.font-mono, .mono {
+  font-family: 'SF Mono', 'Cascadia Code', 'Consolas', 'Microsoft YaHei', monospace;
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+.header {
+  background: var(--slate-800);
+  border-bottom: 1px solid var(--slate-700);
+  padding: 16px 24px;
+}
+.header-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-left { display: flex; align-items: center; gap: 12px; }
+.header-logo {
+  width: 40px; height: 40px; border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--emerald-400), var(--emerald-500));
+  display: flex; align-items: center; justify-content: center; font-size: 22px;
+}
+.header-title { font-size: 20px; font-weight: 700; color: var(--white); }
+.glow-text { text-shadow: 0 0 20px rgba(16,185,129,0.5), 0 0 40px rgba(16,185,129,0.2); }
+.header-sub { font-size: 12px; color: var(--slate-400); margin-top: 2px; }
+.header-right { display: flex; align-items: center; gap: 16px; font-size: 13px; }
+.badge-live {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 20px;
+  background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3);
+  color: var(--emerald-400); font-size: 13px;
+}
+.badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald-400); }
+.pulse { animation: pulse 2s infinite; }
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.header-clock { color: var(--slate-400); }
+
+/* ============================================================
+   Main Layout (3 Columns)
+   ============================================================ */
+.main-layout {
+  max-width: 1600px; margin: 0 auto; padding: 24px;
+  display: flex; gap: 24px;
+  height: calc(100vh - 90px);
+}
+.panel {
+  display: flex; flex-direction: column; gap: 12px;
+}
+.panel-left { width: 320px; flex-shrink: 0; }
+.panel-center { flex: 1; min-width: 0; overflow-y: auto; }
+.panel-right { width: 320px; flex-shrink: 0; }
+
+/* ============================================================
+   Section Title
+   ============================================================ */
+.section-title {
+  font-size: 13px; font-weight: 600; color: var(--slate-300);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 4px;
+}
+.section-badge { font-size: 11px; color: var(--slate-500); }
+
+/* ============================================================
+   Card Base
+   ============================================================ */
+.card {
+  background: var(--slate-800);
+  border: 1px solid var(--slate-700);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.card-hover {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+  border-color: var(--slate-600);
+}
+.card.active {
+  border-color: var(--emerald-500) !important;
+  background: rgba(16,185,129,0.06);
+}
+
+/* ============================================================
+   Match Card (Left Panel)
+   ============================================================ */
+.match-card { padding: 12px; }
+.match-card-top {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
+}
+.match-time { font-size: 12px; color: var(--slate-400); }
+.match-group {
+  font-size: 11px; padding: 2px 6px; border-radius: var(--radius-xs);
+  background: var(--slate-700); color: var(--slate-400);
+}
+.match-teams {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
+}
+.match-side { display: flex; align-items: center; gap: 8px; }
+.match-flag { font-size: 28px; }
+.match-name { font-size: 14px; font-weight: 500; color: var(--white); }
+.match-vs { font-size: 12px; color: var(--slate-500); }
+.match-bottom {
+  display: flex; align-items: center; justify-content: space-between; font-size: 11px;
+}
+.match-handicap { color: var(--slate-500); }
+.match-odds { display: flex; gap: 8px; }
+.match-odds span { padding: 2px 6px; border-radius: var(--radius-xs); background: var(--slate-750); }
+.odds-home, .odds-away { color: var(--slate-300); }
+.odds-draw { color: var(--slate-500); }
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn {
+  display: block; width: 100%; padding: 10px 16px;
+  border-radius: var(--radius-sm); font-size: 13px; cursor: pointer;
+  transition: all 0.2s; text-align: center;
+  background: var(--slate-800); color: var(--slate-400);
+  border: 1px solid var(--slate-700);
+}
+.btn:hover {
+  color: var(--white);
+  border-color: rgba(16,185,129,0.5);
+}
+
+/* ============================================================
+   Empty State
+   ============================================================ */
+.empty-state {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  text-align: center; color: var(--slate-500);
+}
+.empty-state-icon { font-size: 60px; margin-bottom: 16px; }
+.empty-state-title { font-size: 17px; margin-bottom: 4px; }
+.empty-state-sub { font-size: 13px; }
+
+/* ============================================================
+   Loading Spinner
+   ============================================================ */
+.spinner {
+  width: 32px; height: 32px;
+  border: 2px solid var(--emerald-400);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-wrap {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+}
+
+/* ============================================================
+   Match Header (Center Panel)
+   ============================================================ */
+.match-header-card {
+  background: linear-gradient(135deg, var(--slate-800), rgba(30,41,59,0.5));
+  border: 1px solid var(--slate-700); border-radius: var(--radius); padding: 20px;
+}
+.match-header-teams {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.match-header-side { text-align: center; flex: 1; }
+.match-header-flag { font-size: 56px; }
+.match-header-name { font-size: 20px; font-weight: 700; color: var(--white); margin-top: 8px; }
+.match-header-center { text-align: center; padding: 0 24px; }
+.match-header-vs { font-size: 32px; font-weight: 800; color: var(--emerald-400); }
+.match-header-info { font-size: 12px; color: var(--slate-500); margin-top: 4px; }
+
+/* ============================================================
+   Lineup Panel
+   ============================================================ */
+.lineup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.lineup-card { padding: 16px; height: 100%; }
+.lineup-title { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.lineup-title h4 { font-size: 14px; font-weight: 600; color: var(--white); }
+.lineup-players { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; margin-bottom: 16px; }
+.lineup-player {
+  display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--slate-300);
+}
+.lineup-num {
+  width: 20px; height: 20px; border-radius: 50%; background: var(--slate-700);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: var(--slate-400); flex-shrink: 0;
+}
+.injury-section { border-top: 1px solid var(--slate-700); padding-top: 12px; }
+.injury-title { font-size: 12px; color: var(--slate-400); margin-bottom: 8px; }
+.injury-item { display: flex; align-items: center; gap: 8px; font-size: 12px; padding: 4px 0; }
+.injury-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.injury-dot.critical { background: var(--red-500); }
+.injury-dot.warning { background: var(--amber-500); }
+.injury-name { font-weight: 600; }
+.injury-name.critical { color: var(--red-400); }
+.injury-name.warning { color: var(--amber-400); }
+.injury-status { opacity: 0.7; }
+.injury-name.critical + .injury-status { color: var(--red-400); }
+.injury-name.warning + .injury-status { color: var(--amber-400); }
+.injury-clean { font-size: 12px; color: var(--slate-500); border-top: 1px solid var(--slate-700); padding-top: 12px; }
+
+/* ============================================================
+   H2H Panel
+   ============================================================ */
+.h2h-summary { display: flex; align-items: center; gap: 16px; font-size: 12px; margin-bottom: 12px; }
+.h2h-summary .win { color: var(--emerald-400); }
+.h2h-summary .draw-count { color: var(--slate-400); }
+.h2h-summary .lose { color: var(--blue-400); }
+.h2h-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(51,65,85,0.5); border-radius: var(--radius-sm);
+  padding: 8px 12px; font-size: 13px; margin-bottom: 6px;
+}
+.h2h-date { font-size: 12px; color: var(--slate-400); width: 100px; flex-shrink: 0; }
+.h2h-matchup { display: flex; align-items: center; gap: 12px; flex: 1; justify-content: center; }
+.h2h-home-name { width: 80px; text-align: right; }
+.h2h-away-name { width: 80px; text-align: left; }
+.h2h-score { font-weight: 700; width: 50px; text-align: center; color: var(--white); }
+.h2h-venue { font-size: 12px; color: var(--slate-500); width: 100px; text-align: right; flex-shrink: 0; }
+.h2h-win { color: var(--emerald-400) !important; font-weight: 700 !important; }
+.h2h-lose { color: var(--emerald-400) !important; font-weight: 700 !important; }
+
+/* ============================================================
+   AI Prediction
+   ============================================================ */
+.ai-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.ai-cell {
+  text-align: center; padding: 10px; border-radius: var(--radius-sm);
+  background: rgba(51,65,85,0.5);
+}
+.ai-cell-label { font-size: 12px; color: var(--slate-400); }
+.ai-cell-val { font-size: 18px; font-weight: 700; margin-top: 2px; }
+.ai-cell-val.home { color: var(--emerald-400); }
+.ai-cell-val.draw { color: var(--amber-400); }
+.ai-cell-val.away { color: var(--blue-400); }
+.ai-lambda { font-size: 12px; color: var(--slate-500); }
+.ai-chart-wrap { height: 200px; margin-top: 8px; }
+.ai-note { font-size: 11px; color: var(--slate-500); margin-top: 8px; }
+
+/* 比分预测 */
+.score-predict { margin-top: 16px; border-top: 1px solid var(--slate-700); padding-top: 16px; }
+.score-predict-title { font-weight: 600; color: var(--white); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.score-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.score-num { width: 42px; text-align: center; font-weight: 700; font-size: 15px; flex-shrink: 0; }
+.score-num.top1 { color: var(--emerald-400); }
+.score-num.other { color: var(--slate-300); }
+.score-bar-wrap { flex: 1; height: 22px; background: var(--slate-750); border-radius: 6px; overflow: hidden; position: relative; }
+.score-bar-fill { height: 100%; border-radius: 6px; transition: width 0.5s ease; }
+.score-bar-fill.top1 { background: linear-gradient(90deg, rgba(16,185,129,0.6), rgba(16,185,129,0.9)); }
+.score-bar-fill.other { background: linear-gradient(90deg, rgba(100,116,139,0.4), rgba(100,116,139,0.7)); }
+.score-pct { width: 52px; text-align: right; font-size: 13px; font-weight: 600; flex-shrink: 0; }
+.score-pct.top1 { color: var(--emerald-400); }
+.score-pct.other { color: var(--slate-400); }
+
+/* 预期进球 & 大小球 */
+.score-extra { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.score-extra-item { background: var(--slate-750); border-radius: var(--radius-sm); padding: 10px 12px; text-align: center; }
+.score-extra-label { font-size: 11px; color: var(--slate-400); }
+.score-extra-val { font-size: 18px; font-weight: 700; color: var(--white); margin-top: 2px; }
+.score-extra-sub { font-size: 11px; color: var(--slate-500); margin-top: 2px; }
+
+/* ============================================================
+   Betting Panel (Right)
+   ============================================================ */
+.odds-row {
+  background: rgba(51,65,85,0.5); border-radius: var(--radius-sm); padding: 12px;
+  margin-bottom: 8px;
+}
+.odds-row.recommended { border: 1px solid rgba(16,185,129,0.3); }
+.odds-row-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+.odds-row-label { font-size: 14px; font-weight: 500; color: var(--white); }
+.odds-row-price { font-size: 12px; color: var(--slate-400); }
+.odds-row-price val { color: var(--white); }
+.odds-row-stats { display: flex; align-items: center; justify-content: space-between; font-size: 11px; }
+.odds-row-stats span { color: var(--slate-500); }
+.odds-row-stats .val { color: var(--slate-300); }
+.edge-positive { color: var(--emerald-400) !important; }
+.edge-negative { color: var(--red-400) !important; }
+
+/* Kelly Decision */
+.kelly-card { padding: 16px; }
+.kelly-card.recommend {
+  border: 1px solid rgba(16,185,129,0.5);
+  box-shadow: 0 0 0 0 rgba(16,185,129,0.4);
+  animation: pulseBorder 2s infinite;
+}
+@keyframes pulseBorder {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+  50% { box-shadow: 0 0 0 4px rgba(16,185,129,0); }
+}
+.kelly-recommend-item {
+  background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.3);
+  border-radius: var(--radius-sm); padding: 16px; margin-bottom: 12px;
+}
+.kelly-recommend-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.kelly-recommend-badge { font-size: 18px; }
+.kelly-recommend-label { color: var(--emerald-400); font-weight: 700; font-size: 17px; }
+.kelly-recommend-play { color: var(--white); font-weight: 600; margin-bottom: 8px; }
+.kelly-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11px; }
+.kelly-stat {
+  background: rgba(51,65,85,0.5); border-radius: var(--radius-sm); padding: 8px;
+}
+.kelly-stat-label { color: var(--slate-400); }
+.kelly-stat-val { color: var(--emerald-400); font-weight: 700; font-size: 15px; margin-top: 2px; }
+.kelly-note { font-size: 11px; color: var(--slate-400); margin-top: 8px; }
+
+.kelly-pass {
+  text-align: center; padding: 24px 16px;
+}
+.kelly-pass-icon { font-size: 48px; }
+.kelly-pass-title { color: var(--slate-400); font-weight: 600; margin-top: 8px; }
+.kelly-pass-sub { font-size: 12px; color: var(--slate-500); margin-top: 4px; }
+
+.kelly-miss-list { border-top: 1px solid var(--slate-700); padding-top: 12px; margin-top: 12px; }
+.kelly-miss-title { font-size: 12px; color: var(--slate-500); }
+.kelly-miss-row { display: flex; align-items: center; justify-content: space-between; font-size: 12px; margin-top: 4px; }
+.kelly-miss-row span:first-child { color: var(--slate-400); }
+.kelly-miss-row .edge-bad { color: var(--red-400); }
+
+/* ============================================================
+   Animations
+   ============================================================ */
+.slide-in { animation: slideIn 0.3s ease-out; }
+@keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ============================================================
+   Error Notice
+   ============================================================ */
+.cdn-error-banner {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  background: var(--red-500); color: white; padding: 10px 16px;
+  font-size: 13px; text-align: center; line-height: 1.6;
+}
+
+/* ============================================================
+   Overflow / Scroll
+   ============================================================ */
+.scroll-y { overflow-y: auto; }
+.flex-1 { flex: 1; }
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ========== 顶部导航栏 ========== -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="header-logo">⚽</div>
+      <div>
+        <div class="header-title glow-text">2026 美洲世界杯 · AI 预测 Dashboard</div>
+        <div class="header-sub">泊松分布模型 × 凯利公式决策 · Mock Data Mode</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <span id="modeBadge" class="badge-live">
+        <span class="badge-dot pulse"></span><span id="modeText">数据实时更新中</span>
+      </span>
+      <span id="currentTime" class="header-clock font-mono"></span>
+    </div>
+  </div>
+</header>
+
+<!-- ========== 三栏主布局 ========== -->
+<div class="main-layout">
+
+  <!-- 左栏：今日比赛列表 -->
+  <aside class="panel panel-left">
+    <div class="section-title">
+      <span>📅 今日比赛</span>
+      <span id="matchCount" class="section-badge">0 场</span>
+    </div>
+    <div id="matchList" class="scroll-y flex-1" style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="card" style="height:96px;animation:pulse 1.5s infinite;"></div>
+        <div class="card" style="height:96px;animation:pulse 1.5s infinite 0.2s;"></div>
+        <div class="card" style="height:96px;animation:pulse 1.5s infinite 0.4s;"></div>
+        <div class="card" style="height:96px;animation:pulse 1.5s infinite 0.6s;"></div>
+      </div>
+    </div>
+    <button id="refreshBtn" class="btn" onclick="refreshMatches()">🔄 刷新比赛数据</button>
+  </aside>
+
+  <!-- 中栏：赛前情报 + AI预测 -->
+  <section class="panel panel-center">
+    <div id="centerEmpty" class="empty-state">
+      <div>
+        <div class="empty-state-icon">⚽</div>
+        <div class="empty-state-title">← 请从左侧选择一场比赛查看详情</div>
+        <div class="empty-state-sub">点击比赛卡片即可加载 AI 预测与情报</div>
+      </div>
+    </div>
+    <div id="centerContent" class="hidden" style="display:flex;flex-direction:column;gap:16px;flex:1;">
+      <div id="matchHeader"></div>
+      <div class="lineup-grid">
+        <div id="homeLineupPanel"></div>
+        <div id="awayLineupPanel"></div>
+      </div>
+      <div id="h2hPanel"></div>
+      <div id="aiPanel"></div>
+    </div>
+  </section>
+
+  <!-- 右栏：最佳体彩方案 -->
+  <aside class="panel panel-right">
+    <div class="section-title">🎯 最佳体彩方案</div>
+    <div id="bettingEmpty" class="empty-state">
+      <div>
+        <div class="empty-state-icon">📊</div>
+        <div class="empty-state-title">选择比赛后</div>
+        <div class="empty-state-sub">自动计算投注建议</div>
+      </div>
+    </div>
+    <div id="bettingContent" class="hidden scroll-y flex-1" style="display:flex;flex-direction:column;gap:12px;">
+      <div id="oddsCompare"></div>
+      <div id="kellyDecision"></div>
+    </div>
+  </aside>
+</div>
+
+<script>
+/* ===================================================================
+ *  全局状态
+ * =================================================================== */
+var currentMatchId = null;
+var matchesData = [];
+var aiChart = null;
+var renderGen = 0;
+
+/* ===================================================================
+ *  更新时间显示
+ * =================================================================== */
+function updateClock() {
+  var now = new Date();
+  document.getElementById('currentTime').textContent =
+    now.toLocaleDateString('zh-CN', { year:'numeric', month:'2-digit', day:'2-digit' }) + ' ' +
+    now.toLocaleTimeString('zh-CN', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// 数据模式指示
+(function() {
+  var badge = document.getElementById('modeBadge');
+  var text = document.getElementById('modeText');
+  if (USE_MOCK) {
+    badge.style.background = 'rgba(251,191,36,0.1)';
+    badge.style.borderColor = 'rgba(251,191,36,0.3)';
+    badge.querySelector('.badge-dot').style.background = '#fbbf24';
+    text.textContent = '离线 Mock 模式';
+  } else if (API_BASE === '') {
+    text.textContent = '后端 API 模式';
+  } else {
+    text.textContent = 'localhost:8000';
+  }
+})();
+
+/* ===================================================================
+ *  核心抓取函数 —— 【此处对接 Python 爬虫接口】
+ *
+ *  当前使用 Mock 数据模拟后端响应。
+ *  后续替换步骤：
+ *  1. 将 MOCK_MATCHES / MOCK_MATCH_DETAILS 替换为真实 API URL
+ *  2. 修改 fetchData() 中的 URL 指向你的 Python Flask/FastAPI 接口
+ *  3. Python 爬虫应返回与 Mock 数据结构一致的 JSON
+ *  4. 建议 Python 端使用 BeautifulSoup / Scrapy 抓取赔率网站数据
+ * =================================================================== */
+
+/**
+ * 通用数据抓取函数 —— 【此处对接 Python 爬虫接口】
+ *
+ * 自动检测运行模式：
+ *   - 从 http:// 加载 → 同源模式，API_BASE = ''（适合公网分享）
+ *   - 从 file:// 加载 → 本地模式，API_BASE = 'http://localhost:8000'
+ *   - USE_MOCK = true  → 离线模式，使用内嵌数据
+ */
+var USE_MOCK = false;
+
+// 自动判断 API 地址：如果页面通过 http 访问则用同源，否则连本地后端
+var API_BASE = (window.location.protocol === 'file:')
+  ? 'http://localhost:8000'
+  : '';
+
+function fetchData(url, options) {
+  options = options || {};
+
+  // 离线模式：使用内嵌 Mock 数据
+  if (USE_MOCK) {
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        if (url === '/api/matches') {
+          resolve(JSON.parse(JSON.stringify(MOCK_MATCHES)));
+        } else {
+          var m = url.match(/\/api\/match\/(\d+)/);
+          if (m) {
+            var detail = MOCK_MATCH_DETAILS[parseInt(m[1])];
+            if (!detail) throw new Error('Match not found');
+            resolve(JSON.parse(JSON.stringify(detail)));
+          } else {
+            throw new Error('Unknown endpoint: ' + url);
+          }
+        }
+      }, 200 + Math.random() * 300);
+    });
+  }
+
+  // 真实 API 模式：请求 FastAPI 后端
+  return fetch(API_BASE + url, {
+    method: options.method || 'GET',
+    headers: Object.assign({ 'Content-Type': 'application/json' }, options.headers || {}),
+    body: options.body ? JSON.stringify(options.body) : undefined
+  }).then(function(resp) {
+    if (!resp.ok) throw new Error('HTTP ' + resp.status + ': ' + resp.statusText);
+    return resp.json();
+  }).catch(function(err) {
+    console.error('[fetchData] 请求失败:', err.message);
+    throw err;
+  });
+}
+
+/**
+ * 调用后端泊松预测接口 (POST /api/predict)
+ */
+function fetchPredict(homeAttack, awayAttack, homeDefense, awayDefense) {
+  if (USE_MOCK) {
+    // 离线模式：前端本地计算
+    return Promise.resolve(calcMatchProbs(homeAttack, awayAttack, homeDefense, awayDefense));
+  }
+  return fetchData('/api/predict', {
+    method: 'POST',
+    body: { homeAttack: homeAttack, awayAttack: awayAttack, homeDefense: homeDefense, awayDefense: awayDefense }
+  });
+}
+
+/**
+ * 调用后端凯利公式接口 (POST /api/kelly)
+ */
+function fetchKelly(aiProb, decimalOdds) {
+  if (USE_MOCK) {
+    return Promise.resolve(calcKelly(aiProb, decimalOdds));
+  }
+  return fetchData('/api/kelly', {
+    method: 'POST',
+    body: { aiProb: aiProb, decimalOdds: decimalOdds }
+  });
+}
+
+/* ===================================================================
+ *  Mock 数据 —— 模拟 Python 爬虫返回的 JSON
+ *
+ *  数据结构说明（对接 Python 时请保持一致）：
+ *  MOCK_MATCHES: 比赛列表，包含基本信息 + 即时赔率
+ *  MOCK_MATCH_DETAILS: 单场详情，包含阵容、伤停、历史交锋、攻防数据
+ * =================================================================== */
+
+var MOCK_MATCHES = [
+  { id: 1, time: '2026-06-10 21:00', homeTeam: '阿根廷', awayTeam: '巴西', homeFlag: '🇦🇷', awayFlag: '🇧🇷', group: 'H组', handicap: '阿根廷 -0.5', homeOdds: 2.45, drawOdds: 3.10, awayOdds: 2.90 },
+  { id: 2, time: '2026-06-10 23:30', homeTeam: '美国', awayTeam: '英格兰', homeFlag: '🇺🇸', awayFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', group: 'B组', handicap: '英格兰 -0.5/1', homeOdds: 3.80, drawOdds: 3.40, awayOdds: 1.95 },
+  { id: 3, time: '2026-06-11 03:00', homeTeam: '西班牙', awayTeam: '德国', homeFlag: '🇪🇸', awayFlag: '🇩🇪', group: 'E组', handicap: '平手', homeOdds: 2.60, drawOdds: 3.20, awayOdds: 2.70 },
+  { id: 4, time: '2026-06-11 06:00', homeTeam: '墨西哥', awayTeam: '法国', homeFlag: '🇲🇽', awayFlag: '🇫🇷', group: 'C组', handicap: '法国 -1', homeOdds: 5.50, drawOdds: 4.00, awayOdds: 1.55 },
+  { id: 5, time: '2026-06-11 09:00', homeTeam: '日本', awayTeam: '塞内加尔', homeFlag: '🇯🇵', awayFlag: '🇸🇳', group: 'F组', handicap: '日本 -0/0.5', homeOdds: 2.20, drawOdds: 3.00, awayOdds: 3.50 },
+  { id: 6, time: '2026-06-11 12:00', homeTeam: '葡萄牙', awayTeam: '荷兰', homeFlag: '🇵🇹', awayFlag: '🇳🇱', group: 'G组', handicap: '葡萄牙 -0/0.5', homeOdds: 2.35, drawOdds: 3.25, awayOdds: 2.95 }
+];
+
+var MOCK_MATCH_DETAILS = {
+  1: {
+    homeLineup: ['埃米利亚诺·马丁内斯','莫利纳','克里斯蒂安·罗梅罗','奥塔门迪','塔利亚菲科','德保罗','恩佐·费尔南德斯','麦卡利斯特','阿尔瓦雷斯','劳塔罗·马丁内斯','迪马利亚'],
+    awayLineup: ['阿利松','达尼洛','马尔基尼奥斯','加布里埃尔','阿拉纳','卡塞米罗','吉马良斯','帕奎塔','拉菲尼亚','维尼修斯','罗德里戈'],
+    homeInjuries: [{ name: '梅西', status: '肌肉拉伤，出战成疑', critical: true }],
+    awayInjuries: [{ name: '内马尔', status: '十字韧带断裂，赛季报销', critical: true }, { name: '米利唐', status: '累计黄牌停赛', critical: false }],
+    h2h: [
+      { date: '2025-11-18', homeScore: 1, awayScore: 0, venue: '世预赛' },
+      { date: '2024-07-10', homeScore: 0, awayScore: 2, venue: '美洲杯半决赛' },
+      { date: '2023-09-05', homeScore: 0, awayScore: 0, venue: '世预赛' },
+      { date: '2022-06-01', homeScore: 3, awayScore: 1, venue: '南美超级德比' },
+      { date: '2021-07-11', homeScore: 1, awayScore: 0, venue: '美洲杯决赛' }
+    ],
+    homeAttack: 1.8, awayAttack: 1.6, homeDefense: 0.7, awayDefense: 0.8
+  },
+  2: {
+    homeLineup: ['马特·特纳','德斯特','克里斯·理查兹','蒂姆·里姆','安东尼·罗宾逊','泰勒·亚当斯','麦肯尼','穆萨','普利西奇','巴洛贡','维阿'],
+    awayLineup: ['皮克福德','阿诺德','斯通斯','格伊','卢克·肖','赖斯','贝林厄姆','萨卡','福登','帕尔默','凯恩'],
+    homeInjuries: [{ name: '雷纳', status: '脚踝扭伤，每日观察', critical: false }],
+    awayInjuries: [{ name: '里斯·詹姆斯', status: '腿筋拉伤，预计缺席', critical: true }],
+    h2h: [
+      { date: '2025-06-15', homeScore: 1, awayScore: 3, venue: '友谊赛' },
+      { date: '2022-11-25', homeScore: 0, awayScore: 0, venue: '世界杯小组赛' },
+      { date: '2019-07-04', homeScore: 2, awayScore: 1, venue: '友谊赛' },
+      { date: '2018-06-07', homeScore: 1, awayScore: 1, venue: '友谊赛' },
+      { date: '2010-06-12', homeScore: 1, awayScore: 1, venue: '世界杯小组赛' }
+    ],
+    homeAttack: 1.3, awayAttack: 2.0, homeDefense: 1.2, awayDefense: 0.6
+  },
+  3: {
+    homeLineup: ['乌奈·西蒙','卡瓦哈尔','勒诺尔芒','拉波尔特','加亚','罗德里','佩德里','加维','亚马尔','莫拉塔','尼科·威廉姆斯'],
+    awayLineup: ['特尔施特根','基米希','吕迪格','施洛特贝克','劳姆','京多安','穆西亚拉','维尔茨','萨内','哈弗茨','菲尔克鲁格'],
+    homeInjuries: [{ name: '奥尔莫', status: '轻微肌肉不适，可出战', critical: false }],
+    awayInjuries: [{ name: '诺伊尔', status: '退役（国家队）', critical: false }, { name: '克罗斯', status: '退役（国家队）', critical: true }],
+    h2h: [
+      { date: '2025-10-14', homeScore: 2, awayScore: 2, venue: '欧国联' },
+      { date: '2024-07-05', homeScore: 2, awayScore: 1, venue: '欧洲杯1/4决赛' },
+      { date: '2022-11-27', homeScore: 1, awayScore: 1, venue: '世界杯小组赛' },
+      { date: '2020-11-17', homeScore: 6, awayScore: 0, venue: '欧国联' },
+      { date: '2018-10-13', homeScore: 1, awayScore: 1, venue: '欧国联' }
+    ],
+    homeAttack: 1.9, awayAttack: 1.8, homeDefense: 0.7, awayDefense: 0.9
+  },
+  4: {
+    homeLineup: ['奥乔亚','豪尔赫·桑切斯','蒙特斯','巴斯克斯','阿特亚加','埃德松·阿尔瓦雷斯','查韦斯','洛萨诺','皮内达','希门尼斯','韦尔塔'],
+    awayLineup: ['迈尼昂','孔德','萨利巴','于帕梅卡诺','特奥·埃尔南德斯','楚阿梅尼','卡马文加','格列兹曼','登贝莱','姆巴佩','图拉姆'],
+    homeInjuries: [{ name: '劳尔·希门尼斯', status: '腹股沟伤势，出战存疑', critical: true }],
+    awayInjuries: [{ name: '卢卡斯·埃尔南德斯', status: 'ACL术后恢复中', critical: true }],
+    h2h: [
+      { date: '2024-03-23', homeScore: 0, awayScore: 2, venue: '友谊赛' },
+      { date: '2022-01-27', homeScore: 0, awayScore: 1, venue: '友谊赛' },
+      { date: '2018-07-01', homeScore: 0, awayScore: 2, venue: '世界杯1/8决赛' },
+      { date: '2010-06-17', homeScore: 2, awayScore: 0, venue: '世界杯小组赛' },
+      { date: '2006-05-27', homeScore: 0, awayScore: 1, venue: '友谊赛' }
+    ],
+    homeAttack: 1.0, awayAttack: 2.2, homeDefense: 1.3, awayDefense: 0.5
+  },
+  5: {
+    homeLineup: ['铃木彩艳','菅原由势','板仓滉','富安健洋','伊藤洋辉','远藤航','守田英正','三笘薰','久保建英','堂安律','上田绮世'],
+    awayLineup: ['爱德华·门迪','雅各布斯','库利巴利','迪亚洛','巴洛-图雷','格耶','库亚特','伊斯梅拉·萨尔','马内','杰克逊','迪亚'],
+    homeInjuries: [],
+    awayInjuries: [{ name: '库利巴利', status: '膝盖不适，每日观察', critical: false }],
+    h2h: [
+      { date: '2023-10-17', homeScore: 2, awayScore: 0, venue: '友谊赛' },
+      { date: '2022-06-10', homeScore: 4, awayScore: 1, venue: '麒麟杯' },
+      { date: '2019-06-14', homeScore: 1, awayScore: 2, venue: '友谊赛' },
+      { date: '2018-06-24', homeScore: 2, awayScore: 2, venue: '世界杯小组赛' },
+      { date: '2002-06-04', homeScore: 2, awayScore: 2, venue: '友谊赛' }
+    ],
+    homeAttack: 1.5, awayAttack: 1.1, homeDefense: 0.9, awayDefense: 1.0
+  },
+  6: {
+    homeLineup: ['迪奥戈·科斯塔','坎塞洛','鲁本·迪亚斯','安东尼奥·席尔瓦','努诺·门德斯','帕利尼亚','维蒂尼亚','布鲁诺·费尔南德斯','贝尔纳多·席尔瓦','莱奥','贡萨洛·拉莫斯'],
+    awayLineup: ['弗莱肯','邓弗里斯','德里赫特','范戴克','阿克','德容','赫拉芬贝赫','西蒙斯','弗林蓬','加克波','德佩'],
+    homeInjuries: [{ name: 'C罗', status: '肌肉疲劳，可能替补', critical: true }],
+    awayInjuries: [{ name: '德佩', status: '恢复训练，状态未达100%', critical: false }],
+    h2h: [
+      { date: '2025-06-05', homeScore: 2, awayScore: 1, venue: '欧国联' },
+      { date: '2024-03-21', homeScore: 0, awayScore: 1, venue: '友谊赛' },
+      { date: '2022-12-09', homeScore: 1, awayScore: 2, venue: '世界杯1/4决赛' },
+      { date: '2019-06-09', homeScore: 1, awayScore: 0, venue: '欧国联决赛' },
+      { date: '2018-03-26', homeScore: 0, awayScore: 3, venue: '友谊赛' }
+    ],
+    homeAttack: 1.7, awayAttack: 1.6, homeDefense: 0.6, awayDefense: 0.7
+  }
+};
+
+/* ===================================================================
+ *  泊松分布模型 —— AI 预测引擎
+ *
+ *  公式: P(k; λ) = (λ^k * e^(-λ)) / k!
+ *  λ (lambda) = 预期进球数
+ *  通过计算 0~MAX_GOALS 球的所有比分概率矩阵，汇总胜/平/负概率
+ * =================================================================== */
+var MAX_GOALS = 8;
+var LEAGUE_AVG = 1.0;
+
+function poissonProb(lambda, k) {
+  if (lambda <= 0) return k === 0 ? 1 : 0;
+  var logP = -lambda + k * Math.log(lambda);
+  for (var i = 2; i <= k; i++) logP -= Math.log(i);
+  return Math.exp(logP);
+}
+
+function calcMatchProbs(homeAttack, awayAttack, homeDefense, awayDefense) {
+  var lambdaHome = homeAttack * awayDefense / LEAGUE_AVG;
+  var lambdaAway = awayAttack * homeDefense / LEAGUE_AVG;
+  var homeProb = 0, drawProb = 0, awayProb = 0;
+  var scoreList = []; // 收集所有比分概率
+
+  for (var i = 0; i <= MAX_GOALS; i++) {
+    for (var j = 0; j <= MAX_GOALS; j++) {
+      var p = poissonProb(lambdaHome, i) * poissonProb(lambdaAway, j);
+      scoreList.push({ home: i, away: j, prob: p });
+      if (i > j) homeProb += p;
+      else if (i === j) drawProb += p;
+      else awayProb += p;
+    }
+  }
+
+  // 按概率降序排列，取 Top 5 比分
+  scoreList.sort(function(a, b) { return b.prob - a.prob; });
+  var topScores = scoreList.slice(0, 5);
+
+  // 计算大小球概率（以 2.5 球为界）
+  var over25 = 0;
+  for (var k = 0; k < scoreList.length; k++) {
+    if (scoreList[k].home + scoreList[k].away > 2.5) over25 += scoreList[k].prob;
+  }
+
+  return {
+    homeWin: homeProb, draw: drawProb, awayWin: awayProb,
+    lambdaHome: lambdaHome.toFixed(2), lambdaAway: lambdaAway.toFixed(2),
+    topScores: topScores,
+    expectedGoals: (lambdaHome + lambdaAway).toFixed(2),
+    over25: over25, under25: 1 - over25
+  };
+}
+
+/* ===================================================================
+ *  凯利公式 —— 最优投注决策引擎
+ *
+ *  凯利比例: f = (p * b - q) / b
+ *    p = AI 预测概率, b = 净赔率 (decimal_odds - 1), q = 1 - p
+ *  Edge(优势): Edge = p_ai - p_implied, 若 Edge > 0 有正期望值
+ *  使用 1/4 凯利 (Fractional Kelly) 控制风险
+ * =================================================================== */
+var KELLY_FRACTION = 0.25;
+
+function calcKelly(aiProb, decimalOdds) {
+  var p = aiProb;
+  var b = decimalOdds - 1;
+  var q = 1 - p;
+
+  if (b <= 0) return { edge: -1, kelly: 0, stake: 0, recommendation: 'invalid' };
+
+  var pImplied = 1 / decimalOdds;
+  var edge = p - pImplied;
+  var kelly = (p * b - q) / b;
+  var stake = Math.max(0, kelly * KELLY_FRACTION);
+
+  var recommendation;
+  if (edge > 0.03) recommendation = 'strong_buy';
+  else if (edge > 0) recommendation = 'buy';
+  else recommendation = 'pass';
+
+  return { aiProb: p, impliedProb: pImplied, edge: edge, kelly: kelly, stake: stake, recommendation: recommendation, odds: decimalOdds };
+}
+
+/* ===================================================================
+ *  DOM 工具
+ * =================================================================== */
+function el(id) { return document.getElementById(id); }
+function crEl(tag, className, html) {
+  var e = document.createElement(tag);
+  if (className) e.className = className;
+  if (html) e.innerHTML = html;
+  return e;
+}
+
+/* ===================================================================
+ *  页面渲染
+ * =================================================================== */
+
+function renderMatchList(matches) {
+  var container = el('matchList');
+  el('matchCount').textContent = matches.length + ' 场';
+  container.innerHTML = '';
+
+  matches.forEach(function(match) {
+    var card = crEl('div', 'card card-hover match-card');
+    card.setAttribute('data-match-id', match.id);
+    card.innerHTML =
+      '<div class="match-card-top">' +
+        '<span class="match-time font-mono">' + match.time + '</span>' +
+        '<span class="match-group font-mono">' + match.group + '</span>' +
+      '</div>' +
+      '<div class="match-teams">' +
+        '<div class="match-side">' +
+          '<span class="match-flag">' + match.homeFlag + '</span>' +
+          '<span class="match-name">' + match.homeTeam + '</span>' +
+        '</div>' +
+        '<span class="match-vs">VS</span>' +
+        '<div class="match-side">' +
+          '<span class="match-name">' + match.awayTeam + '</span>' +
+          '<span class="match-flag">' + match.awayFlag + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="match-bottom">' +
+        '<span class="match-handicap">盘口: ' + match.handicap + '</span>' +
+        '<div class="match-odds font-mono">' +
+          '<span class="odds-home">' + match.homeOdds.toFixed(2) + '</span>' +
+          '<span class="odds-draw">' + match.drawOdds.toFixed(2) + '</span>' +
+          '<span class="odds-away">' + match.awayOdds.toFixed(2) + '</span>' +
+        '</div>' +
+      '</div>';
+    card.addEventListener('click', function() { selectMatch(match.id); });
+    container.appendChild(card);
+  });
+}
+
+function selectMatch(id) {
+  currentMatchId = id;
+
+  // 高亮选中卡片
+  var cards = document.querySelectorAll('.match-card');
+  for (var i = 0; i < cards.length; i++) cards[i].classList.remove('active');
+  var activeCard = document.querySelector('.match-card[data-match-id="' + id + '"]');
+  if (activeCard) activeCard.classList.add('active');
+
+  // 显示加载
+  el('centerEmpty').classList.add('hidden');
+  el('bettingEmpty').classList.add('hidden');
+  var cc = el('centerContent');
+  var bc = el('bettingContent');
+  cc.classList.remove('hidden');
+  bc.classList.remove('hidden');
+  cc.style.display = 'flex';
+  bc.style.display = 'flex';
+
+  if (aiChart) { try { aiChart.destroy(); } catch(e) {} aiChart = null; }
+
+  cc.innerHTML = '<div class="loading-wrap"><div class="spinner"></div></div>';
+  bc.innerHTML = '<div class="loading-wrap"><div class="spinner"></div></div>';
+
+  var match = null;
+  for (var i = 0; i < matchesData.length; i++) {
+    if (matchesData[i].id === id) { match = matchesData[i]; break; }
+  }
+
+  fetchData('/api/match/' + id).then(function(detail) {
+    cc.innerHTML =
+      '<div id="matchHeader" class="slide-in"></div>' +
+      '<div class="lineup-grid">' +
+        '<div id="homeLineupPanel" class="slide-in"></div>' +
+        '<div id="awayLineupPanel" class="slide-in"></div>' +
+      '</div>' +
+      '<div id="h2hPanel" class="slide-in"></div>' +
+      '<div id="aiPanel" class="slide-in"></div>';
+    bc.innerHTML =
+      '<div id="oddsCompare" class="slide-in"></div>' +
+      '<div id="kellyDecision" class="slide-in"></div>';
+
+    renderMatchHeader(match);
+    renderLineupPanel('home', match.homeTeam, match.homeFlag, detail.homeLineup, detail.homeInjuries);
+    renderLineupPanel('away', match.awayTeam, match.awayFlag, detail.awayLineup, detail.awayInjuries);
+    renderH2H(match, detail.h2h);
+    renderAIChart(match, detail);
+    renderBettingPanel(match, detail);
+  }).catch(function(err) {
+    cc.innerHTML = '<div class="loading-wrap" style="color:#f87171;">加载失败: ' + err.message + '</div>';
+  });
+}
+
+function renderMatchHeader(match) {
+  el('matchHeader').innerHTML =
+    '<div class="match-header-card">' +
+      '<div class="match-header-teams">' +
+        '<div class="match-header-side">' +
+          '<div class="match-header-flag">' + match.homeFlag + '</div>' +
+          '<div class="match-header-name">' + match.homeTeam + '</div>' +
+        '</div>' +
+        '<div class="match-header-center">' +
+          '<div class="match-header-vs font-mono">VS</div>' +
+          '<div class="match-header-info">' + match.time + '</div>' +
+          '<div class="match-header-info">' + match.group + ' · 盘口: ' + match.handicap + '</div>' +
+        '</div>' +
+        '<div class="match-header-side">' +
+          '<div class="match-header-flag">' + match.awayFlag + '</div>' +
+          '<div class="match-header-name">' + match.awayTeam + '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+}
+
+function renderLineupPanel(side, teamName, flag, lineup, injuries) {
+  var panelEl = el(side === 'home' ? 'homeLineupPanel' : 'awayLineupPanel');
+  var sideLabel = side === 'home' ? '🏠 主队' : '✈️ 客队';
+  var criticalInjuries = injuries.filter(function(i) { return i.critical; });
+  var minorIssues = injuries.filter(function(i) { return !i.critical; });
+
+  var playersHtml = '';
+  for (var i = 0; i < lineup.length; i++) {
+    playersHtml +=
+      '<div class="lineup-player">' +
+        '<span class="lineup-num font-mono">' + (i + 1) + '</span>' +
+        lineup[i] +
+      '</div>';
+  }
+
+  var injuryHtml = '';
+  if (injuries.length > 0) {
+    injuryHtml = '<div class="injury-section"><div class="injury-title">🚑 伤停信息</div>';
+    for (var j = 0; j < criticalInjuries.length; j++) {
+      injuryHtml +=
+        '<div class="injury-item">' +
+          '<span class="injury-dot critical"></span>' +
+          '<span class="injury-name critical">' + criticalInjuries[j].name + '</span>' +
+          '<span class="injury-status">— ' + criticalInjuries[j].status + '</span>' +
+        '</div>';
+    }
+    for (var k = 0; k < minorIssues.length; k++) {
+      injuryHtml +=
+        '<div class="injury-item">' +
+          '<span class="injury-dot warning"></span>' +
+          '<span class="injury-name warning">' + minorIssues[k].name + '</span>' +
+          '<span class="injury-status">— ' + minorIssues[k].status + '</span>' +
+        '</div>';
+    }
+    injuryHtml += '</div>';
+  } else {
+    injuryHtml = '<div class="injury-clean">✅ 无重要伤停</div>';
+  }
+
+  panelEl.innerHTML =
+    '<div class="card lineup-card">' +
+      '<div class="lineup-title"><span>' + flag + '</span><h4>' + sideLabel + ' ' + teamName + ' — 预计首发</h4></div>' +
+      '<div class="lineup-players">' + playersHtml + '</div>' +
+      injuryHtml +
+    '</div>';
+}
+
+function renderH2H(match, h2h) {
+  var homeWins = 0, draws = 0, awayWins = 0;
+  for (var i = 0; i < h2h.length; i++) {
+    if (h2h[i].homeScore > h2h[i].awayScore) homeWins++;
+    else if (h2h[i].homeScore === h2h[i].awayScore) draws++;
+    else awayWins++;
+  }
+
+  var rowsHtml = '';
+  for (var j = 0; j < h2h.length; j++) {
+    var h = h2h[j];
+    var isHomeWin = h.homeScore > h.awayScore;
+    var isAwayWin = h.homeScore < h.awayScore;
+    rowsHtml +=
+      '<div class="h2h-row">' +
+        '<span class="h2h-date font-mono">' + h.date + '</span>' +
+        '<div class="h2h-matchup">' +
+          '<span class="h2h-home-name' + (isHomeWin ? ' h2h-win' : '') + '" style="color:' + (isHomeWin ? 'var(--emerald-400)' : 'var(--slate-300)') + '">' + match.homeTeam + '</span>' +
+          '<span class="h2h-score font-mono">' + h.homeScore + ' - ' + h.awayScore + '</span>' +
+          '<span class="h2h-away-name' + (isAwayWin ? ' h2h-lose' : '') + '" style="color:' + (isAwayWin ? 'var(--emerald-400)' : 'var(--slate-300)') + '">' + match.awayTeam + '</span>' +
+        '</div>' +
+        '<span class="h2h-venue">' + h.venue + '</span>' +
+      '</div>';
+  }
+
+  el('h2hPanel').innerHTML =
+    '<div class="card">' +
+      '<h4 style="font-weight:600;color:var(--white);margin-bottom:12px;">📊 近5次历史交锋记录</h4>' +
+      '<div class="h2h-summary">' +
+        '<span class="win">' + match.homeTeam + ' ' + homeWins + '胜</span>' +
+        '<span class="draw-count">' + draws + '平</span>' +
+        '<span class="lose">' + match.awayTeam + ' ' + awayWins + '胜</span>' +
+      '</div>' +
+      rowsHtml +
+    '</div>';
+}
+
+function renderAIChart(match, detail) {
+  return fetchPredict(detail.homeAttack, detail.awayAttack, detail.homeDefense, detail.awayDefense).then(function(probs) {
+
+  // 构建比分预测 HTML
+  var scoreRowsHtml = '';
+  for (var s = 0; s < probs.topScores.length; s++) {
+    var sc = probs.topScores[s];
+    var isTop1 = s === 0;
+    var cls = isTop1 ? 'top1' : 'other';
+    scoreRowsHtml +=
+      '<div class="score-row">' +
+        '<span class="score-num ' + cls + ' font-mono">' + sc.home + '-' + sc.away + '</span>' +
+        '<div class="score-bar-wrap"><div class="score-bar-fill ' + cls + '" style="width:' + (sc.prob * 100 * 3.5).toFixed(0) + '%"></div></div>' +
+        '<span class="score-pct ' + cls + ' font-mono">' + (sc.prob * 100).toFixed(1) + '%</span>' +
+      '</div>';
+  }
+
+  el('aiPanel').innerHTML =
+    '<div class="card">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">' +
+        '<h4 style="font-weight:600;color:var(--white);">🤖 AI 泊松分布预测</h4>' +
+        '<span class="ai-lambda font-mono">λ主=' + probs.lambdaHome + ' λ客=' + probs.lambdaAway + '</span>' +
+      '</div>' +
+      '<div class="ai-grid">' +
+        '<div class="ai-cell"><div class="ai-cell-label">' + match.homeTeam + ' 胜</div><div class="ai-cell-val home font-mono">' + (probs.homeWin * 100).toFixed(1) + '%</div></div>' +
+        '<div class="ai-cell"><div class="ai-cell-label">平局</div><div class="ai-cell-val draw font-mono">' + (probs.draw * 100).toFixed(1) + '%</div></div>' +
+        '<div class="ai-cell"><div class="ai-cell-label">' + match.awayTeam + ' 胜</div><div class="ai-cell-val away font-mono">' + (probs.awayWin * 100).toFixed(1) + '%</div></div>' +
+      '</div>' +
+      '<div class="ai-chart-wrap"><canvas id="aiProbChart"></canvas></div>' +
+      // 比分预测区块
+      '<div class="score-predict">' +
+        '<div class="score-predict-title">🎯 最可能比分预测</div>' +
+        scoreRowsHtml +
+        '<div class="score-extra">' +
+          '<div class="score-extra-item">' +
+            '<div class="score-extra-label">📊 预期总进球</div>' +
+            '<div class="score-extra-val font-mono">' + probs.expectedGoals + '</div>' +
+            '<div class="score-extra-sub">λ主 + λ客</div>' +
+          '</div>' +
+          '<div class="score-extra-item">' +
+            '<div class="score-extra-label">⚽ 大2.5球概率</div>' +
+            '<div class="score-extra-val font-mono" style="color:' + (probs.over25 > 0.5 ? 'var(--emerald-400)' : 'var(--slate-400)') + '">' + (probs.over25 * 100).toFixed(1) + '%</div>' +
+            '<div class="score-extra-sub">小2.5球 ' + (probs.under25 * 100).toFixed(1) + '%</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="ai-note">※ 基于泊松分布模型，使用两队近10场攻防数据计算预期进球概率矩阵</div>' +
+    '</div>';
+
+  var thisGen = ++renderGen;
+  setTimeout(function() {
+    if (thisGen !== renderGen) return;
+    var canvas = el('aiProbChart');
+    if (!canvas) return;
+    if (aiChart) { try { aiChart.destroy(); } catch(e) {} }
+
+    var ctx = canvas.getContext('2d');
+    aiChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [match.homeTeam + ' 胜', '平局', match.awayTeam + ' 胜'],
+        datasets: [{
+          label: 'AI 预测概率',
+          data: [
+            parseFloat((probs.homeWin * 100).toFixed(1)),
+            parseFloat((probs.draw * 100).toFixed(1)),
+            parseFloat((probs.awayWin * 100).toFixed(1))
+          ],
+          backgroundColor: ['rgba(16,185,129,0.7)', 'rgba(251,191,36,0.7)', 'rgba(59,130,246,0.7)'],
+          borderColor: ['rgba(16,185,129,1)', 'rgba(251,191,36,1)', 'rgba(59,130,246,1)'],
+          borderWidth: 1.5, borderRadius: 6, borderSkipped: false
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, max: 100, ticks: { callback: function(v) { return v + '%'; }, color: '#94a3b8' }, grid: { color: 'rgba(51,65,85,0.5)' } },
+          x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+        }
+      }
+    });
+  }, 100);
+  });  // end of fetchPredict.then()
+}
+
+function renderBettingPanel(match, detail) {
+  return fetchPredict(detail.homeAttack, detail.awayAttack, detail.homeDefense, detail.awayDefense).then(function(probs) {
+
+  var outcomes = [
+    { label: match.homeTeam + ' 胜', aiProb: probs.homeWin, odds: match.homeOdds },
+    { label: '平局', aiProb: probs.draw, odds: match.drawOdds },
+    { label: match.awayTeam + ' 胜', aiProb: probs.awayWin, odds: match.awayOdds }
+  ];
+
+  return Promise.all(outcomes.map(function(o) {
+    return fetchKelly(o.aiProb, o.odds).then(function(k) {
+      k.label = o.label;
+      return k;
+    });
+  })).then(function(kellyResults) {
+
+  var hasRecommendation = false;
+  for (var i = 0; i < kellyResults.length; i++) {
+    if (kellyResults[i].recommendation !== 'pass') { hasRecommendation = true; break; }
+  }
+
+  // 赔率对比表
+  var oddsHtml = '';
+  for (var j = 0; j < kellyResults.length; j++) {
+    var k = kellyResults[j];
+    var edgeClass = k.edge > 0 ? 'edge-positive' : 'edge-negative';
+    var edgePrefix = k.edge > 0 ? '+' : '';
+    var recClass = k.recommendation !== 'pass' ? ' recommended' : '';
+    oddsHtml +=
+      '<div class="odds-row' + recClass + '">' +
+        '<div class="odds-row-top">' +
+          '<span class="odds-row-label">' + k.label + '</span>' +
+          '<span class="odds-row-price">赔率 <val class="font-mono">' + k.odds.toFixed(2) + '</val></span>' +
+        '</div>' +
+        '<div class="odds-row-stats">' +
+          '<span>AI概率 <span class="val font-mono">' + (k.aiProb * 100).toFixed(1) + '%</span></span>' +
+          '<span>隐含 <span class="val font-mono">' + (k.impliedProb * 100).toFixed(1) + '%</span></span>' +
+          '<span class="' + edgeClass + ' font-mono" style="font-weight:600;">Edge: ' + edgePrefix + (k.edge * 100).toFixed(1) + '%</span>' +
+        '</div>' +
+      '</div>';
+  }
+  el('oddsCompare').innerHTML =
+    '<div class="card">' +
+      '<h4 style="font-weight:600;color:var(--white);margin-bottom:12px;">💰 赔率 × AI 概率对比</h4>' +
+      oddsHtml +
+    '</div>';
+
+  // 凯利决策
+  var decisionHtml = '';
+  if (hasRecommendation) {
+    for (var m = 0; m < kellyResults.length; m++) {
+      var kr = kellyResults[m];
+      if (kr.recommendation === 'pass') continue;
+      decisionHtml +=
+        '<div class="kelly-recommend-item">' +
+          '<div class="kelly-recommend-header">' +
+            '<span class="kelly-recommend-badge">✅</span>' +
+            '<span class="kelly-recommend-label">【推荐买入】</span>' +
+          '</div>' +
+          '<div class="kelly-recommend-play">' + kr.label + '</div>' +
+          '<div class="kelly-stats">' +
+            '<div class="kelly-stat"><div class="kelly-stat-label">预期优势 Edge</div><div class="kelly-stat-val font-mono">+' + (kr.edge * 100).toFixed(1) + '%</div></div>' +
+            '<div class="kelly-stat"><div class="kelly-stat-label">建议仓位 (1/4凯利)</div><div class="kelly-stat-val font-mono">' + (kr.stake * 100).toFixed(1) + '%</div></div>' +
+          '</div>' +
+          '<div class="kelly-note">凯利比例: ' + (kr.kelly * 100).toFixed(1) + '% → 四分之一仓位: ' + (kr.stake * 100).toFixed(1) + '%</div>' +
+        '</div>';
+    }
+    // 无价值结果
+    var missList = '';
+    for (var n = 0; n < kellyResults.length; n++) {
+      if (kellyResults[n].recommendation !== 'pass') continue;
+      missList +=
+        '<div class="kelly-miss-row">' +
+          '<span>' + kellyResults[n].label + '</span>' +
+          '<span class="edge-bad font-mono">Edge: ' + (kellyResults[n].edge * 100).toFixed(1) + '%</span>' +
+        '</div>';
+    }
+    if (missList) {
+      decisionHtml +=
+        '<div class="kelly-miss-list">' +
+          '<div class="kelly-miss-title">以下结果无正Edge：</div>' +
+          missList +
+        '</div>';
+    }
+  } else {
+    decisionHtml =
+      '<div class="kelly-pass">' +
+        '<div class="kelly-pass-icon">🚫</div>' +
+        '<div class="kelly-pass-title">【放弃本场】</div>' +
+        '<div class="kelly-pass-sub">所有结果均无正期望值，无价值投注空间</div>' +
+        '<div class="kelly-pass-sub">庄家赔率已充分反映真实概率</div>' +
+      '</div>';
+  }
+
+  el('kellyDecision').innerHTML =
+    '<div class="card kelly-card' + (hasRecommendation ? ' recommend' : '') + '">' +
+      '<h4 style="font-weight:600;color:var(--white);margin-bottom:12px;">📈 凯利公式决策</h4>' +
+      decisionHtml +
+    '</div>';
+  });  // end of Promise.all for kelly
+  });  // end of fetchPredict.then()
+}
+
+/* ===================================================================
+ *  初始化
+ * =================================================================== */
+function refreshMatches() {
+  var listEl = el('matchList');
+  listEl.innerHTML = '<div class="loading-wrap"><div class="spinner"></div></div>';
+
+  fetchData('/api/matches').then(function(data) {
+    matchesData = data;
+    renderMatchList(matchesData);
+    if (currentMatchId) {
+      var found = false;
+      for (var i = 0; i < matchesData.length; i++) {
+        if (matchesData[i].id === currentMatchId) { found = true; break; }
+      }
+      if (found) selectMatch(currentMatchId);
+    }
+  }).catch(function(err) {
+    listEl.innerHTML = '<div style="text-align:center;padding:32px;color:#f87171;">加载失败: ' + err.message + '<br><button onclick="refreshMatches()" style="margin-top:8px;color:#34d399;text-decoration:underline;background:none;border:none;cursor:pointer;font-size:13px;">重试</button></div>';
+  });
+}
+
+// 页面加载时自动抓取数据
+refreshMatches();
+
+// Chart.js CDN 加载检测 (5 秒后检查)
+setTimeout(function() {
+  if (typeof Chart === 'undefined') {
+    var banner = document.createElement('div');
+    banner.className = 'cdn-error-banner';
+    banner.innerHTML = '⚠️ Chart.js 未加载成功，AI预测图表将无法显示。请将 Chart.js 脚本下载到本地并修改 script src 路径。';
+    document.body.appendChild(banner);
+  }
+}, 5000);
+</script>
+
+<!-- Chart.js: 国内 BootCDN 镜像 -->
+<script src="https://cdn.bootcdn.net/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</body>
+</html>
