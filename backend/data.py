@@ -223,7 +223,7 @@ def load_data():
     global DATA_SOURCE, REAL_MATCHES_CACHE
     try:
         from scraper import get_match_list
-        matches = get_match_list(limit=20)
+        matches = get_match_list(limit=60)
         if matches and len(matches) >= 6:
             DATA_SOURCE = "real"
             REAL_MATCHES_CACHE = matches

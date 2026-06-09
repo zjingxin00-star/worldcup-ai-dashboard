@@ -471,12 +471,17 @@ def enrich_match_detail(match_id: int) -> dict | None:
         return None
 
 
-def get_match_list(limit: int = 20) -> list:
-    """获取比赛列表（轻量，无 API 调用）"""
-    matches = fetch_real_matches(limit)
-    return [
-        {
-            "id": m["id"],
+def get_match_list(limit: int = 50) -> list:
+    """获取比赛列表（按北京时间排序，轻量无 API 调用）"""
+    # 多抓一些确保覆盖所有日期，然后按时间排序
+    matches = fetch_real_matches(80)
+    matches.sort(key=lambda m: m["time"])
+    matches = matches[:limit]
+    # 重新分配 ID（按时间顺序）
+    result = []
+    for i, m in enumerate(matches):
+        result.append({
+            "id": i + 1,
             "time": m["time"],
             "homeTeam": m["homeTeam"],
             "awayTeam": m["awayTeam"],
@@ -487,17 +492,28 @@ def get_match_list(limit: int = 20) -> list:
             "homeOdds": m["homeOdds"],
             "drawOdds": m["drawOdds"],
             "awayOdds": m["awayOdds"],
-        }
-        for m in matches
-    ]
+            "_orig_id": m["id"],  # 保留原始 ID 用于查详情
+        })
+    return result
 
 
 def get_match_detail(match_id: int) -> dict | None:
-    """获取单场详情（先拿基础数据，再尝试注入真实 H2H/伤停）"""
+    """获取单场详情（通过排序后的 ID 或原始 ID 查找）"""
+    # 先尝试从排序列表中查找（新 ID 系统）
+    sorted_list = get_match_list(80)
+    orig_id = None
+    for m in sorted_list:
+        if m["id"] == match_id:
+            orig_id = m.get("_orig_id", match_id)
+            break
+
+    if orig_id is None:
+        orig_id = match_id
+
     matches = fetch_real_matches(104)
     base = None
     for m in matches:
-        if m["id"] == match_id:
+        if m["id"] == orig_id:
             base = m
             break
     if not base:
