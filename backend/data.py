@@ -5,6 +5,8 @@
 
 数据结构与前端 fetchData() 期望完全一致，不可修改字段名。
 """
+import os
+import json
 
 MOCK_MATCHES = [
     {
@@ -235,9 +237,10 @@ def load_data():
 
 
 def get_matches():
+    matches = MOCK_MATCHES
     if DATA_SOURCE == "real" and REAL_MATCHES_CACHE:
-        return REAL_MATCHES_CACHE
-    return MOCK_MATCHES
+        matches = REAL_MATCHES_CACHE
+    return apply_odds_to_matches(matches)
 
 
 def get_detail(match_id):
@@ -254,3 +257,55 @@ def get_detail(match_id):
         except Exception as e:
             print(f"[data] Detail load failed for match {match_id}: {e}")
     return MOCK_MATCH_DETAILS.get(match_id)
+
+
+# ---------------------------------------------------------------------------
+# 赔率手动配置
+# ---------------------------------------------------------------------------
+
+ODDS_SOURCE = "estimated"
+ODDS_CONFIG_FILE = os.path.join(os.path.dirname(__file__), "odds_config.json")
+
+
+def load_odds_config():
+    """加载手动配置的体彩赔率"""
+    global ODDS_SOURCE
+    if os.path.exists(ODDS_CONFIG_FILE):
+        try:
+            with open(ODDS_CONFIG_FILE, "r", encoding="utf-8") as f:
+                config = json.loads(f.read())
+                if config:
+                    ODDS_SOURCE = "manual"
+                    return config
+        except Exception:
+            pass
+    return {}
+
+
+def save_odds_config(data):
+    """保存体彩赔率到本地文件"""
+    global ODDS_SOURCE
+    with open(ODDS_CONFIG_FILE, "w", encoding="utf-8") as f:
+        f.write(json.dumps(data, ensure_ascii=False, indent=2))
+    ODDS_SOURCE = "manual"
+    # 清除缓存，下次请求会使用新赔率
+    REAL_DETAILS_CACHE.clear()
+
+
+def apply_odds_to_matches(matches):
+    """将手动配置的赔率注入比赛列表"""
+    config = load_odds_config()
+    if not config:
+        return matches
+    result = []
+    for m in matches:
+        mid = str(m["id"])
+        if mid in config:
+            m = dict(m)
+            o = config[mid]
+            m["homeOdds"] = o.get("homeOdds", m["homeOdds"])
+            m["drawOdds"] = o.get("drawOdds", m["drawOdds"])
+            m["awayOdds"] = o.get("awayOdds", m["awayOdds"])
+            m["handicap"] = o.get("handicap", m["handicap"])
+        result.append(m)
+    return result

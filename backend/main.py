@@ -221,7 +221,71 @@ def get_match_detail(match_id: int):
 @app.get("/api/status")
 def get_status():
     """数据源状态"""
-    return {"source": db.DATA_SOURCE, "matches": len(db.get_matches())}
+    return {"source": db.DATA_SOURCE, "matches": len(db.get_matches()),
+            "odds_source": db.ODDS_SOURCE}
+
+
+@app.get("/api/admin/odds")
+def get_odds_config():
+    """获取当前赔率配置"""
+    return db.load_odds_config()
+
+
+@app.post("/api/admin/odds")
+def save_odds_config(data: dict):
+    """保存赔率配置 (POST body: {matchId: {homeOdds, drawOdds, awayOdds, handicap}})"""
+    db.save_odds_config(data)
+    return {"status": "ok", "saved": len(data)}
+
+
+@app.get("/admin", response_class=HTMLResponse)
+def admin_panel():
+    """赔率管理页面"""
+    import json
+    matches = db.get_matches()
+    config = db.load_odds_config()
+    rows = []
+    for m in matches:
+        mid = str(m["id"])
+        o = config.get(mid, {})
+        rows.append(f"""
+        <tr>
+          <td style='padding:8px'>{m['homeFlag']} {m['homeTeam']} vs {m['awayTeam']} {m['awayFlag']}</td>
+          <td style='padding:4px'>{m['group']} {m['time']}</td>
+          <td><input id='h{mid}' value='{o.get('homeOdds', m['homeOdds'])}' size='5' style='padding:4px;background:#1e293b;color:#fff;border:1px solid #334155;border-radius:4px'></td>
+          <td><input id='d{mid}' value='{o.get('drawOdds', m['drawOdds'])}' size='5' style='padding:4px;background:#1e293b;color:#fff;border:1px solid #334155;border-radius:4px'></td>
+          <td><input id='a{mid}' value='{o.get('awayOdds', m['awayOdds'])}' size='5' style='padding:4px;background:#1e293b;color:#fff;border:1px solid #334155;border-radius:4px'></td>
+          <td><input id='p{mid}' value='{o.get('handicap', m['handicap'])}' size='10' style='padding:4px;background:#1e293b;color:#fff;border:1px solid #334155;border-radius:4px'></td>
+        </tr>""")
+    html = f"""<!DOCTYPE html><html lang='zh-CN'><head><meta charset='UTF-8'><title>赔率管理</title>
+<style>body{{background:#0f172a;color:#e2e8f0;font-family:system-ui;padding:24px}}
+table{{border-collapse:collapse;width:100%}}th{{background:#1e293b;padding:10px;text-align:left}}
+tr:hover{{background:#1e293b}}button{{padding:10px 24px;background:#10b981;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:16px}}
+#msg{{color:#34d399;margin-left:16px}}</style></head><body>
+<h1 style='color:#34d399'>赔率配置</h1><p style='color:#94a3b8'>从 sporttery.cn 查到竞彩赔率后填入下表，点保存即可</p>
+<table><thead><tr><th>比赛</th><th>时间/小组</th><th>主胜</th><th>平局</th><th>客胜</th><th>让球盘口</th></tr></thead><tbody>
+{''.join(rows)}
+</tbody></table>
+<button onclick='save()' style='margin-top:16px'>保存赔率</button><span id='msg'></span>
+<script>
+function save() {{
+  var data = {{}};
+  { 'var ids = [' + ','.join([f"'{m['id']}'" for m in matches]) + '];' }
+  ids.forEach(function(id) {{
+    data[id] = {{
+      homeOdds: parseFloat(document.getElementById('h'+id).value),
+      drawOdds: parseFloat(document.getElementById('d'+id).value),
+      awayOdds: parseFloat(document.getElementById('a'+id).value),
+      handicap: document.getElementById('p'+id).value
+    }};
+  }});
+  fetch('/api/admin/odds', {{method:'POST',headers:{{'Content-Type':'application/json'}},body:JSON.stringify(data)}})
+    .then(function(r){{ return r.json(); }})
+    .then(function(d){{ document.getElementById('msg').textContent='已保存 '+d.saved+' 场比赛赔率! 刷新主页即可看到'; }})
+    .catch(function(e){{ document.getElementById('msg').textContent='保存失败: '+e; }});
+}}
+</script></body></html>"""
+    return HTMLResponse(content=html)
 
 
 @app.post("/api/predict", response_model=PredictResponse)
