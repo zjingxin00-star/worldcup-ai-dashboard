@@ -240,7 +240,7 @@ def save_odds_config(data: dict):
 
 @app.get("/admin", response_class=HTMLResponse)
 def admin_panel():
-    """赔率管理页面"""
+    """赔率管理页面 — 支持逐行录入 + 批量粘贴"""
     import json
     matches = db.get_matches()
     config = db.load_odds_config()
@@ -250,39 +250,90 @@ def admin_panel():
         o = config.get(mid, {})
         rows.append(f"""
         <tr>
-          <td style='padding:8px'>{m['homeFlag']} {m['homeTeam']} vs {m['awayTeam']} {m['awayFlag']}</td>
-          <td style='padding:4px'>{m['group']} {m['time']}</td>
-          <td><input id='h{mid}' value='{o.get('homeOdds', m['homeOdds'])}' size='5' style='padding:4px;background:#1e293b;color:#fff;border:1px solid #334155;border-radius:4px'></td>
-          <td><input id='d{mid}' value='{o.get('drawOdds', m['drawOdds'])}' size='5' style='padding:4px;background:#1e293b;color:#fff;border:1px solid #334155;border-radius:4px'></td>
-          <td><input id='a{mid}' value='{o.get('awayOdds', m['awayOdds'])}' size='5' style='padding:4px;background:#1e293b;color:#fff;border:1px solid #334155;border-radius:4px'></td>
-          <td><input id='p{mid}' value='{o.get('handicap', m['handicap'])}' size='10' style='padding:4px;background:#1e293b;color:#fff;border:1px solid #334155;border-radius:4px'></td>
+          <td style='padding:4px'>{m['time']}</td>
+          <td style='padding:4px'>{m['homeFlag']} {m['homeTeam']} vs {m['awayTeam']} {m['awayFlag']}</td>
+          <td style='padding:4px'>{m['group']}</td>
+          <td><input id='h{mid}' value='{o.get('homeOdds', m['homeOdds'])}' size='4' style='width:60px;padding:4px;background:#1e293b;color:#34d399;border:1px solid #334155;border-radius:4px;text-align:center'></td>
+          <td><input id='d{mid}' value='{o.get('drawOdds', m['drawOdds'])}' size='4' style='width:60px;padding:4px;background:#1e293b;color:#fbbf24;border:1px solid #334155;border-radius:4px;text-align:center'></td>
+          <td><input id='a{mid}' value='{o.get('awayOdds', m['awayOdds'])}' size='4' style='width:60px;padding:4px;background:#1e293b;color:#60a5fa;border:1px solid #334155;border-radius:4px;text-align:center'></td>
+          <td><input id='p{mid}' value='{o.get('handicap', m['handicap'])}' size='8' style='width:100px;padding:4px;background:#1e293b;color:#fff;border:1px solid #334155;border-radius:4px;text-align:center'></td>
         </tr>""")
     html = f"""<!DOCTYPE html><html lang='zh-CN'><head><meta charset='UTF-8'><title>赔率管理</title>
 <style>body{{background:#0f172a;color:#e2e8f0;font-family:system-ui;padding:24px}}
-table{{border-collapse:collapse;width:100%}}th{{background:#1e293b;padding:10px;text-align:left}}
-tr:hover{{background:#1e293b}}button{{padding:10px 24px;background:#10b981;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:16px}}
-#msg{{color:#34d399;margin-left:16px}}</style></head><body>
-<h1 style='color:#34d399'>赔率配置</h1><p style='color:#94a3b8'>从 sporttery.cn 查到竞彩赔率后填入下表，点保存即可</p>
-<table><thead><tr><th>比赛</th><th>时间/小组</th><th>主胜</th><th>平局</th><th>客胜</th><th>让球盘口</th></tr></thead><tbody>
+h1{{color:#34d399}}table{{border-collapse:collapse;width:100%;font-size:13px}}
+th{{background:#1e293b;padding:8px;text-align:left;position:sticky;top:0}}
+tr:hover{{background:#1e293b}}td{{padding:4px;border-bottom:1px solid #1e293b}}
+button{{padding:12px 32px;background:#10b981;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:16px;font-weight:600}}
+button:hover{{background:#059669}}#msg{{color:#34d399;margin-left:16px;font-size:14px}}
+textarea{{background:#1e293b;color:#94a3b8;border:1px solid #334155;border-radius:8px;padding:12px;font-size:12px;width:100%;font-family:monospace}}
+.tab{{display:inline-block;padding:8px 16px;cursor:pointer;border-radius:8px 8px 0 0;margin-right:4px;font-size:14px}}
+.tab.active{{background:#1e293b;color:#34d399}} .tab:not(.active){{color:#64748b}}
+.panel{{display:none}} .panel.active{{display:block}}
+</style></head><body>
+<h1>体彩赔率管理</h1>
+<div style='margin-bottom:16px'>
+  <span class='tab active' onclick='switchTab(0)'>逐行录入</span>
+  <span class='tab' onclick='switchTab(1)'>批量粘贴</span>
+</div>
+
+<div class='panel active' id='panel0'>
+<div style='max-height:70vh;overflow-y:auto'>
+<table><thead><tr><th>时间</th><th>比赛</th><th>小组</th><th style='color:#34d399'>主胜</th><th style='color:#fbbf24'>平局</th><th style='color:#60a5fa'>客胜</th><th>让球</th></tr></thead><tbody>
 {''.join(rows)}
-</tbody></table>
+</tbody></table></div>
 <button onclick='save()' style='margin-top:16px'>保存赔率</button><span id='msg'></span>
+</div>
+
+<div class='panel' id='panel1'>
+<p style='color:#94a3b8;margin-bottom:8px'>在竞彩官网复制赔率数据，粘贴到下方（格式: 主胜 平局 客胜 让球，每行一场）</p>
+<textarea id='batch' rows='20' placeholder='示例格式（空格或Tab分隔）:
+2.45 3.10 2.90 -0.5
+3.80 3.40 1.95 -0.5/1
+...'></textarea>
+<button onclick='batchSave()' style='margin-top:12px'>批量导入（按当前列表顺序匹配）</button>
+</div>
+
 <script>
+function switchTab(n) {{
+  document.querySelectorAll('.tab').forEach(function(t,i){{ t.className='tab'+(i===n?' active':''); }});
+  document.querySelectorAll('.panel').forEach(function(p,i){{ p.className='panel'+(i===n?' active':''); }});
+}}
 function save() {{
   var data = {{}};
   { 'var ids = [' + ','.join([f"'{m['id']}'" for m in matches]) + '];' }
   ids.forEach(function(id) {{
     data[id] = {{
-      homeOdds: parseFloat(document.getElementById('h'+id).value),
-      drawOdds: parseFloat(document.getElementById('d'+id).value),
-      awayOdds: parseFloat(document.getElementById('a'+id).value),
+      homeOdds: parseFloat(document.getElementById('h'+id).value)||1,
+      drawOdds: parseFloat(document.getElementById('d'+id).value)||1,
+      awayOdds: parseFloat(document.getElementById('a'+id).value)||1,
       handicap: document.getElementById('p'+id).value
     }};
   }});
   fetch('/api/admin/odds', {{method:'POST',headers:{{'Content-Type':'application/json'}},body:JSON.stringify(data)}})
     .then(function(r){{ return r.json(); }})
-    .then(function(d){{ document.getElementById('msg').textContent='已保存 '+d.saved+' 场比赛赔率! 刷新主页即可看到'; }})
-    .catch(function(e){{ document.getElementById('msg').textContent='保存失败: '+e; }});
+    .then(function(d){{ document.getElementById('msg').textContent='已保存 '+d.saved+' 场! 刷新主页即可'; }})
+    .catch(function(e){{ document.getElementById('msg').textContent='失败: '+e; }});
+}}
+function batchSave() {{
+  var lines = document.getElementById('batch').value.trim().split('\\n');
+  var data = {{}};
+  { 'var ids = [' + ','.join([f"'{m['id']}'" for m in matches]) + '];' }
+  for (var i=0; i<Math.min(lines.length, ids.length); i++) {{
+    var parts = lines[i].trim().split(/\\s+/);
+    if (parts.length>=3) {{
+      data[ids[i]] = {{
+        homeOdds: parseFloat(parts[0])||1,
+        drawOdds: parseFloat(parts[1])||1,
+        awayOdds: parseFloat(parts[2])||1,
+        handicap: parts[3]||''
+      }};
+    }}
+  }}
+  if (Object.keys(data).length===0) {{ alert('未解析到赔率数据，请检查格式'); return; }}
+  fetch('/api/admin/odds', {{method:'POST',headers:{{'Content-Type':'application/json'}},body:JSON.stringify(data)}})
+    .then(function(r){{ return r.json(); }})
+    .then(function(d){{ document.getElementById('msg').textContent='批量导入 '+d.saved+' 场!'; }})
+    .catch(function(e){{ document.getElementById('msg').textContent='失败: '+e; }});
 }}
 </script></body></html>"""
     return HTMLResponse(content=html)
