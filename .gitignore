@@ -17,3 +17,7 @@ Thumbs.db
 
 # Claude
 .claude/
+apology-app/
+gacha-lottery/
+skills/
+test_api.py
