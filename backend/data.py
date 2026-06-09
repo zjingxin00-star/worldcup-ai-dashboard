@@ -213,25 +213,20 @@ MOCK_MATCH_DETAILS = {
 
 DATA_SOURCE = "mock"
 REAL_MATCHES_CACHE = None
-REAL_DETAILS_CACHE = None
+REAL_DETAILS_CACHE = {}
 
 
 def load_data():
-    """服务启动时调用。尝试抓真实数据，失败则用 Mock"""
-    global DATA_SOURCE, REAL_MATCHES_CACHE, REAL_DETAILS_CACHE
+    """启动时只加载赛程列表（快），详情按需加载"""
+    global DATA_SOURCE, REAL_MATCHES_CACHE
     try:
-        from scraper import get_match_list, get_match_detail
+        from scraper import get_match_list
         matches = get_match_list(limit=20)
         if matches and len(matches) >= 6:
             DATA_SOURCE = "real"
             REAL_MATCHES_CACHE = matches
-            REAL_DETAILS_CACHE = {}
-            for m in matches:
-                mid = m["id"]
-                detail = get_match_detail(mid)
-                if detail:
-                    REAL_DETAILS_CACHE[mid] = detail
-            print(f"[data] Loaded {len(matches)} real 2026 World Cup matches (OpenFootball)")
+            REAL_DETAILS_CACHE.clear()
+            print(f"[data] Loaded {len(matches)} real 2026 World Cup matches (fast, details on-demand)")
             return
     except Exception as e:
         print(f"[data] Real data fetch failed: {e}")
@@ -246,6 +241,16 @@ def get_matches():
 
 
 def get_detail(match_id):
-    if DATA_SOURCE == "real" and REAL_DETAILS_CACHE:
-        return REAL_DETAILS_CACHE.get(match_id)
+    # 真实数据：先查缓存，没有则按需加载（带 API 富化）
+    if DATA_SOURCE == "real":
+        if match_id in REAL_DETAILS_CACHE:
+            return REAL_DETAILS_CACHE[match_id]
+        try:
+            from scraper import get_match_detail
+            detail = get_match_detail(match_id)
+            if detail:
+                REAL_DETAILS_CACHE[match_id] = detail
+                return detail
+        except Exception as e:
+            print(f"[data] Detail load failed for match {match_id}: {e}")
     return MOCK_MATCH_DETAILS.get(match_id)

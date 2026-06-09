@@ -296,61 +296,9 @@ def fetch_real_matches(limit: int = 20) -> list:
 
         home_str = _strength(home_cn)
         away_str = _strength(away_cn)
-
-        # --- 优先从 live_data 获取真实数据 ---
-        from live_data import (
-            get_team_id, fetch_real_odds, fetch_real_h2h,
-            fetch_real_injuries, fetch_team_statistics, has_api_key
-        )
-
-        real_odds = None
-        real_h2h = None
-        real_injuries_home = []
-        real_injuries_away = []
-        real_stats_home = None
-        real_stats_away = None
-
-        if has_api_key():
-            home_id = get_team_id(home_cn)
-            away_id = get_team_id(away_cn)
-            if home_id and away_id:
-                # 暂时无法获取 fixture_id（API-Football 的赛程 ID），
-                # 先用 H2H + 统计 + 伤停数据
-                real_h2h = fetch_real_h2h(home_id, away_id, 5)
-                real_injuries_home = fetch_real_injuries(home_id) or []
-                real_injuries_away = fetch_real_injuries(away_id) or []
-                real_stats_home = fetch_team_statistics(home_id)
-                real_stats_away = fetch_team_statistics(away_id)
-
-        # 赔率：真实 or 估算
-        if real_odds:
-            odds = real_odds
-        else:
-            odds = _calc_odds(home_str, away_str)
-
-        # 攻防：真实统计 or 估算
-        if real_stats_home:
-            home_atk = real_stats_home["attack"]
-            home_def = real_stats_home["defense"]
-        else:
-            home_atk, home_def = _calc_attack_defense(home_str)
-
-        if real_stats_away:
-            away_atk = real_stats_away["attack"]
-            away_def = real_stats_away["defense"]
-        else:
-            away_atk, away_def = _calc_attack_defense(away_str)
-
-        # H2H
-        h2h_data = real_h2h if real_h2h else _mock_h2h(home_cn, away_cn)
-
-        # 伤停
-        if real_injuries_home or real_injuries_away:
-            home_injuries = real_injuries_home
-            away_injuries = real_injuries_away
-        else:
-            home_injuries = []
-            away_injuries = []
+        odds = _calc_odds(home_str, away_str)
+        home_atk, home_def = _calc_attack_defense(home_str)
+        away_atk, away_def = _calc_attack_defense(away_str)
 
         # 让球盘口（基于实力差 or 真实赔率折算）
         diff = home_str - away_str
@@ -390,9 +338,9 @@ def fetch_real_matches(limit: int = 20) -> list:
             "venue": venue,
             "homeLineup": _mock_lineup(home_cn),
             "awayLineup": _mock_lineup(away_cn),
-            "homeInjuries": home_injuries,
-            "awayInjuries": away_injuries,
-            "h2h": h2h_data,
+            "homeInjuries": [],
+            "awayInjuries": [],
+            "h2h": _mock_h2h(home_cn, away_cn),
             "homeAttack": home_atk,
             "awayAttack": away_atk,
             "homeDefense": home_def,
@@ -458,11 +406,73 @@ def _mock_h2h(home_cn: str, away_cn: str) -> list:
 
 
 # ---------------------------------------------------------------------------
-# 便捷函数：获取完整比赛详情
+# 按需加载真实数据（H2H / 伤停 / 统计）
 # ---------------------------------------------------------------------------
 
+def enrich_match_detail(match_id: int) -> dict | None:
+    """
+    为指定比赛获取真实 H2H、伤停、统计数据
+    从 API-Football 实时抓取（带缓存）
+    """
+    from live_data import (
+        get_team_id, fetch_real_h2h,
+        fetch_real_injuries, fetch_team_statistics, has_api_key
+    )
+
+    matches = fetch_real_matches(104)
+    match_data = None
+    for m in matches:
+        if m["id"] == match_id:
+            match_data = m
+            break
+
+    if not match_data:
+        return None
+
+    if not has_api_key():
+        return None  # 无 API Key，保持 mock 数据
+
+    home_cn = match_data["homeTeam"]
+    away_cn = match_data["awayTeam"]
+    home_id = get_team_id(home_cn)
+    away_id = get_team_id(away_cn)
+
+    if not home_id or not away_id:
+        return None
+
+    updates = {}
+    try:
+        # H2H
+        h2h = fetch_real_h2h(home_id, away_id, 5)
+        if h2h:
+            updates["h2h"] = h2h
+
+        # 伤停
+        injuries_home = fetch_real_injuries(home_id)
+        injuries_away = fetch_real_injuries(away_id)
+        if injuries_home is not None:
+            updates["homeInjuries"] = injuries_home
+        if injuries_away is not None:
+            updates["awayInjuries"] = injuries_away
+
+        # 统计数据
+        stats_home = fetch_team_statistics(home_id)
+        stats_away = fetch_team_statistics(away_id)
+        if stats_home:
+            updates["homeAttack"] = stats_home["attack"]
+            updates["homeDefense"] = stats_home["defense"]
+        if stats_away:
+            updates["awayAttack"] = stats_away["attack"]
+            updates["awayDefense"] = stats_away["defense"]
+
+        return updates
+    except Exception as e:
+        print(f"[enrich] Failed for match {match_id}: {e}")
+        return None
+
+
 def get_match_list(limit: int = 20) -> list:
-    """获取比赛列表（仅包含前端展示所需字段）"""
+    """获取比赛列表（轻量，无 API 调用）"""
     matches = fetch_real_matches(limit)
     return [
         {
@@ -483,19 +493,32 @@ def get_match_list(limit: int = 20) -> list:
 
 
 def get_match_detail(match_id: int) -> dict | None:
-    """获取单场比赛完整详情"""
-    matches = fetch_real_matches(104)  # 缓存问题，实际应该优化
+    """获取单场详情（先拿基础数据，再尝试注入真实 H2H/伤停）"""
+    matches = fetch_real_matches(104)
+    base = None
     for m in matches:
         if m["id"] == match_id:
-            return {
-                "homeLineup": m["homeLineup"],
-                "awayLineup": m["awayLineup"],
-                "homeInjuries": m["homeInjuries"],
-                "awayInjuries": m["awayInjuries"],
-                "h2h": m["h2h"],
-                "homeAttack": m["homeAttack"],
-                "awayAttack": m["awayAttack"],
-                "homeDefense": m["homeDefense"],
-                "awayDefense": m["awayDefense"],
-            }
-    return None
+            base = m
+            break
+    if not base:
+        return None
+
+    detail = {
+        "homeLineup": base["homeLineup"],
+        "awayLineup": base["awayLineup"],
+        "homeInjuries": base["homeInjuries"],
+        "awayInjuries": base["awayInjuries"],
+        "h2h": base["h2h"],
+        "homeAttack": base["homeAttack"],
+        "awayAttack": base["awayAttack"],
+        "homeDefense": base["homeDefense"],
+        "awayDefense": base["awayDefense"],
+    }
+
+    # 尝试注入真实数据
+    enriched = enrich_match_detail(match_id)
+    if enriched:
+        detail.update(enriched)
+
+    return detail
+
