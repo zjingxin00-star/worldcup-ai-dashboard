@@ -1,13 +1,9 @@
 """
-世界杯 Mock 数据集
-====================
-【此处对接 Python 爬虫接口】
-当前使用静态 Mock 数据。后续替换方案：
-1. 使用 httpx + BeautifulSoup 从公开体育网站抓取赛程/赔率
-2. 使用 scrapy 定期爬取并存入 SQLite/Redis
-3. 替换此文件中的 MOCK_MATCHES / MOCK_MATCH_DETAILS 为数据库查询
+世界杯数据层
+============
+数据优先级: OpenFootball 真实赛程 > Mock 兜底数据
 
-数据结构与前端 MOCK_MATCHES / MOCK_MATCH_DETAILS 完全一致，不可修改字段名。
+数据结构与前端 fetchData() 期望完全一致，不可修改字段名。
 """
 
 MOCK_MATCHES = [
@@ -210,3 +206,46 @@ MOCK_MATCH_DETAILS = {
         "homeDefense": 0.6, "awayDefense": 0.7
     }
 }
+
+# ---------------------------------------------------------------------------
+# 数据加载：优先真实赛程，失败回退 Mock
+# ---------------------------------------------------------------------------
+
+DATA_SOURCE = "mock"
+REAL_MATCHES_CACHE = None
+REAL_DETAILS_CACHE = None
+
+
+def load_data():
+    """服务启动时调用。尝试抓真实数据，失败则用 Mock"""
+    global DATA_SOURCE, REAL_MATCHES_CACHE, REAL_DETAILS_CACHE
+    try:
+        from scraper import get_match_list, get_match_detail
+        matches = get_match_list(limit=20)
+        if matches and len(matches) >= 6:
+            DATA_SOURCE = "real"
+            REAL_MATCHES_CACHE = matches
+            REAL_DETAILS_CACHE = {}
+            for m in matches:
+                mid = m["id"]
+                detail = get_match_detail(mid)
+                if detail:
+                    REAL_DETAILS_CACHE[mid] = detail
+            print(f"[data] Loaded {len(matches)} real 2026 World Cup matches (OpenFootball)")
+            return
+    except Exception as e:
+        print(f"[data] Real data fetch failed: {e}")
+    DATA_SOURCE = "mock"
+    print(f"[data] Using mock data ({len(MOCK_MATCHES)} matches)")
+
+
+def get_matches():
+    if DATA_SOURCE == "real" and REAL_MATCHES_CACHE:
+        return REAL_MATCHES_CACHE
+    return MOCK_MATCHES
+
+
+def get_detail(match_id):
+    if DATA_SOURCE == "real" and REAL_DETAILS_CACHE:
+        return REAL_DETAILS_CACHE.get(match_id)
+    return MOCK_MATCH_DETAILS.get(match_id)

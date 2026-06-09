@@ -25,7 +25,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
-from data import MOCK_MATCHES, MOCK_MATCH_DETAILS
+import data as db
 
 # HTML 文件路径（与 main.py 同目录）
 HTML_FILE = Path(__file__).parent / "worldcup-dashboard.html"
@@ -205,25 +205,23 @@ def calc_kelly(ai_prob: float, decimal_odds: float) -> dict:
 
 @app.get("/api/matches")
 def get_matches():
-    """
-    获取今日比赛列表
-    【此处对接 Python 爬虫接口】
-    替换为: return scraper.fetch_today_matches()
-    """
-    return MOCK_MATCHES
+    """获取今日比赛列表（真实赛程 / Mock 兜底）"""
+    return db.get_matches()
 
 
 @app.get("/api/match/{match_id}")
 def get_match_detail(match_id: int):
-    """
-    获取单场比赛详情（阵容、伤停、历史交锋、攻防数据）
-    【此处对接 Python 爬虫接口】
-    替换为: return scraper.fetch_match_detail(match_id)
-    """
-    detail = MOCK_MATCH_DETAILS.get(match_id)
+    """获取单场比赛详情"""
+    detail = db.get_detail(match_id)
     if detail is None:
         raise HTTPException(status_code=404, detail=f"比赛 {match_id} 不存在")
     return detail
+
+
+@app.get("/api/status")
+def get_status():
+    """数据源状态"""
+    return {"source": db.DATA_SOURCE, "matches": len(db.get_matches())}
 
 
 @app.post("/api/predict", response_model=PredictResponse)
@@ -280,9 +278,11 @@ async def startup_event():
         scheduler.start()
     """
     port = os.environ.get("PORT", "8000")
-    print("🚀 2026 世界杯 AI Dashboard API 已启动")
-    print(f"🏠 本地访问:   http://localhost:{port}")
-    print(f"📡 API 文档:   http://localhost:{port}/docs")
+    db.load_data()
+    print("2026 World Cup AI Dashboard API started")
+    print(f"Data source: {db.DATA_SOURCE}")
+    print(f"Local:   http://localhost:{port}")
+    print(f"API Doc: http://localhost:{port}/docs")
 
 
 # ---------------------------------------------------------------------------

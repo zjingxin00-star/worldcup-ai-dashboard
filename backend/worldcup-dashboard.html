@@ -517,7 +517,13 @@ setInterval(updateClock, 1000);
     badge.querySelector('.badge-dot').style.background = '#fbbf24';
     text.textContent = '离线 Mock 模式';
   } else if (API_BASE === '') {
-    text.textContent = '后端 API 模式';
+    fetch(API_BASE + '/api/status').then(function(r) { return r.json(); }).then(function(s) {
+      if (s.source === 'real') {
+        text.textContent = '真实赛程 · ' + s.matches + '场';
+      } else {
+        text.textContent = 'Mock 数据 · ' + s.matches + '场';
+      }
+    }).catch(function() { text.textContent = '后端 API 模式'; });
   } else {
     text.textContent = 'localhost:8000';
   }
@@ -573,15 +579,20 @@ function fetchData(url, options) {
   }
 
   // 真实 API 模式：请求 FastAPI 后端
-  return fetch(API_BASE + url, {
-    method: options.method || 'GET',
-    headers: Object.assign({ 'Content-Type': 'application/json' }, options.headers || {}),
-    body: options.body ? JSON.stringify(options.body) : undefined
-  }).then(function(resp) {
-    if (!resp.ok) throw new Error('HTTP ' + resp.status + ': ' + resp.statusText);
+  var fetchOpts = { method: options.method || 'GET' };
+  var headers = { 'Content-Type': 'application/json' };
+  if (options.headers) {
+    var keys = Object.keys(options.headers);
+    for (var h = 0; h < keys.length; h++) { headers[keys[h]] = options.headers[keys[h]]; }
+  }
+  fetchOpts.headers = headers;
+  if (options.body) { fetchOpts.body = JSON.stringify(options.body); }
+
+  return fetch(API_BASE + url, fetchOpts).then(function(resp) {
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
     return resp.json();
   }).catch(function(err) {
-    console.error('[fetchData] 请求失败:', err.message);
+    console.error('[fetchData] error:', err.message);
     throw err;
   });
 }
