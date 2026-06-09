@@ -27,8 +27,9 @@ uvicorn main:app --host 0.0.0.0 --port 8000
 2. 打开 [render.com](https://render.com) → New Web Service
 3. 连接 GitHub 仓库，配置：
    - **Root Directory**: `backend`
+- **Environment Variable**: `PYTHON_VERSION` = `3.11`
    - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+   - **Start Command**: `python -m uvicorn main:app --host 0.0.0.0 --port $PORT`
 4. 点击 Deploy → 获得 `https://xxx.onrender.com` 公网链接
 
 ## API 端点
