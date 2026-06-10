@@ -1409,9 +1409,13 @@ function renderHandicapPanel(match, detail, probs) {
 }
 
 function saveHandicapOdds(matchId) {
-  var homeOdds = parseFloat(document.getElementById('hco' + matchId + '_homeOdds').value) || 1;
-  var drawOdds = parseFloat(document.getElementById('hco' + matchId + '_drawOdds') ? (document.getElementById('hco' + matchId + '_drawOdds').value) : 0) || 0;
-  var awayOdds = parseFloat(document.getElementById('hco' + matchId + '_awayOdds').value) || 1;
+  var homeEl = document.getElementById('hco' + matchId + '_homeOdds');
+  var drawEl = document.getElementById('hco' + matchId + '_drawOdds');
+  var awayEl = document.getElementById('hco' + matchId + '_awayOdds');
+
+  var homeOdds = (homeEl && parseFloat(homeEl.value)) || 1;
+  var drawOdds = (drawEl && parseFloat(drawEl.value)) || 0;
+  var awayOdds = (awayEl && parseFloat(awayEl.value)) || 1;
 
   var data = {};
   data[matchId] = {
@@ -1424,15 +1428,15 @@ function saveHandicapOdds(matchId) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   }).then(function(r) { return r.json(); }).then(function() {
-    // 更新内存
+    // 更新内存中的比赛数据
     for (var i = 0; i < matchesData.length; i++) {
       if (matchesData[i].id === matchId) {
         matchesData[i]._handicapOdds = {homeOdds: homeOdds, drawOdds: drawOdds, awayOdds: awayOdds};
         break;
       }
     }
-    if (currentMatchId === matchId) selectMatch(matchId);
-  });
+    if (currentMatchId === matchId) { selectMatch(matchId); }
+  }).catch(function(e) { console.error('Save handicap odds error:', e); });
 }
 
 /* ===================================================================
@@ -1457,8 +1461,9 @@ function toggleEditOdds() {
     btn.style.color = 'var(--slate-400)';
     btn.style.borderColor = 'var(--slate-600)';
   }
-  // 重新渲染比赛列表
+  // 重新渲染比赛列表 + 当前选中比赛的详情
   renderMatchList(matchesData);
+  if (currentMatchId) { selectMatch(currentMatchId); }
 }
 
 function saveOddsForMatch(matchId, homeOdds, drawOdds, awayOdds, handicap) {

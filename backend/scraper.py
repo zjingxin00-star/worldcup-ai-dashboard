@@ -297,8 +297,28 @@ def fetch_real_matches(limit: int = 20) -> list:
         home_str = _strength(home_cn)
         away_str = _strength(away_cn)
         odds = _calc_odds(home_str, away_str)
-        home_atk, home_def = _calc_attack_defense(home_str)
-        away_atk, away_def = _calc_attack_defense(away_str)
+
+        # 优先使用真实近期数据，否则用实力估算
+        try:
+            from team_stats import STATS_CACHE
+            from live_data import get_team_id
+            home_id = get_team_id(home_cn)
+            away_id = get_team_id(away_cn)
+            home_stats = STATS_CACHE.get(str(home_id)) if home_id else None
+            away_stats = STATS_CACHE.get(str(away_id)) if away_id else None
+            if home_stats and home_stats.get('matches', 0) >= 5:
+                home_atk = home_stats['goalsFor']
+                home_def = home_stats['goalsAgainst']
+            else:
+                home_atk, home_def = _calc_attack_defense(home_str)
+            if away_stats and away_stats.get('matches', 0) >= 5:
+                away_atk = away_stats['goalsFor']
+                away_def = away_stats['goalsAgainst']
+            else:
+                away_atk, away_def = _calc_attack_defense(away_str)
+        except Exception:
+            home_atk, home_def = _calc_attack_defense(home_str)
+            away_atk, away_def = _calc_attack_defense(away_str)
 
         # 让球盘口（基于实力差 or 真实赔率折算）
         diff = home_str - away_str
