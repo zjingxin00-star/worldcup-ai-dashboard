@@ -292,6 +292,29 @@ def save_odds_config(data):
     REAL_DETAILS_CACHE.clear()
 
 
+HANDICAP_ODDS_FILE = os.path.join(os.path.dirname(__file__), "handicap_odds.json")
+
+
+def save_handicap_odds(data):
+    """保存让球赔率"""
+    existing = load_handicap_odds()
+    existing.update(data)
+    with open(HANDICAP_ODDS_FILE, "w", encoding="utf-8") as f:
+        f.write(json.dumps(existing, ensure_ascii=False, indent=2))
+    ODDS_SOURCE = "manual"
+
+
+def load_handicap_odds():
+    """加载让球赔率"""
+    if os.path.exists(HANDICAP_ODDS_FILE):
+        try:
+            with open(HANDICAP_ODDS_FILE, "r", encoding="utf-8") as f:
+                return json.loads(f.read())
+        except Exception:
+            pass
+    return {}
+
+
 def apply_odds_to_matches(matches):
     """将手动配置的赔率注入比赛列表"""
     config = load_odds_config()

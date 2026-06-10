@@ -238,6 +238,19 @@ def save_odds_config(data: dict):
     return {"status": "ok", "saved": len(data)}
 
 
+@app.post("/api/admin/handicap-odds")
+def save_handicap_odds(data: dict):
+    """保存让球赔率 (POST body: {matchId: {handicapHomeOdds, handicapDrawOdds, handicapAwayOdds}})"""
+    db.save_handicap_odds(data)
+    return {"status": "ok", "saved": len(data)}
+
+
+@app.get("/api/admin/handicap-odds")
+def get_handicap_odds():
+    """获取让球赔率配置"""
+    return db.load_handicap_odds()
+
+
 @app.get("/admin", response_class=HTMLResponse)
 def admin_panel():
     """赔率管理页面 — 支持逐行录入 + 批量粘贴"""

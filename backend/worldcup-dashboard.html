@@ -1326,29 +1326,30 @@ function renderBettingPanel(match, detail) {
 function renderHandicapPanel(match, detail, probs) {
   var hc = parseHandicap(match.handicap);
   if (hc.value === 0) {
-    // 平手盘，无需额外分析
-    var hp = document.getElementById('handicapPanel');
-    if (hp) hp.innerHTML = '';
+    var hp0 = document.getElementById('handicapPanel');
+    if (hp0) hp0.innerHTML = '';
     return;
   }
 
+  // 加载已保存的让球赔率（从后端配置）
+  var savedOdds = match._handicapOdds || null;
+
   var hProbs = calcHandicapProbs(detail.homeAttack, detail.awayAttack, detail.homeDefense, detail.awayDefense, match.handicap);
 
-  // 估算让球赔率（基于普通赔率的转换）
-  // 让球赔率 ≈ 普通赔率 * 调整因子
+  // 赔率：优先用已保存的，否则估算
   var adj = 1 + Math.abs(hc.value) * 0.3;
-  var hOdds = hc.side === 'home' ? match.homeOdds * adj : match.homeOdds / adj;
-  var dOdds = 3.0 + Math.abs(hc.value) * 0.5;
-  var aOdds = hc.side === 'home' ? match.awayOdds / adj : match.awayOdds * adj;
+  var hOdds = savedOdds ? savedOdds.homeOdds : Math.max(1.15, Math.round((hc.side === 'home' ? match.homeOdds * adj : match.homeOdds / adj) * 100) / 100);
+  var dOdds = savedOdds ? savedOdds.drawOdds : (hc.value % 1 === 0 ? Math.round((3.0 + Math.abs(hc.value) * 0.5) * 100) / 100 : 0);
+  var aOdds = savedOdds ? savedOdds.awayOdds : Math.max(1.15, Math.round((hc.side === 'home' ? match.awayOdds / adj : match.awayOdds * adj) * 100) / 100);
+  if (hc.value % 1 !== 0 && !savedOdds) dOdds = 0; // 半球盘无平
 
-  hOdds = Math.max(1.15, Math.round(hOdds * 100) / 100);
-  aOdds = Math.max(1.15, Math.round(aOdds * 100) / 100);
-  dOdds = hc.value % 1 === 0 ? Math.round(dOdds * 100) / 100 : 0;
+  var sideLabel = hc.side === 'home' ? match.homeTeam : match.awayTeam;
+  var hcDesc = hc.value > 0 ? (sideLabel + ' -' + hc.value) : (sideLabel + ' +' + hc.value);
 
   var outcomes = [
-    { label: '让球主胜', aiProb: hProbs.homeWin, odds: hOdds },
-    { label: '让球平', aiProb: hProbs.draw, odds: dOdds || null },
-    { label: '让球客胜', aiProb: hProbs.awayWin, odds: aOdds }
+    { label: '让球主胜', aiProb: hProbs.homeWin, odds: hOdds, key: 'homeOdds' },
+    { label: '让球平',   aiProb: hProbs.draw,     odds: dOdds || null, key: 'drawOdds' },
+    { label: '让球客胜', aiProb: hProbs.awayWin,  odds: aOdds, key: 'awayOdds' }
   ];
 
   var hKelly = [];
@@ -1357,6 +1358,7 @@ function renderHandicapPanel(match, detail, probs) {
     if (!o.odds) continue;
     var k = calcKelly(o.aiProb, o.odds);
     k.label = o.label;
+    k.key = o.key;
     hKelly.push(k);
   }
 
@@ -1365,20 +1367,18 @@ function renderHandicapPanel(match, detail, probs) {
     if (hKelly[j].recommendation !== 'pass') { hasHRec = true; break; }
   }
 
-  var sideLabel = hc.side === 'home' ? match.homeTeam : match.awayTeam;
-  var hcVal = hc.value;
-  if (hc.side === 'away') hcVal = -hcVal;
-  var hcDesc = hcVal > 0 ? (sideLabel + ' -' + hc.value) : (sideLabel + ' +' + hc.value);
-
   var hRows = '';
   for (var m = 0; m < hKelly.length; m++) {
     var hk = hKelly[m];
     var edgeCls = hk.edge > 0 ? 'edge-positive' : 'edge-negative';
+    var oddsCell = editMode
+      ? '<input id="hco' + match.id + '_' + hk.key + '" value="' + hk.odds.toFixed(2) + '" onchange="saveHandicapOdds(' + match.id + ')" size="5" style="width:60px;background:#1e293b;color:#fbbf24;border:1px solid #10b981;border-radius:3px;font-size:13px;padding:2px 4px;text-align:center">'
+      : ('<val class="font-mono">' + hk.odds.toFixed(2) + '</val>');
     hRows +=
       '<div class="odds-row' + (hk.recommendation !== 'pass' ? ' recommended' : '') + '">' +
         '<div class="odds-row-top">' +
           '<span class="odds-row-label">' + hk.label + '</span>' +
-          '<span class="odds-row-price">赔率 <val class="font-mono">' + hk.odds.toFixed(2) + '</val></span>' +
+          '<span class="odds-row-price">赔率 ' + oddsCell + '</span>' +
         '</div>' +
         '<div class="odds-row-stats">' +
           '<span>概率 <span class="val font-mono">' + (hk.aiProb * 100).toFixed(1) + '%</span></span>' +
@@ -1399,19 +1399,40 @@ function renderHandicapPanel(match, detail, probs) {
   }
 
   var hp = document.getElementById('handicapPanel');
-  if (!hp) {
-    hp = document.createElement('div');
-    hp.id = 'handicapPanel';
-    hp.className = 'slide-in';
-    document.getElementById('bettingContent').appendChild(hp);
-  }
   hp.innerHTML =
     '<div class="card" style="margin-top:12px;border:1px solid rgba(245,158,11,0.3)">' +
       '<h4 style="font-weight:600;color:#fbbf24;margin-bottom:8px">🎯 让球胜平负 | ' + hcDesc + '</h4>' +
-      '<p style="font-size:11px;color:#94a3b8;margin-bottom:8px">让球赔率为估算值，以竞彩官网为准</p>' +
+      '<p style="font-size:11px;color:#94a3b8;margin-bottom:8px">' + (editMode ? '点击赔率直接修改，输入后自动保存' : '让球赔率为估算值，点编辑赔率可修改') + '</p>' +
       hRows +
       '<div style="margin-top:10px;padding:10px;background:#1e293b;border-radius:8px">' + bestBet + '</div>' +
     '</div>';
+}
+
+function saveHandicapOdds(matchId) {
+  var homeOdds = parseFloat(document.getElementById('hco' + matchId + '_homeOdds').value) || 1;
+  var drawOdds = parseFloat(document.getElementById('hco' + matchId + '_drawOdds') ? (document.getElementById('hco' + matchId + '_drawOdds').value) : 0) || 0;
+  var awayOdds = parseFloat(document.getElementById('hco' + matchId + '_awayOdds').value) || 1;
+
+  var data = {};
+  data[matchId] = {
+    handicapHomeOdds: homeOdds,
+    handicapDrawOdds: drawOdds,
+    handicapAwayOdds: awayOdds
+  };
+  fetch(API_BASE + '/api/admin/handicap-odds', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).then(function(r) { return r.json(); }).then(function() {
+    // 更新内存
+    for (var i = 0; i < matchesData.length; i++) {
+      if (matchesData[i].id === matchId) {
+        matchesData[i]._handicapOdds = {homeOdds: homeOdds, drawOdds: drawOdds, awayOdds: awayOdds};
+        break;
+      }
+    }
+    if (currentMatchId === matchId) selectMatch(matchId);
+  });
 }
 
 /* ===================================================================
