@@ -784,6 +784,102 @@ function calcMatchProbs(homeAttack, awayAttack, homeDefense, awayDefense) {
 }
 
 /* ===================================================================
+ *  让球胜平负 (RQSPF) 概率计算
+ *
+ *  盘口示例: "阿根廷 -0.5" → home 让 0.5 球
+ *  解析盘口字符串，再用泊松比分矩阵计算让球后的胜平负概率
+ * =================================================================== */
+
+function parseHandicap(handicapStr) {
+  // 解析让球盘口，返回 {side: 'home'|'away', value: float}
+  // "阿根廷 -0.5" → {side:'home', value:0.5}
+  // "英格兰 -1" → {side:'home', value:1}
+  // "法国 -0.5/1" → {side:'home', value:0.75}
+  // "平手" → {side:'home', value:0}
+  // "巴西 +1" → {side:'away', value:1}
+  if (!handicapStr || handicapStr === '平手') return {side:'home', value:0};
+
+  var s = handicapStr.replace(/[^-+0-9./]/g, '').trim();
+  if (!s) return {side:'home', value:0};
+
+  // 确定方向
+  var side = 'home';
+  if (s.indexOf('+') >= 0) { side = 'away'; s = s.replace('+',''); }
+  else if (s.indexOf('-') >= 0) { s = s.replace('-',''); }
+  else {
+    // 检查原始字符串中是否有队名+盘口结构
+    // 格式如 "法国 -1" 表示法国让1球，即主队让球
+    // 格式如 "法国 +1" 表示法国受让1球
+    // 如果没有明确符号，默认为主队让球
+  }
+
+  // 解析数值（支持 "0.5/1" 格式 → 取中间值 0.75）
+  var val = 0;
+  if (s.indexOf('/') >= 0) {
+    var parts = s.split('/');
+    var v1 = parseFloat(parts[0]);
+    var v2 = parseFloat(parts[1]);
+    val = (v1 + v2) / 2;
+  } else {
+    val = parseFloat(s);
+  }
+  if (isNaN(val)) val = 0;
+
+  return {side: side, value: val};
+}
+
+function calcHandicapProbs(homeAttack, awayAttack, homeDefense, awayDefense, handicapStr) {
+  // 基于泊松分布计算让球后的胜平负概率
+  var hc = parseHandicap(handicapStr);
+  if (hc.value === 0) {
+    // 平手盘等同于普通胜平负
+    var base = calcMatchProbs(homeAttack, awayAttack, homeDefense, awayDefense);
+    return {homeWin: base.homeWin, draw: base.draw, awayWin: base.awayWin};
+  }
+
+  var lambdaHome = homeAttack * awayDefense / LEAGUE_AVG;
+  var lambdaAway = awayAttack * homeDefense / LEAGUE_AVG;
+
+  var homeProb = 0, drawProb = 0, awayProb = 0;
+
+  // 如果 side='home'（主队让球）:
+  //   让球主胜 = P(home - away > handicap)
+  //   让球平   = P(home - away == handicap)
+  //   让球客胜 = P(home - away < handicap)
+  // 如果 side='away'（客队让球/主队受让）:
+  //   让球主胜 = P(home - away > -handicap)
+  //   让球平   = P(home - away == -handicap)
+  //   让球客胜 = P(home - away < -handicap)
+
+  var threshold = hc.side === 'home' ? hc.value : -hc.value;
+
+  if (threshold === Math.floor(threshold)) {
+    // 整数盘口：可能平局
+    var target = Math.round(threshold);
+    for (var i = 0; i <= MAX_GOALS; i++) {
+      for (var j = 0; j <= MAX_GOALS; j++) {
+        var p = poissonProb(lambdaHome, i) * poissonProb(lambdaAway, j);
+        var diff = i - j;
+        if (diff > target) homeProb += p;
+        else if (diff === target) drawProb += p;
+        else awayProb += p;
+      }
+    }
+  } else {
+    // 半球盘口：无平局
+    for (var i2 = 0; i2 <= MAX_GOALS; i2++) {
+      for (var j2 = 0; j2 <= MAX_GOALS; j2++) {
+        var p2 = poissonProb(lambdaHome, i2) * poissonProb(lambdaAway, j2);
+        if ((i2 - j2) > threshold) homeProb += p2;
+        else awayProb += p2;
+      }
+    }
+  }
+
+  return {homeWin: homeProb, draw: drawProb, awayWin: awayProb};
+}
+
+/* ===================================================================
  *  凯利公式 —— 最优投注决策引擎
  *
  *  凯利比例: f = (p * b - q) / b
@@ -916,7 +1012,8 @@ function selectMatch(id) {
       '<div id="aiPanel" class="slide-in"></div>';
     bc.innerHTML =
       '<div id="oddsCompare" class="slide-in"></div>' +
-      '<div id="kellyDecision" class="slide-in"></div>';
+      '<div id="kellyDecision" class="slide-in"></div>' +
+      '<div id="handicapPanel" class="slide-in"></div>';
 
     renderMatchHeader(match);
     renderLineupPanel('home', match.homeTeam, match.homeFlag, detail.homeLineup, detail.homeInjuries);
@@ -1216,11 +1313,105 @@ function renderBettingPanel(match, detail) {
 
   el('kellyDecision').innerHTML =
     '<div class="card kelly-card' + (hasRecommendation ? ' recommend' : '') + '">' +
-      '<h4 style="font-weight:600;color:var(--white);margin-bottom:12px;">📈 凯利公式决策</h4>' +
+      '<h4 style="font-weight:600;color:var(--white);margin-bottom:12px;">📈 凯利公式决策 (胜平负)</h4>' +
       decisionHtml +
     '</div>';
+
+  // 让球胜平负分析
+  renderHandicapPanel(match, detail, probs);
   });  // end of Promise.all for kelly
   });  // end of fetchPredict.then()
+}
+
+function renderHandicapPanel(match, detail, probs) {
+  var hc = parseHandicap(match.handicap);
+  if (hc.value === 0) {
+    // 平手盘，无需额外分析
+    var hp = document.getElementById('handicapPanel');
+    if (hp) hp.innerHTML = '';
+    return;
+  }
+
+  var hProbs = calcHandicapProbs(detail.homeAttack, detail.awayAttack, detail.homeDefense, detail.awayDefense, match.handicap);
+
+  // 估算让球赔率（基于普通赔率的转换）
+  // 让球赔率 ≈ 普通赔率 * 调整因子
+  var adj = 1 + Math.abs(hc.value) * 0.3;
+  var hOdds = hc.side === 'home' ? match.homeOdds * adj : match.homeOdds / adj;
+  var dOdds = 3.0 + Math.abs(hc.value) * 0.5;
+  var aOdds = hc.side === 'home' ? match.awayOdds / adj : match.awayOdds * adj;
+
+  hOdds = Math.max(1.15, Math.round(hOdds * 100) / 100);
+  aOdds = Math.max(1.15, Math.round(aOdds * 100) / 100);
+  dOdds = hc.value % 1 === 0 ? Math.round(dOdds * 100) / 100 : 0;
+
+  var outcomes = [
+    { label: '让球主胜', aiProb: hProbs.homeWin, odds: hOdds },
+    { label: '让球平', aiProb: hProbs.draw, odds: dOdds || null },
+    { label: '让球客胜', aiProb: hProbs.awayWin, odds: aOdds }
+  ];
+
+  var hKelly = [];
+  for (var i = 0; i < outcomes.length; i++) {
+    var o = outcomes[i];
+    if (!o.odds) continue;
+    var k = calcKelly(o.aiProb, o.odds);
+    k.label = o.label;
+    hKelly.push(k);
+  }
+
+  var hasHRec = false;
+  for (var j = 0; j < hKelly.length; j++) {
+    if (hKelly[j].recommendation !== 'pass') { hasHRec = true; break; }
+  }
+
+  var sideLabel = hc.side === 'home' ? match.homeTeam : match.awayTeam;
+  var hcVal = hc.value;
+  if (hc.side === 'away') hcVal = -hcVal;
+  var hcDesc = hcVal > 0 ? (sideLabel + ' -' + hc.value) : (sideLabel + ' +' + hc.value);
+
+  var hRows = '';
+  for (var m = 0; m < hKelly.length; m++) {
+    var hk = hKelly[m];
+    var edgeCls = hk.edge > 0 ? 'edge-positive' : 'edge-negative';
+    hRows +=
+      '<div class="odds-row' + (hk.recommendation !== 'pass' ? ' recommended' : '') + '">' +
+        '<div class="odds-row-top">' +
+          '<span class="odds-row-label">' + hk.label + '</span>' +
+          '<span class="odds-row-price">赔率 <val class="font-mono">' + hk.odds.toFixed(2) + '</val></span>' +
+        '</div>' +
+        '<div class="odds-row-stats">' +
+          '<span>概率 <span class="val font-mono">' + (hk.aiProb * 100).toFixed(1) + '%</span></span>' +
+          '<span class="' + edgeCls + ' font-mono" style="font-weight:600">Edge: ' + (hk.edge > 0 ? '+' : '') + (hk.edge * 100).toFixed(1) + '%</span>' +
+        '</div>' +
+      '</div>';
+  }
+
+  var bestBet = '';
+  if (hasHRec) {
+    for (var n = 0; n < hKelly.length; n++) {
+      if (hKelly[n].recommendation !== 'pass') {
+        bestBet += '<div style="color:#34d399;font-weight:600;font-size:14px;margin-bottom:4px">✅ 推荐: ' + hKelly[n].label + ' (仓位 ' + (hKelly[n].stake * 100).toFixed(1) + '%)</div>';
+      }
+    }
+  } else {
+    bestBet = '<div style="color:#94a3b8;font-size:13px">🚫 让球盘口无正期望值</div>';
+  }
+
+  var hp = document.getElementById('handicapPanel');
+  if (!hp) {
+    hp = document.createElement('div');
+    hp.id = 'handicapPanel';
+    hp.className = 'slide-in';
+    document.getElementById('bettingContent').appendChild(hp);
+  }
+  hp.innerHTML =
+    '<div class="card" style="margin-top:12px;border:1px solid rgba(245,158,11,0.3)">' +
+      '<h4 style="font-weight:600;color:#fbbf24;margin-bottom:8px">🎯 让球胜平负 | ' + hcDesc + '</h4>' +
+      '<p style="font-size:11px;color:#94a3b8;margin-bottom:8px">让球赔率为估算值，以竞彩官网为准</p>' +
+      hRows +
+      '<div style="margin-top:10px;padding:10px;background:#1e293b;border-radius:8px">' + bestBet + '</div>' +
+    '</div>';
 }
 
 /* ===================================================================
