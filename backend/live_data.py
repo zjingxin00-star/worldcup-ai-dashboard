@@ -41,8 +41,8 @@ def _set_cache(key, data, ttl_sec=3600):
     _cache_ttl[key] = time.time() + ttl_sec
 
 
-def _api_request(endpoint, params=None):
-    """调用 API-Football 接口"""
+def _api_request(endpoint, params=None, retries=2):
+    """调用 API-Football 接口（带重试）"""
     if not API_FOOTBALL_KEY:
         return None
 
@@ -51,22 +51,28 @@ def _api_request(endpoint, params=None):
         qs = "&".join(f"{k}={v}" for k, v in params.items())
         url += "?" + qs
 
-    try:
-        req = Request(url, headers={
-            "x-apisports-key": API_FOOTBALL_KEY,
-            "Accept": "application/json"
-        })
-        with urlopen(req, timeout=15) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-        # API-Football 免费套餐有速率限制，每次请求后稍等
-        time.sleep(0.3)
-        # 检查 quota
-        remaining = resp.headers.get("x-ratelimit-requests-remaining", "?")
-        print(f"  [API] {endpoint} -> {len(data.get('response', []))} results (quota: {remaining})")
-        return data
-    except Exception as e:
-        print(f"  [API] {endpoint} FAILED: {e}")
-        return None
+    for attempt in range(retries + 1):
+        try:
+            req = Request(url, headers={
+                "x-apisports-key": API_FOOTBALL_KEY,
+                "Accept": "application/json"
+            })
+            with urlopen(req, timeout=15) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+            time.sleep(0.5)
+            remaining = resp.headers.get("x-ratelimit-requests-remaining", "?")
+            if attempt > 0:
+                print(f"  [API] {endpoint} -> OK on retry {attempt} (quota: {remaining})")
+            return data
+        except Exception as e:
+            if attempt < retries and "429" in str(e):
+                wait = (attempt + 1) * 5
+                print(f"  [API] {endpoint} 429 rate limited, waiting {wait}s...")
+                time.sleep(wait)
+                continue
+            if attempt == retries:
+                print(f"  [API] {endpoint} FAILED: {e}")
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -135,16 +141,26 @@ def fetch_real_h2h(team1_id, team2_id, limit=5):
         return None
 
     results = []
-    for f in data["response"][:limit]:
+    for f in data["response"]:
+        # 过滤：只保留已完成的比赛（比分不为 null）
+        home_goals = f["goals"]["home"]
+        away_goals = f["goals"]["away"]
+        if home_goals is None or away_goals is None:
+            continue  # 跳过未进行的比赛
+        # 跳过未来日期的比赛
+        if f["fixture"]["date"][:10] > time.strftime("%Y-%m-%d"):
+            continue
         results.append({
             "date": f["fixture"]["date"][:10],
-            "homeScore": f["goals"]["home"] or 0,
-            "awayScore": f["goals"]["away"] or 0,
+            "homeScore": home_goals,
+            "awayScore": away_goals,
             "venue": f["fixture"]["venue"]["name"] if f["fixture"]["venue"].get("name") else "未知",
             "competition": f["league"]["name"],
             "homeTeam": f["teams"]["home"]["name"],
             "awayTeam": f["teams"]["away"]["name"],
         })
+        if len(results) >= limit:
+            break
 
     _set_cache(cache_key, results, 86400)
     return results
@@ -284,11 +300,12 @@ TEAM_IDS = {
     "挪威": 1090,     "乌克兰": 772,   "捷克": 770,
     "匈牙利": 769,    "斯洛伐克": 773, "罗马尼亚": 774,
     "希腊": 1117,
-    # 以下待搜索（受 API 限流影响，分批补全）
-    "意大利": 0, "瑞典": 0, "埃及": 0,
-    "秘鲁": 0, "智利": 0, "巴拉圭": 0,
-    "尼日利亚": 0, "科特迪瓦": 0, "阿尔及利亚": 0,
-    "南非": 0, "苏格兰": 0, "爱尔兰": 0, "芬兰": 0,
+    # 第二批搜索到的新 ID
+    "阿尔及利亚": 1532, "尼日利亚": 19,   "科特迪瓦": 1501,
+    "苏格兰": 1108,     "南非": 1531,     "巴拉圭": 2380,
+    "秘鲁": 30,         "瑞典": 5,        "埃及": 32,
+    # 以下待搜索
+    "意大利": 0, "智利": 0, "爱尔兰": 0, "芬兰": 0,
     "冰岛": 0, "波黑": 0, "北爱尔兰": 0, "巴拿马": 0,
     "牙买加": 0, "新西兰": 0, "海地": 0, "库拉索": 0,
     "阿联酋": 0, "伊拉克": 0, "委内瑞拉": 0, "玻利维亚": 0,
