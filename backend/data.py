@@ -244,10 +244,8 @@ def get_matches():
 
 
 def get_detail(match_id):
-    # 真实数据：先查缓存，没有则按需加载（带 API 富化）
+    # 真实数据：每次都重新加载（确保 H2H 数据库更新生效，不做持久缓存）
     if DATA_SOURCE == "real":
-        if match_id in REAL_DETAILS_CACHE:
-            return REAL_DETAILS_CACHE[match_id]
         try:
             from scraper import get_match_detail
             detail = get_match_detail(match_id)
