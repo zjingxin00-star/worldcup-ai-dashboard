@@ -11,8 +11,20 @@ GitHub: https://github.com/openfootball/worldcup.json
 
 import json
 import math
+import os
 import random
 from urllib.request import urlopen, Request
+
+# 加载手工采集的真实 H2H 数据库
+_H2H_DB = {}
+_H2H_DB_PATH = os.path.join(os.path.dirname(__file__), "h2h_database.json")
+try:
+    if os.path.exists(_H2H_DB_PATH):
+        with open(_H2H_DB_PATH, "r", encoding="utf-8") as f:
+            _H2H_DB = json.loads(f.read())
+        print(f"[scraper] Loaded H2H database: {len(_H2H_DB)} matchups")
+except Exception as e:
+    print(f"[scraper] H2H database load failed: {e}")
 
 OPENFOOTBALL_URL = (
     "https://raw.githubusercontent.com/openfootball/worldcup.json/"
@@ -462,10 +474,16 @@ def enrich_match_detail(match_id: int) -> dict | None:
 
     updates = {}
     try:
-        # H2H
-        h2h = fetch_real_h2h(home_id, away_id, 5)
-        if h2h:
+        # H2H: 优先查手工数据库，其次 API-Football
+        h2h_key1 = home_cn + "-" + away_cn
+        h2h_key2 = away_cn + "-" + home_cn
+        h2h = _H2H_DB.get(h2h_key1) or _H2H_DB.get(h2h_key2)
+        if h2h and len(h2h) >= 1:
             updates["h2h"] = h2h
+        elif has_api_key():
+            api_h2h = fetch_real_h2h(home_id, away_id, 5)
+            if api_h2h and len(api_h2h) >= 1:
+                updates["h2h"] = api_h2h
 
         # 伤停
         injuries_home = fetch_real_injuries(home_id)
