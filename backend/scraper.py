@@ -569,10 +569,23 @@ def get_match_detail(match_id: int) -> dict | None:
         "awayDefense": base["awayDefense"],
     }
 
-    # 尝试注入真实数据
-    enriched = enrich_match_detail(match_id)
+    # 尝试注入真实数据（用原始 ID 或队名查找）
+    enriched = enrich_match_detail(orig_id)
+    if not enriched:
+        # 如果原始 ID 查找失败，直接用队名查找
+        enriched = _enrich_by_teams(base["homeTeam"], base["awayTeam"])
     if enriched:
         detail.update(enriched)
 
     return detail
+
+
+def _enrich_by_teams(home_cn, away_cn):
+    """直接用队名从 H2H 数据库查找"""
+    key1 = home_cn + "-" + away_cn
+    key2 = away_cn + "-" + home_cn
+    h2h = _H2H_DB.get(key1) or _H2H_DB.get(key2)
+    if h2h and len(h2h) >= 1:
+        return {"h2h": h2h}
+    return None
 
