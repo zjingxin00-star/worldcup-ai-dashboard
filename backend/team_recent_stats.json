@@ -59,9 +59,9 @@
   },
   "6": {
     "team": "巴西",
-    "matches": 8,
-    "goalsFor": 1.62,
-    "goalsAgainst": 1.0,
+    "matches": 10,
+    "goalsFor": 1.9,
+    "goalsAgainst": 1.3,
     "recent": [
       {
         "date": "2024-07-07",
@@ -755,29 +755,1683 @@
   },
   "12": {
     "team": "日本",
-    "matches": 2,
-    "goalsFor": 5.5,
-    "goalsAgainst": 0.5,
+    "matches": 10,
+    "goalsFor": 3.3,
+    "goalsAgainst": 1.2,
     "recent": [
       {
-        "date": "2024-01-09",
+        "date": "2024-02-03",
+        "home": "Iran",
+        "away": "Japan",
+        "homeId": 22,
+        "awayId": 12,
+        "homeGoals": 2,
+        "awayGoals": 1,
+        "league": "Asian Cup"
+      },
+      {
+        "date": "2024-01-31",
+        "home": "Bahrain",
+        "away": "Japan",
+        "homeId": 1547,
+        "awayId": 12,
+        "homeGoals": 1,
+        "awayGoals": 3,
+        "league": "Asian Cup"
+      },
+      {
+        "date": "2024-01-24",
         "home": "Japan",
-        "away": "Jordan",
+        "away": "Indonesia",
         "homeId": 12,
-        "awayId": 1548,
-        "homeGoals": 6,
+        "awayId": 1571,
+        "homeGoals": 3,
+        "awayGoals": 1,
+        "league": "Asian Cup"
+      },
+      {
+        "date": "2024-01-19",
+        "home": "Iraq",
+        "away": "Japan",
+        "homeId": 1567,
+        "awayId": 12,
+        "homeGoals": 2,
+        "awayGoals": 1,
+        "league": "Asian Cup"
+      },
+      {
+        "date": "2024-01-14",
+        "home": "Japan",
+        "away": "Vietnam",
+        "homeId": 12,
+        "awayId": 1542,
+        "homeGoals": 4,
+        "awayGoals": 2,
+        "league": "Asian Cup"
+      }
+    ]
+  },
+  "7": {
+    "team": "乌拉圭",
+    "matches": 10,
+    "goalsFor": 1.7,
+    "goalsAgainst": 0.7,
+    "recent": [
+      {
+        "date": "2024-09-01",
+        "home": "Uruguay",
+        "away": "Guatemala",
+        "homeId": 7,
+        "awayId": 5161,
+        "homeGoals": 1,
         "awayGoals": 1,
         "league": "Friendlies"
       },
       {
-        "date": "2024-01-01",
-        "home": "Japan",
-        "away": "Thailand",
-        "homeId": 12,
-        "awayId": 1564,
-        "homeGoals": 5,
+        "date": "2024-07-14",
+        "home": "Canada",
+        "away": "Uruguay",
+        "homeId": 5529,
+        "awayId": 7,
+        "homeGoals": 2,
+        "awayGoals": 2,
+        "league": "Copa America"
+      },
+      {
+        "date": "2024-07-11",
+        "home": "Uruguay",
+        "away": "Colombia",
+        "homeId": 7,
+        "awayId": 8,
+        "homeGoals": 0,
+        "awayGoals": 1,
+        "league": "Copa America"
+      },
+      {
+        "date": "2024-07-07",
+        "home": "Uruguay",
+        "away": "Brazil",
+        "homeId": 7,
+        "awayId": 6,
+        "homeGoals": 0,
+        "awayGoals": 0,
+        "league": "Copa America"
+      },
+      {
+        "date": "2024-07-02",
+        "home": "USA",
+        "away": "Uruguay",
+        "homeId": 2384,
+        "awayId": 7,
+        "homeGoals": 0,
+        "awayGoals": 1,
+        "league": "Copa America"
+      }
+    ]
+  },
+  "17": {
+    "team": "韩国",
+    "matches": 10,
+    "goalsFor": 2.3,
+    "goalsAgainst": 1.0,
+    "recent": [
+      {
+        "date": "2024-02-06",
+        "home": "Jordan",
+        "away": "South Korea",
+        "homeId": 1548,
+        "awayId": 17,
+        "homeGoals": 2,
+        "awayGoals": 0,
+        "league": "Asian Cup"
+      },
+      {
+        "date": "2024-02-02",
+        "home": "Australia",
+        "away": "South Korea",
+        "homeId": 20,
+        "awayId": 17,
+        "homeGoals": 1,
+        "awayGoals": 2,
+        "league": "Asian Cup"
+      },
+      {
+        "date": "2024-01-30",
+        "home": "Saudi Arabia",
+        "away": "South Korea",
+        "homeId": 23,
+        "awayId": 17,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "Asian Cup"
+      },
+      {
+        "date": "2024-01-25",
+        "home": "South Korea",
+        "away": "Malaysia",
+        "homeId": 17,
+        "awayId": 1538,
+        "homeGoals": 3,
+        "awayGoals": 3,
+        "league": "Asian Cup"
+      },
+      {
+        "date": "2024-01-20",
+        "home": "Jordan",
+        "away": "South Korea",
+        "homeId": 1548,
+        "awayId": 17,
+        "homeGoals": 2,
+        "awayGoals": 2,
+        "league": "Asian Cup"
+      }
+    ]
+  },
+  "31": {
+    "team": "摩洛哥",
+    "matches": 10,
+    "goalsFor": 1.7,
+    "goalsAgainst": 0.7,
+    "recent": [
+      {
+        "date": "2025-08-30",
+        "home": "Madagascar",
+        "away": "Morocco",
+        "homeId": 1490,
+        "awayId": 31,
+        "homeGoals": 2,
+        "awayGoals": 3,
+        "league": "African Nations Championship"
+      },
+      {
+        "date": "2025-08-26",
+        "home": "Morocco",
+        "away": "Senegal",
+        "homeId": 31,
+        "awayId": 13,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "African Nations Championship"
+      },
+      {
+        "date": "2025-08-22",
+        "home": "Tanzania",
+        "away": "Morocco",
+        "homeId": 1489,
+        "awayId": 31,
+        "homeGoals": 0,
+        "awayGoals": 1,
+        "league": "African Nations Championship"
+      },
+      {
+        "date": "2025-08-17",
+        "home": "Congo DR",
+        "away": "Morocco",
+        "homeId": 1508,
+        "awayId": 31,
+        "homeGoals": 1,
+        "awayGoals": 3,
+        "league": "African Nations Championship"
+      },
+      {
+        "date": "2025-08-14",
+        "home": "Morocco",
+        "away": "Zambia",
+        "homeId": 31,
+        "awayId": 1507,
+        "homeGoals": 3,
+        "awayGoals": 1,
+        "league": "African Nations Championship"
+      }
+    ]
+  },
+  "13": {
+    "team": "塞内加尔",
+    "matches": 10,
+    "goalsFor": 1.3,
+    "goalsAgainst": 0.4,
+    "recent": [
+      {
+        "date": "2025-08-29",
+        "home": "Sudan",
+        "away": "Senegal",
+        "homeId": 1510,
+        "awayId": 13,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "African Nations Championship"
+      },
+      {
+        "date": "2025-08-26",
+        "home": "Morocco",
+        "away": "Senegal",
+        "homeId": 31,
+        "awayId": 13,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "African Nations Championship"
+      },
+      {
+        "date": "2025-08-23",
+        "home": "Uganda",
+        "away": "Senegal",
+        "homeId": 1519,
+        "awayId": 13,
+        "homeGoals": 0,
+        "awayGoals": 1,
+        "league": "African Nations Championship"
+      },
+      {
+        "date": "2025-08-19",
+        "home": "Sudan",
+        "away": "Senegal",
+        "homeId": 1510,
+        "awayId": 13,
+        "homeGoals": 0,
+        "awayGoals": 0,
+        "league": "African Nations Championship"
+      },
+      {
+        "date": "2025-08-12",
+        "home": "Senegal",
+        "away": "Congo",
+        "homeId": 13,
+        "awayId": 1517,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "African Nations Championship"
+      }
+    ]
+  },
+  "21": {
+    "team": "丹麦",
+    "matches": 10,
+    "goalsFor": 2.4,
+    "goalsAgainst": 1.3,
+    "recent": [
+      {
+        "date": "2026-03-31",
+        "home": "Czech Republic",
+        "away": "Denmark",
+        "homeId": 770,
+        "awayId": 21,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2026-03-26",
+        "home": "Denmark",
+        "away": "FYR Macedonia",
+        "homeId": 21,
+        "awayId": 1105,
+        "homeGoals": 4,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-18",
+        "home": "Scotland",
+        "away": "Denmark",
+        "homeId": 1108,
+        "awayId": 21,
+        "homeGoals": 4,
+        "awayGoals": 2,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-15",
+        "home": "Denmark",
+        "away": "Belarus",
+        "homeId": 21,
+        "awayId": 1100,
+        "homeGoals": 2,
+        "awayGoals": 2,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-12",
+        "home": "Denmark",
+        "away": "Greece",
+        "homeId": 21,
+        "awayId": 1117,
+        "homeGoals": 3,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      }
+    ]
+  },
+  "15": {
+    "team": "瑞士",
+    "matches": 10,
+    "goalsFor": 1.9,
+    "goalsAgainst": 1.0,
+    "recent": [
+      {
+        "date": "2025-11-18",
+        "home": "Kosovo",
+        "away": "Switzerland",
+        "homeId": 1111,
+        "awayId": 15,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-15",
+        "home": "Switzerland",
+        "away": "Sweden",
+        "homeId": 15,
+        "awayId": 5,
+        "homeGoals": 4,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-13",
+        "home": "Slovenia",
+        "away": "Switzerland",
+        "homeId": 1091,
+        "awayId": 15,
+        "homeGoals": 0,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-10",
+        "home": "Sweden",
+        "away": "Switzerland",
+        "homeId": 5,
+        "awayId": 15,
+        "homeGoals": 0,
+        "awayGoals": 2,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-09-08",
+        "home": "Switzerland",
+        "away": "Slovenia",
+        "homeId": 15,
+        "awayId": 1091,
+        "homeGoals": 3,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      }
+    ]
+  },
+  "24": {
+    "team": "波兰",
+    "matches": 10,
+    "goalsFor": 1.8,
+    "goalsAgainst": 1.1,
+    "recent": [
+      {
+        "date": "2026-03-31",
+        "home": "Sweden",
+        "away": "Poland",
+        "homeId": 5,
+        "awayId": 24,
+        "homeGoals": 3,
+        "awayGoals": 2,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2026-03-26",
+        "home": "Poland",
+        "away": "Albania",
+        "homeId": 24,
+        "awayId": 778,
+        "homeGoals": 2,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-17",
+        "home": "Malta",
+        "away": "Poland",
+        "homeId": 1112,
+        "awayId": 24,
+        "homeGoals": 2,
+        "awayGoals": 3,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-14",
+        "home": "Poland",
+        "away": "Netherlands",
+        "homeId": 24,
+        "awayId": 1118,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-12",
+        "home": "Lithuania",
+        "away": "Poland",
+        "homeId": 1097,
+        "awayId": 24,
+        "homeGoals": 0,
+        "awayGoals": 2,
+        "league": "World Cup - Qualification Europe"
+      }
+    ]
+  },
+  "14": {
+    "team": "塞尔维亚",
+    "matches": 10,
+    "goalsFor": 1.2,
+    "goalsAgainst": 1.1,
+    "recent": [
+      {
+        "date": "2025-11-16",
+        "home": "Serbia",
+        "away": "Latvia",
+        "homeId": 14,
+        "awayId": 1092,
+        "homeGoals": 2,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-13",
+        "home": "England",
+        "away": "Serbia",
+        "homeId": 10,
+        "awayId": 14,
+        "homeGoals": 2,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-14",
+        "home": "Andorra",
+        "away": "Serbia",
+        "homeId": 1110,
+        "awayId": 14,
+        "homeGoals": 1,
+        "awayGoals": 3,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-11",
+        "home": "Serbia",
+        "away": "Albania",
+        "homeId": 14,
+        "awayId": 778,
+        "homeGoals": 0,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-09-09",
+        "home": "Serbia",
+        "away": "England",
+        "homeId": 14,
+        "awayId": 10,
+        "homeGoals": 0,
+        "awayGoals": 5,
+        "league": "World Cup - Qualification Europe"
+      }
+    ]
+  },
+  "20": {
+    "team": "澳大利亚",
+    "matches": 10,
+    "goalsFor": 1.7,
+    "goalsAgainst": 0.6,
+    "recent": [
+      {
+        "date": "2024-02-02",
+        "home": "Australia",
+        "away": "South Korea",
+        "homeId": 20,
+        "awayId": 17,
+        "homeGoals": 1,
+        "awayGoals": 2,
+        "league": "Asian Cup"
+      },
+      {
+        "date": "2024-01-28",
+        "home": "Australia",
+        "away": "Indonesia",
+        "homeId": 20,
+        "awayId": 1571,
+        "homeGoals": 4,
+        "awayGoals": 0,
+        "league": "Asian Cup"
+      },
+      {
+        "date": "2024-01-23",
+        "home": "Australia",
+        "away": "Uzbekistan",
+        "homeId": 20,
+        "awayId": 1568,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "Asian Cup"
+      },
+      {
+        "date": "2024-01-18",
+        "home": "Syria",
+        "away": "Australia",
+        "homeId": 1565,
+        "awayId": 20,
+        "homeGoals": 0,
+        "awayGoals": 1,
+        "league": "Asian Cup"
+      },
+      {
+        "date": "2024-01-13",
+        "home": "Australia",
+        "away": "India",
+        "homeId": 20,
+        "awayId": 1537,
+        "homeGoals": 2,
+        "awayGoals": 0,
+        "league": "Asian Cup"
+      }
+    ]
+  },
+  "22": {
+    "team": "伊朗",
+    "matches": 10,
+    "goalsFor": 1.1,
+    "goalsAgainst": 1.2,
+    "recent": [
+      {
+        "date": "2022-11-29",
+        "home": "Iran",
+        "away": "USA",
+        "homeId": 22,
+        "awayId": 2384,
+        "homeGoals": 0,
+        "awayGoals": 1,
+        "league": "World Cup"
+      },
+      {
+        "date": "2022-11-25",
+        "home": "Wales",
+        "away": "Iran",
+        "homeId": 767,
+        "awayId": 22,
+        "homeGoals": 0,
+        "awayGoals": 2,
+        "league": "World Cup"
+      },
+      {
+        "date": "2022-11-21",
+        "home": "England",
+        "away": "Iran",
+        "homeId": 10,
+        "awayId": 22,
+        "homeGoals": 6,
+        "awayGoals": 2,
+        "league": "World Cup"
+      },
+      {
+        "date": "2022-11-10",
+        "home": "Iran",
+        "away": "Nicaragua",
+        "homeId": 22,
+        "awayId": 5164,
+        "homeGoals": 1,
         "awayGoals": 0,
         "league": "Friendlies"
+      },
+      {
+        "date": "2022-09-27",
+        "home": "Senegal",
+        "away": "Iran",
+        "homeId": 13,
+        "awayId": 22,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "Friendlies"
+      }
+    ]
+  },
+  "23": {
+    "team": "沙特阿拉伯",
+    "matches": 10,
+    "goalsFor": 1.9,
+    "goalsAgainst": 1.1,
+    "recent": [
+      {
+        "date": "2024-12-31",
+        "home": "Oman",
+        "away": "Saudi Arabia",
+        "homeId": 1552,
+        "awayId": 23,
+        "homeGoals": 2,
+        "awayGoals": 1,
+        "league": "Gulf Cup of Nations"
+      },
+      {
+        "date": "2024-12-28",
+        "home": "Iraq",
+        "away": "Saudi Arabia",
+        "homeId": 1567,
+        "awayId": 23,
+        "homeGoals": 1,
+        "awayGoals": 3,
+        "league": "Gulf Cup of Nations"
+      },
+      {
+        "date": "2024-12-25",
+        "home": "Yemen",
+        "away": "Saudi Arabia",
+        "homeId": 1550,
+        "awayId": 23,
+        "homeGoals": 2,
+        "awayGoals": 3,
+        "league": "Gulf Cup of Nations"
+      },
+      {
+        "date": "2024-12-22",
+        "home": "Saudi Arabia",
+        "away": "Bahrain",
+        "homeId": 23,
+        "awayId": 1547,
+        "homeGoals": 2,
+        "awayGoals": 3,
+        "league": "Gulf Cup of Nations"
+      },
+      {
+        "date": "2024-12-17",
+        "home": "Saudi Arabia",
+        "away": "Trinidad and Tobago",
+        "homeId": 23,
+        "awayId": 5168,
+        "homeGoals": 3,
+        "awayGoals": 1,
+        "league": "Friendlies"
+      }
+    ]
+  },
+  "1569": {
+    "team": "卡塔尔",
+    "matches": 10,
+    "goalsFor": 1.7,
+    "goalsAgainst": 0.9,
+    "recent": [
+      {
+        "date": "2024-12-27",
+        "home": "Kuwait",
+        "away": "Qatar",
+        "homeId": 1570,
+        "awayId": 1569,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "Gulf Cup of Nations"
+      },
+      {
+        "date": "2024-12-24",
+        "home": "Oman",
+        "away": "Qatar",
+        "homeId": 1552,
+        "awayId": 1569,
+        "homeGoals": 2,
+        "awayGoals": 1,
+        "league": "Gulf Cup of Nations"
+      },
+      {
+        "date": "2024-12-21",
+        "home": "Qatar",
+        "away": "United Arab Emirates",
+        "homeId": 1569,
+        "awayId": 1563,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "Gulf Cup of Nations"
+      },
+      {
+        "date": "2024-02-10",
+        "home": "Jordan",
+        "away": "Qatar",
+        "homeId": 1548,
+        "awayId": 1569,
+        "homeGoals": 1,
+        "awayGoals": 3,
+        "league": "Asian Cup"
+      },
+      {
+        "date": "2024-02-07",
+        "home": "Iran",
+        "away": "Qatar",
+        "homeId": 22,
+        "awayId": 1569,
+        "homeGoals": 2,
+        "awayGoals": 3,
+        "league": "Asian Cup"
+      }
+    ]
+  },
+  "2382": {
+    "team": "厄瓜多尔",
+    "matches": 10,
+    "goalsFor": 1.5,
+    "goalsAgainst": 1.0,
+    "recent": [
+      {
+        "date": "2024-07-05",
+        "home": "Argentina",
+        "away": "Ecuador",
+        "homeId": 26,
+        "awayId": 2382,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "Copa America"
+      },
+      {
+        "date": "2024-07-01",
+        "home": "Mexico",
+        "away": "Ecuador",
+        "homeId": 16,
+        "awayId": 2382,
+        "homeGoals": 0,
+        "awayGoals": 0,
+        "league": "Copa America"
+      },
+      {
+        "date": "2024-06-27",
+        "home": "Ecuador",
+        "away": "Jamaica",
+        "homeId": 2382,
+        "awayId": 2385,
+        "homeGoals": 3,
+        "awayGoals": 1,
+        "league": "Copa America"
+      },
+      {
+        "date": "2024-06-22",
+        "home": "Ecuador",
+        "away": "Venezuela",
+        "homeId": 2382,
+        "awayId": 2379,
+        "homeGoals": 1,
+        "awayGoals": 2,
+        "league": "Copa America"
+      },
+      {
+        "date": "2024-06-16",
+        "home": "Ecuador",
+        "away": "Honduras",
+        "homeId": 2382,
+        "awayId": 4672,
+        "homeGoals": 2,
+        "awayGoals": 1,
+        "league": "Friendlies"
+      }
+    ]
+  },
+  "1530": {
+    "team": "喀麦隆",
+    "matches": 10,
+    "goalsFor": 1.1,
+    "goalsAgainst": 0.6,
+    "recent": [
+      {
+        "date": "2025-11-13",
+        "home": "Cameroon",
+        "away": "Congo DR",
+        "homeId": 1530,
+        "awayId": 1508,
+        "homeGoals": 0,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Africa"
+      },
+      {
+        "date": "2025-10-13",
+        "home": "Cameroon",
+        "away": "Angola",
+        "homeId": 1530,
+        "awayId": 1529,
+        "homeGoals": 0,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Africa"
+      },
+      {
+        "date": "2025-10-08",
+        "home": "Mauritius",
+        "away": "Cameroon",
+        "homeId": 1497,
+        "awayId": 1530,
+        "homeGoals": 0,
+        "awayGoals": 2,
+        "league": "World Cup - Qualification Africa"
+      },
+      {
+        "date": "2025-09-09",
+        "home": "Cape Verde Islands",
+        "away": "Cameroon",
+        "homeId": 1533,
+        "awayId": 1530,
+        "homeGoals": 1,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Africa"
+      },
+      {
+        "date": "2025-09-04",
+        "home": "Cameroon",
+        "away": "Eswatini",
+        "homeId": 1530,
+        "awayId": 2995,
+        "homeGoals": 3,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Africa"
+      }
+    ]
+  },
+  "1504": {
+    "team": "加纳",
+    "matches": 10,
+    "goalsFor": 2.3,
+    "goalsAgainst": 0.8,
+    "recent": [
+      {
+        "date": "2025-10-12",
+        "home": "Ghana",
+        "away": "Comoros",
+        "homeId": 1504,
+        "awayId": 1524,
+        "homeGoals": 1,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Africa"
+      },
+      {
+        "date": "2025-10-08",
+        "home": "Central African Republic",
+        "away": "Ghana",
+        "homeId": 1527,
+        "awayId": 1504,
+        "homeGoals": 0,
+        "awayGoals": 5,
+        "league": "World Cup - Qualification Africa"
+      },
+      {
+        "date": "2025-09-08",
+        "home": "Ghana",
+        "away": "Mali",
+        "homeId": 1504,
+        "awayId": 1500,
+        "homeGoals": 1,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Africa"
+      },
+      {
+        "date": "2025-09-04",
+        "home": "Chad",
+        "away": "Ghana",
+        "homeId": 1523,
+        "awayId": 1504,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Africa"
+      },
+      {
+        "date": "2025-03-24",
+        "home": "Madagascar",
+        "away": "Ghana",
+        "homeId": 1490,
+        "awayId": 1504,
+        "homeGoals": 0,
+        "awayGoals": 3,
+        "league": "World Cup - Qualification Africa"
+      }
+    ]
+  },
+  "28": {
+    "team": "突尼斯",
+    "matches": 10,
+    "goalsFor": 1.7,
+    "goalsAgainst": 0.0,
+    "recent": [
+      {
+        "date": "2025-10-13",
+        "home": "Tunisia",
+        "away": "Namibia",
+        "homeId": 28,
+        "awayId": 1493,
+        "homeGoals": 3,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Africa"
+      },
+      {
+        "date": "2025-10-10",
+        "home": "Sao Tome and Principe",
+        "away": "Tunisia",
+        "homeId": 1494,
+        "awayId": 28,
+        "homeGoals": 0,
+        "awayGoals": 6,
+        "league": "World Cup - Qualification Africa"
+      },
+      {
+        "date": "2025-09-08",
+        "home": "Equatorial Guinea",
+        "away": "Tunisia",
+        "homeId": 1521,
+        "awayId": 28,
+        "homeGoals": 0,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Africa"
+      },
+      {
+        "date": "2025-09-04",
+        "home": "Tunisia",
+        "away": "Liberia",
+        "homeId": 28,
+        "awayId": 1525,
+        "homeGoals": 3,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Africa"
+      },
+      {
+        "date": "2025-03-24",
+        "home": "Tunisia",
+        "away": "Malawi",
+        "homeId": 28,
+        "awayId": 1495,
+        "homeGoals": 2,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Africa"
+      }
+    ]
+  },
+  "29": {
+    "team": "哥斯达黎加",
+    "matches": 10,
+    "goalsFor": 1.1,
+    "goalsAgainst": 0.8,
+    "recent": [
+      {
+        "date": "2024-11-19",
+        "home": "Panama",
+        "away": "Costa Rica",
+        "homeId": 11,
+        "awayId": 29,
+        "homeGoals": 2,
+        "awayGoals": 2,
+        "league": "CONCACAF Nations League"
+      },
+      {
+        "date": "2024-11-15",
+        "home": "Costa Rica",
+        "away": "Panama",
+        "homeId": 29,
+        "awayId": 11,
+        "homeGoals": 0,
+        "awayGoals": 1,
+        "league": "CONCACAF Nations League"
+      },
+      {
+        "date": "2024-10-16",
+        "home": "Costa Rica",
+        "away": "Guatemala",
+        "homeId": 29,
+        "awayId": 5161,
+        "homeGoals": 3,
+        "awayGoals": 0,
+        "league": "CONCACAF Nations League"
+      },
+      {
+        "date": "2024-10-11",
+        "home": "Suriname",
+        "away": "Costa Rica",
+        "homeId": 8171,
+        "awayId": 29,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "CONCACAF Nations League"
+      },
+      {
+        "date": "2024-09-10",
+        "home": "Guatemala",
+        "away": "Costa Rica",
+        "homeId": 5161,
+        "awayId": 29,
+        "homeGoals": 0,
+        "awayGoals": 0,
+        "league": "CONCACAF Nations League"
+      }
+    ]
+  },
+  "767": {
+    "team": "威尔士",
+    "matches": 10,
+    "goalsFor": 2.6,
+    "goalsAgainst": 1.3,
+    "recent": [
+      {
+        "date": "2026-03-26",
+        "home": "Wales",
+        "away": "Bosnia & Herzegovina",
+        "homeId": 767,
+        "awayId": 1113,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-18",
+        "home": "Wales",
+        "away": "FYR Macedonia",
+        "homeId": 767,
+        "awayId": 1105,
+        "homeGoals": 7,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-15",
+        "home": "Liechtenstein",
+        "away": "Wales",
+        "homeId": 1107,
+        "awayId": 767,
+        "homeGoals": 0,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-13",
+        "home": "Wales",
+        "away": "Belgium",
+        "homeId": 767,
+        "awayId": 1,
+        "homeGoals": 2,
+        "awayGoals": 4,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-09-04",
+        "home": "Kazakhstan",
+        "away": "Wales",
+        "homeId": 1095,
+        "awayId": 767,
+        "homeGoals": 0,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      }
+    ]
+  },
+  "8": {
+    "team": "哥伦比亚",
+    "matches": 10,
+    "goalsFor": 2.4,
+    "goalsAgainst": 0.6,
+    "recent": [
+      {
+        "date": "2024-07-15",
+        "home": "Argentina",
+        "away": "Colombia",
+        "homeId": 26,
+        "awayId": 8,
+        "homeGoals": 1,
+        "awayGoals": 0,
+        "league": "Copa America"
+      },
+      {
+        "date": "2024-07-11",
+        "home": "Uruguay",
+        "away": "Colombia",
+        "homeId": 7,
+        "awayId": 8,
+        "homeGoals": 0,
+        "awayGoals": 1,
+        "league": "Copa America"
+      },
+      {
+        "date": "2024-07-06",
+        "home": "Colombia",
+        "away": "Panama",
+        "homeId": 8,
+        "awayId": 11,
+        "homeGoals": 5,
+        "awayGoals": 0,
+        "league": "Copa America"
+      },
+      {
+        "date": "2024-07-03",
+        "home": "Brazil",
+        "away": "Colombia",
+        "homeId": 6,
+        "awayId": 8,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "Copa America"
+      },
+      {
+        "date": "2024-06-29",
+        "home": "Colombia",
+        "away": "Costa Rica",
+        "homeId": 8,
+        "awayId": 29,
+        "homeGoals": 3,
+        "awayGoals": 0,
+        "league": "Copa America"
+      }
+    ]
+  },
+  "775": {
+    "team": "奥地利",
+    "matches": 10,
+    "goalsFor": 2.3,
+    "goalsAgainst": 0.7,
+    "recent": [
+      {
+        "date": "2025-11-18",
+        "home": "Austria",
+        "away": "Bosnia & Herzegovina",
+        "homeId": 775,
+        "awayId": 1113,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-15",
+        "home": "Cyprus",
+        "away": "Austria",
+        "homeId": 1106,
+        "awayId": 775,
+        "homeGoals": 0,
+        "awayGoals": 2,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-12",
+        "home": "Romania",
+        "away": "Austria",
+        "homeId": 774,
+        "awayId": 775,
+        "homeGoals": 1,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-09",
+        "home": "Austria",
+        "away": "San Marino",
+        "homeId": 775,
+        "awayId": 1115,
+        "homeGoals": 10,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-09-09",
+        "home": "Bosnia & Herzegovina",
+        "away": "Austria",
+        "homeId": 1113,
+        "awayId": 775,
+        "homeGoals": 1,
+        "awayGoals": 2,
+        "league": "World Cup - Qualification Europe"
+      }
+    ]
+  },
+  "777": {
+    "team": "土耳其",
+    "matches": 10,
+    "goalsFor": 2.5,
+    "goalsAgainst": 1.3,
+    "recent": [
+      {
+        "date": "2026-03-31",
+        "home": "Kosovo",
+        "away": "Türkiye",
+        "homeId": 1111,
+        "awayId": 777,
+        "homeGoals": 0,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2026-03-26",
+        "home": "Türkiye",
+        "away": "Romania",
+        "homeId": 777,
+        "awayId": 774,
+        "homeGoals": 1,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-18",
+        "home": "Spain",
+        "away": "Türkiye",
+        "homeId": 9,
+        "awayId": 777,
+        "homeGoals": 2,
+        "awayGoals": 2,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-15",
+        "home": "Türkiye",
+        "away": "Bulgaria",
+        "homeId": 777,
+        "awayId": 1103,
+        "homeGoals": 2,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-14",
+        "home": "Türkiye",
+        "away": "Georgia",
+        "homeId": 777,
+        "awayId": 1104,
+        "homeGoals": 4,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      }
+    ]
+  },
+  "1090": {
+    "team": "挪威",
+    "matches": 10,
+    "goalsFor": 4.6,
+    "goalsAgainst": 0.6,
+    "recent": [
+      {
+        "date": "2025-11-16",
+        "home": "Italy",
+        "away": "Norway",
+        "homeId": 768,
+        "awayId": 1090,
+        "homeGoals": 1,
+        "awayGoals": 4,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-13",
+        "home": "Norway",
+        "away": "Estonia",
+        "homeId": 1090,
+        "awayId": 1101,
+        "homeGoals": 4,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-11",
+        "home": "Norway",
+        "away": "Israel",
+        "homeId": 1090,
+        "awayId": 1116,
+        "homeGoals": 5,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-09-09",
+        "home": "Norway",
+        "away": "Moldova",
+        "homeId": 1090,
+        "awayId": 1114,
+        "homeGoals": 11,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-06-09",
+        "home": "Estonia",
+        "away": "Norway",
+        "homeId": 1101,
+        "awayId": 1090,
+        "homeGoals": 0,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      }
+    ]
+  },
+  "772": {
+    "team": "乌克兰",
+    "matches": 6,
+    "goalsFor": 1.67,
+    "goalsAgainst": 0.67,
+    "recent": [
+      {
+        "date": "2022-09-27",
+        "home": "Ukraine",
+        "away": "Scotland",
+        "homeId": 772,
+        "awayId": 1108,
+        "homeGoals": 0,
+        "awayGoals": 0,
+        "league": "UEFA Nations League"
+      },
+      {
+        "date": "2022-09-24",
+        "home": "Armenia",
+        "away": "Ukraine",
+        "homeId": 1094,
+        "awayId": 772,
+        "homeGoals": 0,
+        "awayGoals": 5,
+        "league": "UEFA Nations League"
+      },
+      {
+        "date": "2022-09-21",
+        "home": "Scotland",
+        "away": "Ukraine",
+        "homeId": 1108,
+        "awayId": 772,
+        "homeGoals": 3,
+        "awayGoals": 0,
+        "league": "UEFA Nations League"
+      },
+      {
+        "date": "2022-06-14",
+        "home": "Ukraine",
+        "away": "Rep. Of Ireland",
+        "homeId": 772,
+        "awayId": 776,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "UEFA Nations League"
+      },
+      {
+        "date": "2022-06-11",
+        "home": "Ukraine",
+        "away": "Armenia",
+        "homeId": 772,
+        "awayId": 1094,
+        "homeGoals": 3,
+        "awayGoals": 0,
+        "league": "UEFA Nations League"
+      }
+    ]
+  },
+  "770": {
+    "team": "捷克",
+    "matches": 10,
+    "goalsFor": 2.1,
+    "goalsAgainst": 1.1,
+    "recent": [
+      {
+        "date": "2026-03-31",
+        "home": "Czech Republic",
+        "away": "Denmark",
+        "homeId": 770,
+        "awayId": 21,
+        "homeGoals": 1,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2026-03-26",
+        "home": "Czech Republic",
+        "away": "Rep. Of Ireland",
+        "homeId": 770,
+        "awayId": 776,
+        "homeGoals": 2,
+        "awayGoals": 2,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-17",
+        "home": "Czech Republic",
+        "away": "Gibraltar",
+        "homeId": 770,
+        "awayId": 1093,
+        "homeGoals": 6,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-12",
+        "home": "Faroe Islands",
+        "away": "Czech Republic",
+        "homeId": 1098,
+        "awayId": 770,
+        "homeGoals": 2,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-09",
+        "home": "Czech Republic",
+        "away": "Croatia",
+        "homeId": 770,
+        "awayId": 3,
+        "homeGoals": 0,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      }
+    ]
+  },
+  "769": {
+    "team": "匈牙利",
+    "matches": 10,
+    "goalsFor": 1.3,
+    "goalsAgainst": 2.1,
+    "recent": [
+      {
+        "date": "2025-11-16",
+        "home": "Hungary",
+        "away": "Rep. Of Ireland",
+        "homeId": 769,
+        "awayId": 776,
+        "homeGoals": 2,
+        "awayGoals": 3,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-13",
+        "home": "Armenia",
+        "away": "Hungary",
+        "homeId": 1094,
+        "awayId": 769,
+        "homeGoals": 0,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-14",
+        "home": "Portugal",
+        "away": "Hungary",
+        "homeId": 27,
+        "awayId": 769,
+        "homeGoals": 2,
+        "awayGoals": 2,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-11",
+        "home": "Hungary",
+        "away": "Armenia",
+        "homeId": 769,
+        "awayId": 1094,
+        "homeGoals": 2,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-09-09",
+        "home": "Hungary",
+        "away": "Portugal",
+        "homeId": 769,
+        "awayId": 27,
+        "homeGoals": 2,
+        "awayGoals": 3,
+        "league": "World Cup - Qualification Europe"
+      }
+    ]
+  },
+  "773": {
+    "team": "斯洛伐克",
+    "matches": 10,
+    "goalsFor": 1.0,
+    "goalsAgainst": 1.3,
+    "recent": [
+      {
+        "date": "2026-03-26",
+        "home": "Slovakia",
+        "away": "Kosovo",
+        "homeId": 773,
+        "awayId": 1111,
+        "homeGoals": 3,
+        "awayGoals": 4,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-17",
+        "home": "Germany",
+        "away": "Slovakia",
+        "homeId": 25,
+        "awayId": 773,
+        "homeGoals": 6,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-14",
+        "home": "Slovakia",
+        "away": "Northern Ireland",
+        "homeId": 773,
+        "awayId": 771,
+        "homeGoals": 1,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-13",
+        "home": "Slovakia",
+        "away": "Luxembourg",
+        "homeId": 773,
+        "awayId": 1102,
+        "homeGoals": 2,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-10",
+        "home": "Northern Ireland",
+        "away": "Slovakia",
+        "homeId": 771,
+        "awayId": 773,
+        "homeGoals": 2,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      }
+    ]
+  },
+  "774": {
+    "team": "罗马尼亚",
+    "matches": 10,
+    "goalsFor": 2.3,
+    "goalsAgainst": 1.2,
+    "recent": [
+      {
+        "date": "2026-03-26",
+        "home": "Türkiye",
+        "away": "Romania",
+        "homeId": 777,
+        "awayId": 774,
+        "homeGoals": 1,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-18",
+        "home": "Romania",
+        "away": "San Marino",
+        "homeId": 774,
+        "awayId": 1115,
+        "homeGoals": 7,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-15",
+        "home": "Bosnia & Herzegovina",
+        "away": "Romania",
+        "homeId": 1113,
+        "awayId": 774,
+        "homeGoals": 3,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-12",
+        "home": "Romania",
+        "away": "Austria",
+        "homeId": 774,
+        "awayId": 775,
+        "homeGoals": 1,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-09-09",
+        "home": "Cyprus",
+        "away": "Romania",
+        "homeId": 1106,
+        "awayId": 774,
+        "homeGoals": 2,
+        "awayGoals": 2,
+        "league": "World Cup - Qualification Europe"
+      }
+    ]
+  },
+  "1117": {
+    "team": "希腊",
+    "matches": 10,
+    "goalsFor": 1.5,
+    "goalsAgainst": 1.6,
+    "recent": [
+      {
+        "date": "2025-11-18",
+        "home": "Belarus",
+        "away": "Greece",
+        "homeId": 1100,
+        "awayId": 1117,
+        "homeGoals": 0,
+        "awayGoals": 0,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-11-15",
+        "home": "Greece",
+        "away": "Scotland",
+        "homeId": 1117,
+        "awayId": 1108,
+        "homeGoals": 3,
+        "awayGoals": 2,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-12",
+        "home": "Denmark",
+        "away": "Greece",
+        "homeId": 21,
+        "awayId": 1117,
+        "homeGoals": 3,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-10-09",
+        "home": "Scotland",
+        "away": "Greece",
+        "homeId": 1108,
+        "awayId": 1117,
+        "homeGoals": 3,
+        "awayGoals": 1,
+        "league": "World Cup - Qualification Europe"
+      },
+      {
+        "date": "2025-09-08",
+        "home": "Greece",
+        "away": "Denmark",
+        "homeId": 1117,
+        "awayId": 21,
+        "homeGoals": 0,
+        "awayGoals": 3,
+        "league": "World Cup - Qualification Europe"
       }
     ]
   }

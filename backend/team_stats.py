@@ -28,9 +28,9 @@ def fetch_team_recent(team_id, team_name, count=10):
     if cache_key in STATS_CACHE and STATS_CACHE[cache_key].get("matches", 0) >= count:
         return STATS_CACHE[cache_key]
 
-    # 搜索最近几个赛季的 fixtures
+    # 搜索最近几个赛季的 fixtures（扩展到更早赛季覆盖更多比赛）
     all_fixtures = []
-    for season in [2026, 2025, 2024]:
+    for season in [2026, 2025, 2024, 2023, 2022]:
         if len(all_fixtures) >= count:
             break
         try:
