@@ -129,7 +129,10 @@
     {"date":"1992-10-20","homeScore":3,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
     {"date":"1988-07-10","homeScore":2,"awayScore":2,"venue":"友谊赛","competition":"Friendly"}
   ],
-  "加拿大-波黑": [],
+  "加拿大-波黑": [
+    {"date":"2019-06-11","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
+    {"date":"2013-11-18","homeScore":1,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
+  ],
   "卡塔尔-瑞士": [
     {"date":"2018-11-14","homeScore":0,"awayScore":1,"venue":"友谊赛","competition":"Friendly"}
   ],
@@ -260,5 +263,6 @@
     {"date":"2007-06-05","homeScore":4,"awayScore":3,"venue":"友谊赛","competition":"Friendly"},
     {"date":"1992-10-14","homeScore":1,"awayScore":1,"venue":"友谊赛","competition":"Friendly"}
   ],
-  "法国-伊拉克": []
-}
+  "法国-伊拉克": [],
+  "海地-苏格兰": [],
+  "德国-库拉索": []
