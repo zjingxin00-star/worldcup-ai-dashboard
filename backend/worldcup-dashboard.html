@@ -837,9 +837,9 @@ function parseHandicap(handicapStr, homeTeam, awayTeam) {
   return {side: side, value: val};
 }
 
-function calcHandicapProbs(homeAttack, awayAttack, homeDefense, awayDefense, handicapStr) {
+function calcHandicapProbs(homeAttack, awayAttack, homeDefense, awayDefense, handicapStr, homeTeam, awayTeam) {
   // 基于泊松分布计算让球后的胜平负概率
-  var hc = parseHandicap(handicapStr);
+  var hc = parseHandicap(handicapStr, homeTeam, awayTeam);
   if (hc.value === 0) {
     // 平手盘等同于普通胜平负
     var base = calcMatchProbs(homeAttack, awayAttack, homeDefense, awayDefense);
@@ -1343,7 +1343,7 @@ function renderHandicapPanel(match, detail, probs) {
   // 加载已保存的让球赔率（从后端配置）
   var savedOdds = match._handicapOdds || null;
 
-  var hProbs = calcHandicapProbs(detail.homeAttack, detail.awayAttack, detail.homeDefense, detail.awayDefense, match.handicap);
+  var hProbs = calcHandicapProbs(detail.homeAttack, detail.awayAttack, detail.homeDefense, detail.awayDefense, match.handicap, match.homeTeam, match.awayTeam);
 
   // 赔率：优先用已保存的，否则估算
   var adj = 1 + Math.abs(hc.value) * 0.3;
