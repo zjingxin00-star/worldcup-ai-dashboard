@@ -20,13 +20,23 @@
     "handicapAwayOdds": 1.83
   },
   "5": {
-    "handicapHomeOdds": 2.02,
-    "handicapDrawOdds": 3.82,
-    "handicapAwayOdds": 2.69
+    "handicapHomeOdds": 2.08,
+    "handicapDrawOdds": 3.75,
+    "handicapAwayOdds": 2.62
   },
   "6": {
-    "handicapHomeOdds": 2.75,
+    "handicapHomeOdds": 2.7,
     "handicapDrawOdds": 3.26,
-    "handicapAwayOdds": 2.18
+    "handicapAwayOdds": 2.21
+  },
+  "7": {
+    "handicapHomeOdds": 2.71,
+    "handicapDrawOdds": 3.4,
+    "handicapAwayOdds": 2.15
+  },
+  "8": {
+    "handicapHomeOdds": 1,
+    "handicapDrawOdds": 3.5,
+    "handicapAwayOdds": 1.17
   }
 }

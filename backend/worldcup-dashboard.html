@@ -790,40 +790,49 @@ function calcMatchProbs(homeAttack, awayAttack, homeDefense, awayDefense) {
  *  解析盘口字符串，再用泊松比分矩阵计算让球后的胜平负概率
  * =================================================================== */
 
-function parseHandicap(handicapStr) {
+function parseHandicap(handicapStr, homeTeam, awayTeam) {
   // 解析让球盘口，返回 {side: 'home'|'away', value: float}
-  // "阿根廷 -0.5" → {side:'home', value:0.5}
-  // "英格兰 -1" → {side:'home', value:1}
-  // "法国 -0.5/1" → {side:'home', value:0.75}
-  // "平手" → {side:'home', value:0}
-  // "巴西 +1" → {side:'away', value:1}
+  // "阿根廷 -0.5" → 阿根廷是主队 → {side:'home', value:0.5}
+  // "苏格兰 -1"  → 苏格兰是客队 → {side:'away', value:1}
+  // "平手"       → {side:'home', value:0}
   if (!handicapStr || handicapStr === '平手') return {side:'home', value:0};
 
-  var s = handicapStr.replace(/[^-+0-9./]/g, '').trim();
-  if (!s) return {side:'home', value:0};
+  // 提取队名和盘口值
+  // 格式: "某队 -0.5" 或 "某队 +1" 或 "某队 -0.5/1"
+  var match = handicapStr.match(/^(.+?)\s*([-+])\s*([\d./]+)$/);
+  if (!match) return {side:'home', value:0};
 
-  // 确定方向
-  var side = 'home';
-  if (s.indexOf('+') >= 0) { side = 'away'; s = s.replace('+',''); }
-  else if (s.indexOf('-') >= 0) { s = s.replace('-',''); }
-  else {
-    // 检查原始字符串中是否有队名+盘口结构
-    // 格式如 "法国 -1" 表示法国让1球，即主队让球
-    // 格式如 "法国 +1" 表示法国受让1球
-    // 如果没有明确符号，默认为主队让球
-  }
+  var teamInStr = match[1].trim();
+  var sign = match[2];
+  var valStr = match[3];
 
-  // 解析数值（支持 "0.5/1" 格式 → 取中间值 0.75）
+  // 解析数值
   var val = 0;
-  if (s.indexOf('/') >= 0) {
-    var parts = s.split('/');
-    var v1 = parseFloat(parts[0]);
-    var v2 = parseFloat(parts[1]);
-    val = (v1 + v2) / 2;
+  if (valStr.indexOf('/') >= 0) {
+    var parts = valStr.split('/');
+    val = (parseFloat(parts[0]) + parseFloat(parts[1])) / 2;
   } else {
-    val = parseFloat(s);
+    val = parseFloat(valStr);
   }
   if (isNaN(val)) val = 0;
+
+  // 判断让球方是主队还是客队
+  var side = 'home';
+  if (sign === '-') {
+    // 队名 -X 表示该队让球
+    // 如果队名匹配客队 → away让球
+    if (awayTeam && teamInStr.indexOf(awayTeam) >= 0) {
+      side = 'away';
+    }
+    // 如果队名匹配主队 → home让球 (默认)
+  } else if (sign === '+') {
+    // 队名 +X 表示该队受让，对方让球
+    if (homeTeam && teamInStr.indexOf(homeTeam) >= 0) {
+      side = 'away';  // 主队受让 → 客队让球
+    } else {
+      side = 'home';  // 客队受让 → 主队让球
+    }
+  }
 
   return {side: side, value: val};
 }
@@ -1324,7 +1333,7 @@ function renderBettingPanel(match, detail) {
 }
 
 function renderHandicapPanel(match, detail, probs) {
-  var hc = parseHandicap(match.handicap);
+  var hc = parseHandicap(match.handicap, match.homeTeam, match.awayTeam);
   if (hc.value === 0) {
     var hp0 = document.getElementById('handicapPanel');
     if (hp0) hp0.innerHTML = '';
