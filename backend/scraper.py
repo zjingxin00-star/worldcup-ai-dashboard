@@ -477,9 +477,10 @@ def enrich_match_detail(match_id: int) -> dict | None:
         # H2H: 优先查手工数据库，其次 API-Football
         h2h_key1 = home_cn + "-" + away_cn
         h2h_key2 = away_cn + "-" + home_cn
-        h2h = _H2H_DB.get(h2h_key1) or _H2H_DB.get(h2h_key2)
-        if h2h and len(h2h) >= 1:
-            updates["h2h"] = h2h
+        if h2h_key1 in _H2H_DB:
+            updates["h2h"] = _H2H_DB[h2h_key1]
+        elif h2h_key2 in _H2H_DB:
+            updates["h2h"] = _H2H_DB[h2h_key2]
         elif has_api_key():
             api_h2h = fetch_real_h2h(home_id, away_id, 5)
             if api_h2h and len(api_h2h) >= 1:
@@ -584,8 +585,10 @@ def _enrich_by_teams(home_cn, away_cn):
     """直接用队名从 H2H 数据库查找"""
     key1 = home_cn + "-" + away_cn
     key2 = away_cn + "-" + home_cn
-    h2h = _H2H_DB.get(key1) or _H2H_DB.get(key2)
-    if h2h and len(h2h) >= 1:
-        return {"h2h": h2h}
+    # 区分"找到但为空"和"未找到"
+    if key1 in _H2H_DB:
+        return {"h2h": _H2H_DB[key1]}
+    if key2 in _H2H_DB:
+        return {"h2h": _H2H_DB[key2]}
     return None
 
