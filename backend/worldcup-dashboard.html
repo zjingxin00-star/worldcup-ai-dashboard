@@ -1355,10 +1355,24 @@ function renderHandicapPanel(match, detail, probs) {
   var sideLabel = hc.side === 'home' ? match.homeTeam : match.awayTeam;
   var hcDesc = hc.value > 0 ? (sideLabel + ' -' + hc.value) : (sideLabel + ' +' + hc.value);
 
+  // 标签用队名（而非"让球主胜/客胜"）
+  var homeLabel, drawLabel, awayLabel;
+  if (hc.side === 'home') {
+    // 主队让球
+    homeLabel = match.homeTeam + ' 让球胜';
+    drawLabel = '让球平';
+    awayLabel = match.awayTeam + ' 受让胜';
+  } else {
+    // 客队让球 → 主队受让
+    homeLabel = match.homeTeam + ' 受让胜';
+    drawLabel = '让球平';
+    awayLabel = match.awayTeam + ' 让球胜';
+  }
+
   var outcomes = [
-    { label: '让球主胜', aiProb: hProbs.homeWin, odds: hOdds, key: 'homeOdds' },
-    { label: '让球平',   aiProb: hProbs.draw,     odds: dOdds || null, key: 'drawOdds' },
-    { label: '让球客胜', aiProb: hProbs.awayWin,  odds: aOdds, key: 'awayOdds' }
+    { label: homeLabel, aiProb: hProbs.homeWin, odds: hOdds, key: 'homeOdds' },
+    { label: drawLabel,  aiProb: hProbs.draw,    odds: dOdds || null, key: 'drawOdds' },
+    { label: awayLabel,  aiProb: hProbs.awayWin, odds: aOdds, key: 'awayOdds' }
   ];
 
   var hKelly = [];
