@@ -30,6 +30,11 @@ OPENFOOTBALL_URL = (
     "https://raw.githubusercontent.com/openfootball/worldcup.json/"
     "master/2026/worldcup.json"
 )
+# GitHub API 备用（raw 域名偶尔 DNS 失败）
+OPENFOOTBALL_FALLBACK = (
+    "https://api.github.com/repos/openfootball/worldcup.json/"
+    "contents/2026/worldcup.json"
+)
 
 # ---------------------------------------------------------------------------
 # 队名中英文映射 (48 支参赛队)
@@ -277,13 +282,24 @@ def fetch_real_matches(limit: int = 20) -> list:
     从 OpenFootball 抓取真实 2026 世界杯赛程
     返回前 `limit` 场比赛（按日期排序，优先小组赛第一轮）
     """
-    try:
-        req = Request(OPENFOOTBALL_URL, headers={"User-Agent": "WorldCupDashboard/1.0"})
-        with urlopen(req, timeout=15) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-    except Exception as e:
-        print(f"[scraper] OpenFootball 抓取失败: {e}")
+    raw_data = None
+    for url in [OPENFOOTBALL_URL, OPENFOOTBALL_FALLBACK]:
+        try:
+            hdrs = {"User-Agent": "WorldCupDashboard/1.0"}
+            if "api.github.com" in url:
+                hdrs["Accept"] = "application/vnd.github.v3.raw"
+            req = Request(url, headers=hdrs)
+            with urlopen(req, timeout=20) as resp:
+                raw_data = resp.read().decode("utf-8")
+            break
+        except Exception as e:
+            print(f"[scraper] {url[:50]}... failed: {e}")
+
+    if not raw_data:
+        print("[scraper] All OpenFootball sources failed")
         return []
+
+    data = json.loads(raw_data)
 
     matches_raw = data.get("matches", [])
     if not matches_raw:
