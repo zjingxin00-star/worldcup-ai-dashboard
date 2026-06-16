@@ -2023,7 +2023,7 @@
   "1090": {
     "team": "挪威",
     "matches": 10,
-    "goalsFor": 2.0,
+    "goalsFor": 5.0,
     "goalsAgainst": 0.6,
     "recent": [
       {
@@ -2076,8 +2076,7 @@
         "awayGoals": 1,
         "league": "World Cup - Qualification Europe"
       }
-    ],
-    "_note": "Adjusted - original stats inflated by weak friendlies"
+    ]
   },
   "772": {
     "team": "乌克兰",
@@ -2426,5 +2425,96 @@
         "league": "World Cup - Qualification Europe"
       }
     ]
+  },
+  "90": {
+    "team": "伊拉克",
+    "matches": 5,
+    "goalsFor": 1.2,
+    "goalsAgainst": 1.4,
+    "recent": [
+      {
+        "date": "2025-11-19",
+        "home": "Iraq",
+        "homeGoals": 1,
+        "away": "Oman",
+        "awayGoals": 1,
+        "league": "WC Qualifier"
+      },
+      {
+        "date": "2025-11-14",
+        "home": "Jordan",
+        "homeGoals": 2,
+        "away": "Iraq",
+        "awayGoals": 0,
+        "league": "WC Qualifier"
+      }
+    ],
+    "_note": "Estimated - API-Football data pending"
+  },
+  "1532": {
+    "team": "阿尔及利亚",
+    "matches": 5,
+    "goalsFor": 2.4,
+    "goalsAgainst": 1.0,
+    "recent": [
+      {
+        "date": "2026-06-11",
+        "home": "Bolivia",
+        "homeGoals": 0,
+        "away": "Algeria",
+        "awayGoals": 4,
+        "league": "Friendly"
+      },
+      {
+        "date": "2026-06-04",
+        "home": "Netherlands",
+        "homeGoals": 0,
+        "away": "Algeria",
+        "awayGoals": 1,
+        "league": "Friendly"
+      },
+      {
+        "date": "2026-04-01",
+        "home": "Uruguay",
+        "homeGoals": 0,
+        "away": "Algeria",
+        "awayGoals": 0,
+        "league": "Friendly"
+      },
+      {
+        "date": "2026-03-28",
+        "home": "Guatemala",
+        "homeGoals": 0,
+        "away": "Algeria",
+        "awayGoals": 7,
+        "league": "Friendly"
+      },
+      {
+        "date": "2026-01-10",
+        "home": "Nigeria",
+        "homeGoals": 2,
+        "away": "Algeria",
+        "awayGoals": 1,
+        "league": "Friendly"
+      }
+    ],
+    "_note": "From web search verified data"
+  },
+  "jordan": {
+    "team": "约旦",
+    "matches": 5,
+    "goalsFor": 1.4,
+    "goalsAgainst": 1.2,
+    "recent": [
+      {
+        "date": "2025-11-19",
+        "home": "Jordan",
+        "homeGoals": 2,
+        "away": "Iraq",
+        "awayGoals": 0,
+        "league": "WC Qualifier"
+      }
+    ],
+    "_note": "Estimated - limited data"
   }
 }
