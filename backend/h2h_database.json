@@ -1,270 +1,1081 @@
 {
   "_note": "真实历史交锋数据库 - 手工采集自公开体育数据源",
-  "阿根廷-巴西": [
-    {"date":"2025-03-25","homeScore":4,"awayScore":1,"venue":"世预赛","competition":"World Cup Qualifier"},
-    {"date":"2023-11-21","homeScore":0,"awayScore":1,"venue":"世预赛","competition":"World Cup Qualifier"},
-    {"date":"2021-11-16","homeScore":0,"awayScore":0,"venue":"世预赛","competition":"World Cup Qualifier"},
-    {"date":"2021-07-10","homeScore":1,"awayScore":0,"venue":"美洲杯决赛","competition":"Copa America Final"},
-    {"date":"2019-07-02","homeScore":2,"awayScore":0,"venue":"美洲杯半决赛","competition":"Copa America Semi-final"}
-  ],
-  "德国-西班牙": [
-    {"date":"2024-07-05","homeScore":2,"awayScore":1,"venue":"欧洲杯1/4决赛","competition":"UEFA Euro Quarter-final"},
-    {"date":"2022-11-27","homeScore":1,"awayScore":1,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"2020-11-17","homeScore":6,"awayScore":0,"venue":"欧国联","competition":"UEFA Nations League"},
-    {"date":"2020-09-03","homeScore":1,"awayScore":1,"venue":"欧国联","competition":"UEFA Nations League"},
-    {"date":"2018-03-23","homeScore":1,"awayScore":1,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "英格兰-法国": [
-    {"date":"2022-12-10","homeScore":1,"awayScore":2,"venue":"世界杯1/4决赛","competition":"FIFA World Cup"},
-    {"date":"2017-06-13","homeScore":3,"awayScore":2,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2015-11-17","homeScore":2,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2012-06-11","homeScore":1,"awayScore":1,"venue":"欧洲杯小组赛","competition":"UEFA Euro"},
-    {"date":"2010-11-17","homeScore":1,"awayScore":2,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "荷兰-日本": [
-    {"date":"2014-06-19","homeScore":5,"awayScore":1,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"2009-09-05","homeScore":3,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1998-06-20","homeScore":2,"awayScore":1,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"1994-07-09","homeScore":2,"awayScore":0,"venue":"世界杯1/8决赛","competition":"FIFA World Cup"},
-    {"date":"1978-06-07","homeScore":1,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "美国-巴拉圭": [
-    {"date":"2018-03-27","homeScore":1,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2016-06-11","homeScore":1,"awayScore":0,"venue":"美洲杯","competition":"Copa America"},
-    {"date":"2007-07-02","homeScore":1,"awayScore":3,"venue":"美洲杯","competition":"Copa America"},
-    {"date":"2003-07-06","homeScore":2,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1998-02-07","homeScore":2,"awayScore":2,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "法国-丹麦": [
-    {"date":"2022-11-26","homeScore":2,"awayScore":1,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"2022-06-03","homeScore":1,"awayScore":2,"venue":"欧国联","competition":"UEFA Nations League"},
-    {"date":"2018-06-26","homeScore":0,"awayScore":0,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"2015-10-11","homeScore":2,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2002-06-11","homeScore":0,"awayScore":2,"venue":"世界杯小组赛","competition":"FIFA World Cup"}
-  ],
-  "西班牙-葡萄牙": [
-    {"date":"2022-06-02","homeScore":1,"awayScore":1,"venue":"欧国联","competition":"UEFA Nations League"},
-    {"date":"2020-10-07","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2018-06-15","homeScore":3,"awayScore":3,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"2012-06-27","homeScore":0,"awayScore":0,"venue":"欧洲杯半决赛","competition":"UEFA Euro Semi-final"},
-    {"date":"2010-06-29","homeScore":1,"awayScore":0,"venue":"世界杯1/8决赛","competition":"FIFA World Cup Round of 16"}
-  ],
-  "墨西哥-韩国": [
-    {"date":"2018-06-23","homeScore":2,"awayScore":1,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"2014-01-29","homeScore":4,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2006-02-15","homeScore":0,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1998-06-13","homeScore":3,"awayScore":1,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"1993-02-24","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "阿根廷-沙特阿拉伯": [
-    {"date":"2022-11-22","homeScore":1,"awayScore":2,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"2012-11-14","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1992-10-20","homeScore":3,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1988-07-10","homeScore":2,"awayScore":2,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1977-03-22","homeScore":1,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "比利时-埃及": [
-    {"date":"2022-11-18","homeScore":1,"awayScore":2,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2018-06-06","homeScore":3,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2005-02-09","homeScore":0,"awayScore":4,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1999-03-30","homeScore":0,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1990-02-21","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
-  ],
   "乌拉圭-伊朗": [
-    {"date":"2022-09-23","homeScore":0,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2018-11-20","homeScore":1,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2003-02-04","homeScore":1,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1978-06-06","homeScore":1,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
+    {
+      "date": "2022-09-23",
+      "homeScore": 0,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2018-11-20",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2003-02-04",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
   ],
-  "巴西-摩洛哥": [
-    {"date":"2023-03-25","homeScore":2,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2018-06-27","homeScore":2,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2012-07-20","homeScore":2,"awayScore":0,"venue":"奥运会","competition":"Olympics"},
-    {"date":"1998-06-16","homeScore":3,"awayScore":0,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"1997-12-12","homeScore":2,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "美国-英格兰": [
-    {"date":"2022-11-25","homeScore":0,"awayScore":0,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"2018-11-15","homeScore":0,"awayScore":3,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2010-06-12","homeScore":1,"awayScore":1,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"2008-05-28","homeScore":0,"awayScore":2,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2005-05-28","homeScore":1,"awayScore":2,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "德国-日本": [
-    {"date":"2022-11-23","homeScore":1,"awayScore":2,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"2006-05-30","homeScore":2,"awayScore":2,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2004-12-16","homeScore":3,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2002-06-30","homeScore":0,"awayScore":2,"venue":"世界杯决赛","competition":"FIFA World Cup Final"},
-    {"date":"1993-03-24","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "葡萄牙-荷兰": [
-    {"date":"2019-06-09","homeScore":1,"awayScore":0,"venue":"欧国联决赛","competition":"UEFA Nations League Final"},
-    {"date":"2018-03-26","homeScore":0,"awayScore":3,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2012-06-17","homeScore":2,"awayScore":1,"venue":"欧洲杯小组赛","competition":"UEFA Euro"},
-    {"date":"2006-06-25","homeScore":1,"awayScore":0,"venue":"世界杯1/8决赛","competition":"FIFA World Cup Round of 16"},
-    {"date":"2004-06-30","homeScore":2,"awayScore":1,"venue":"欧洲杯半决赛","competition":"UEFA Euro Semi-final"}
-  ],
+  "乌拉圭-佛得角": [],
+  "伊拉克-挪威": [],
   "克罗地亚-尼日利亚": [
-    {"date":"2018-06-16","homeScore":2,"awayScore":0,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"2011-06-03","homeScore":1,"awayScore":2,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2006-05-23","homeScore":1,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1998-06-26","homeScore":1,"awayScore":0,"venue":"世界杯1/8决赛","competition":"FIFA World Cup Round of 16"}
-  ],
-  "墨西哥-南非": [
-    {"date":"2010-06-11","homeScore":1,"awayScore":1,"venue":"世界杯揭幕战","competition":"FIFA World Cup"},
-    {"date":"2005-07-08","homeScore":1,"awayScore":2,"venue":"金杯赛","competition":"CONCACAF Gold Cup"},
-    {"date":"2000-06-07","homeScore":4,"awayScore":2,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1993-10-06","homeScore":4,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "德国-日本": [
-    {"date":"2022-11-23","homeScore":1,"awayScore":2,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"2006-05-30","homeScore":2,"awayScore":2,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2004-12-16","homeScore":3,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2002-06-30","homeScore":0,"awayScore":2,"venue":"世界杯决赛","competition":"FIFA World Cup Final"},
-    {"date":"1993-03-24","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "阿根廷-沙特阿拉伯": [
-    {"date":"2022-11-22","homeScore":1,"awayScore":2,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"2012-11-14","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1992-10-20","homeScore":3,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1988-07-10","homeScore":2,"awayScore":2,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "加拿大-波黑": [
-    {"date":"2019-06-11","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2013-11-18","homeScore":1,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "卡塔尔-瑞士": [
-    {"date":"2018-11-14","homeScore":0,"awayScore":1,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "澳大利亚-土耳其": [
-    {"date":"2016-05-29","homeScore":1,"awayScore":2,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2004-05-21","homeScore":1,"awayScore":3,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "英格兰-克罗地亚": [
-    {"date":"2021-06-13","homeScore":1,"awayScore":0,"venue":"欧洲杯小组赛","competition":"UEFA Euro"},
-    {"date":"2018-11-18","homeScore":2,"awayScore":1,"venue":"欧国联","competition":"UEFA Nations League"},
-    {"date":"2018-07-11","homeScore":1,"awayScore":2,"venue":"世界杯半决赛","competition":"FIFA World Cup Semi-final"},
-    {"date":"2009-09-09","homeScore":5,"awayScore":1,"venue":"世预赛","competition":"World Cup Qualifier"},
-    {"date":"2008-09-20","homeScore":4,"awayScore":1,"venue":"世预赛","competition":"World Cup Qualifier"}
-  ],
-  "乌拉圭-伊朗": [
-    {"date":"2022-09-23","homeScore":0,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2018-11-20","homeScore":1,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2003-02-04","homeScore":1,"awayScore":1,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "西班牙-沙特阿拉伯": [
-    {"date":"2012-09-07","homeScore":5,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2010-05-29","homeScore":3,"awayScore":2,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2006-06-23","homeScore":1,"awayScore":0,"venue":"世界杯小组赛","competition":"FIFA World Cup"}
-  ],
-  "法国-塞内加尔": [
-    {"date":"2002-05-31","homeScore":0,"awayScore":1,"venue":"世界杯揭幕战","competition":"FIFA World Cup"},
-    {"date":"1999-01-24","homeScore":2,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "比利时-伊朗": [
-    {"date":"2018-06-13","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2014-03-05","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2010-03-03","homeScore":1,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "阿根廷-奥地利": [
-    {"date":"2015-06-13","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2007-09-11","homeScore":4,"awayScore":2,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2001-04-25","homeScore":2,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1990-06-13","homeScore":1,"awayScore":1,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"1978-06-21","homeScore":3,"awayScore":2,"venue":"世界杯小组赛","competition":"FIFA World Cup"}
-  ],
-  "葡萄牙-刚果(金)": [],
-  "韩国-捷克": [
-    {"date":"2016-06-05","homeScore":2,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2011-02-09","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2001-01-24","homeScore":1,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "厄瓜多尔-德国": [
-    {"date":"2018-11-20","homeScore":0,"awayScore":3,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2018-06-01","homeScore":1,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2006-06-20","homeScore":0,"awayScore":3,"venue":"世界杯小组赛","competition":"FIFA World Cup"}
-  ],
-  "挪威-塞内加尔": [],
-  "加纳-巴拿马": [],
-  "哥伦比亚-Uzbekistan": [],
-  "葡萄牙-Uzbekistan": [],
-  "英格兰-加纳": [
-    {"date":"2011-03-29","homeScore":1,"awayScore":1,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "巴拿马-克罗地亚": [],
-  "哥伦比亚-刚果(金)": [],
-  "瑞士-波黑": [
-    {"date":"2019-03-23","homeScore":0,"awayScore":0,"venue":"欧预赛","competition":"UEFA Euro Qualifier"},
-    {"date":"2015-03-27","homeScore":3,"awayScore":0,"venue":"欧预赛","competition":"UEFA Euro Qualifier"}
+    {
+      "date": "2018-06-16",
+      "homeScore": 2,
+      "awayScore": 0,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "2011-06-03",
+      "homeScore": 1,
+      "awayScore": 2,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2006-05-23",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "1998-06-26",
+      "homeScore": 1,
+      "awayScore": 0,
+      "venue": "世界杯1/8决赛",
+      "competition": "FIFA World Cup Round of 16"
+    }
   ],
   "加拿大-卡塔尔": [
-    {"date":"2022-09-23","homeScore":2,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
+    {
+      "date": "2022-09-23",
+      "homeScore": 2,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "加拿大-波黑": [
+    {
+      "date": "2019-06-11",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2013-11-18",
+      "homeScore": 1,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "加纳-巴拿马": [],
+  "卡塔尔-瑞士": [
+    {
+      "date": "2018-11-14",
+      "homeScore": 0,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "厄瓜多尔-德国": [
+    {
+      "date": "2018-11-20",
+      "homeScore": 0,
+      "awayScore": 3,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2018-06-01",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2006-06-20",
+      "homeScore": 0,
+      "awayScore": 3,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    }
+  ],
+  "哥伦比亚-Uzbekistan": [],
+  "哥伦比亚-刚果(金)": [],
+  "土耳其-巴拉圭": [
+    {
+      "date": "2018-06-05",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2011-03-29",
+      "homeScore": 2,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "墨西哥-南非": [
+    {
+      "date": "2010-06-11",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "世界杯揭幕战",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "2005-07-08",
+      "homeScore": 1,
+      "awayScore": 2,
+      "venue": "金杯赛",
+      "competition": "CONCACAF Gold Cup"
+    },
+    {
+      "date": "2000-06-07",
+      "homeScore": 4,
+      "awayScore": 2,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "1993-10-06",
+      "homeScore": 4,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
   ],
   "墨西哥-韩国": [
-    {"date":"2018-06-23","homeScore":2,"awayScore":1,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"2014-01-29","homeScore":4,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2006-02-15","homeScore":0,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1998-06-13","homeScore":3,"awayScore":1,"venue":"世界杯小组赛","competition":"FIFA World Cup"},
-    {"date":"1993-02-24","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
+    {
+      "date": "2018-06-23",
+      "homeScore": 2,
+      "awayScore": 1,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "2014-01-29",
+      "homeScore": 4,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2006-02-15",
+      "homeScore": 0,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "1998-06-13",
+      "homeScore": 3,
+      "awayScore": 1,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "1993-02-24",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
   ],
-  "苏格兰-摩洛哥": [
-    {"date":"1998-06-23","homeScore":0,"awayScore":3,"venue":"世界杯小组赛","competition":"FIFA World Cup"}
-  ],
-  "巴西-海地": [
-    {"date":"2016-06-08","homeScore":7,"awayScore":1,"venue":"美洲杯","competition":"Copa America"},
-    {"date":"2004-08-18","homeScore":6,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "土耳其-巴拉圭": [
-    {"date":"2018-06-05","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2011-03-29","homeScore":2,"awayScore":1,"venue":"友谊赛","competition":"Friendly"}
-  ],
-  "荷兰-瑞典": [
-    {"date":"2018-10-16","homeScore":3,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2017-10-10","homeScore":2,"awayScore":0,"venue":"世预赛","competition":"World Cup Qualifier"},
-    {"date":"2016-09-06","homeScore":1,"awayScore":1,"venue":"世预赛","competition":"World Cup Qualifier"},
-    {"date":"2011-10-11","homeScore":2,"awayScore":3,"venue":"欧预赛","competition":"UEFA Euro Qualifier"},
-    {"date":"2010-10-12","homeScore":4,"awayScore":1,"venue":"欧预赛","competition":"UEFA Euro Qualifier"}
-  ],
-  "突尼斯-日本": [
-    {"date":"2022-06-14","homeScore":2,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2015-03-27","homeScore":0,"awayScore":2,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2002-06-14","homeScore":0,"awayScore":2,"venue":"世界杯小组赛","competition":"FIFA World Cup"}
-  ],
-  "美国-土耳其": [
-    {"date":"2014-06-01","homeScore":2,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2010-05-29","homeScore":2,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2005-06-04","homeScore":1,"awayScore":2,"venue":"友谊赛","competition":"Friendly"}
+  "奥地利-Jordan": [
+    {
+      "date": "2014-05-30",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
   ],
   "巴拉圭-澳大利亚": [
-    {"date":"2010-10-09","homeScore":1,"awayScore":0,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2006-10-07","homeScore":1,"awayScore":1,"venue":"友谊赛","competition":"Friendly"}
+    {
+      "date": "2010-10-09",
+      "homeScore": 1,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2006-10-07",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
   ],
-  "科特迪瓦-厄瓜多尔": [
-    {"date":"2022-06-07","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
+  "巴拿马-克罗地亚": [],
+  "巴西-摩洛哥": [
+    {
+      "date": "2023-03-25",
+      "homeScore": 2,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2018-06-27",
+      "homeScore": 2,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2012-07-20",
+      "homeScore": 2,
+      "awayScore": 0,
+      "venue": "奥运会",
+      "competition": "Olympics"
+    },
+    {
+      "date": "1998-06-16",
+      "homeScore": 3,
+      "awayScore": 0,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "1997-12-12",
+      "homeScore": 2,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "巴西-海地": [
+    {
+      "date": "2016-06-08",
+      "homeScore": 7,
+      "awayScore": 1,
+      "venue": "美洲杯",
+      "competition": "Copa America"
+    },
+    {
+      "date": "2004-08-18",
+      "homeScore": 6,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "德国-库拉索": [],
+  "德国-日本": [
+    {
+      "date": "2022-11-23",
+      "homeScore": 1,
+      "awayScore": 2,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "2006-05-30",
+      "homeScore": 2,
+      "awayScore": 2,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2004-12-16",
+      "homeScore": 3,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2002-06-30",
+      "homeScore": 0,
+      "awayScore": 2,
+      "venue": "世界杯决赛",
+      "competition": "FIFA World Cup Final"
+    },
+    {
+      "date": "1993-03-24",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "德国-西班牙": [
+    {
+      "date": "2024-07-05",
+      "homeScore": 2,
+      "awayScore": 1,
+      "venue": "欧洲杯1/4决赛",
+      "competition": "UEFA Euro Quarter-final"
+    },
+    {
+      "date": "2022-11-27",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "2020-11-17",
+      "homeScore": 6,
+      "awayScore": 0,
+      "venue": "欧国联",
+      "competition": "UEFA Nations League"
+    },
+    {
+      "date": "2020-09-03",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "欧国联",
+      "competition": "UEFA Nations League"
+    },
+    {
+      "date": "2018-03-23",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "挪威-塞内加尔": [],
+  "新西兰-埃及": [],
+  "比利时-伊朗": [
+    {
+      "date": "2018-06-13",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2014-03-05",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2010-03-03",
+      "homeScore": 1,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "比利时-埃及": [
+    {
+      "date": "2022-11-18",
+      "homeScore": 1,
+      "awayScore": 2,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2018-06-06",
+      "homeScore": 3,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2005-02-09",
+      "homeScore": 0,
+      "awayScore": 4,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "1999-03-30",
+      "homeScore": 0,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "1990-02-21",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "法国-丹麦": [
+    {
+      "date": "2022-11-26",
+      "homeScore": 2,
+      "awayScore": 1,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "2022-06-03",
+      "homeScore": 1,
+      "awayScore": 2,
+      "venue": "欧国联",
+      "competition": "UEFA Nations League"
+    },
+    {
+      "date": "2018-06-26",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "2015-10-11",
+      "homeScore": 2,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2002-06-11",
+      "homeScore": 0,
+      "awayScore": 2,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    }
+  ],
+  "法国-伊拉克": [],
+  "法国-塞内加尔": [
+    {
+      "date": "2002-05-31",
+      "homeScore": 0,
+      "awayScore": 1,
+      "venue": "世界杯揭幕战",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "1999-01-24",
+      "homeScore": 2,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "海地-苏格兰": [],
+  "澳大利亚-土耳其": [
+    {
+      "date": "2016-05-29",
+      "homeScore": 1,
+      "awayScore": 2,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2004-05-21",
+      "homeScore": 1,
+      "awayScore": 3,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
   ],
   "瑞典-突尼斯": [
-    {"date":"2015-05-31","homeScore":1,"awayScore":1,"venue":"友谊赛","competition":"Friendly"}
+    {
+      "date": "2015-05-31",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
   ],
-  "法国-伊拉克": [],
+  "瑞士-波黑": [
+    {
+      "date": "2019-03-23",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "欧预赛",
+      "competition": "UEFA Euro Qualifier"
+    },
+    {
+      "date": "2015-03-27",
+      "homeScore": 3,
+      "awayScore": 0,
+      "venue": "欧预赛",
+      "competition": "UEFA Euro Qualifier"
+    }
+  ],
+  "科特迪瓦-厄瓜多尔": [
+    {
+      "date": "2022-06-07",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "突尼斯-日本": [
+    {
+      "date": "2022-06-14",
+      "homeScore": 2,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2015-03-27",
+      "homeScore": 0,
+      "awayScore": 2,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2002-06-14",
+      "homeScore": 0,
+      "awayScore": 2,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    }
+  ],
+  "美国-土耳其": [
+    {
+      "date": "2014-06-01",
+      "homeScore": 2,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2010-05-29",
+      "homeScore": 2,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2005-06-04",
+      "homeScore": 1,
+      "awayScore": 2,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "美国-巴拉圭": [
+    {
+      "date": "2018-03-27",
+      "homeScore": 1,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2016-06-11",
+      "homeScore": 1,
+      "awayScore": 0,
+      "venue": "美洲杯",
+      "competition": "Copa America"
+    },
+    {
+      "date": "2007-07-02",
+      "homeScore": 1,
+      "awayScore": 3,
+      "venue": "美洲杯",
+      "competition": "Copa America"
+    },
+    {
+      "date": "2003-07-06",
+      "homeScore": 2,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "1998-02-07",
+      "homeScore": 2,
+      "awayScore": 2,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
   "美国-澳大利亚": [
-    {"date":"2015-06-08","homeScore":3,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"2010-06-05","homeScore":3,"awayScore":1,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1998-11-06","homeScore":0,"awayScore":0,"venue":"友谊赛","competition":"Friendly"}
+    {
+      "date": "2015-06-08",
+      "homeScore": 3,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2010-06-05",
+      "homeScore": 3,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "1998-11-06",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "美国-英格兰": [
+    {
+      "date": "2022-11-25",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "2018-11-15",
+      "homeScore": 0,
+      "awayScore": 3,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2010-06-12",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "2008-05-28",
+      "homeScore": 0,
+      "awayScore": 2,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2005-05-28",
+      "homeScore": 1,
+      "awayScore": 2,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "苏格兰-摩洛哥": [
+    {
+      "date": "1998-06-23",
+      "homeScore": 0,
+      "awayScore": 3,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    }
+  ],
+  "英格兰-克罗地亚": [
+    {
+      "date": "2021-06-13",
+      "homeScore": 1,
+      "awayScore": 0,
+      "venue": "欧洲杯小组赛",
+      "competition": "UEFA Euro"
+    },
+    {
+      "date": "2018-11-18",
+      "homeScore": 2,
+      "awayScore": 1,
+      "venue": "欧国联",
+      "competition": "UEFA Nations League"
+    },
+    {
+      "date": "2018-07-11",
+      "homeScore": 1,
+      "awayScore": 2,
+      "venue": "世界杯半决赛",
+      "competition": "FIFA World Cup Semi-final"
+    },
+    {
+      "date": "2009-09-09",
+      "homeScore": 5,
+      "awayScore": 1,
+      "venue": "世预赛",
+      "competition": "World Cup Qualifier"
+    },
+    {
+      "date": "2008-09-20",
+      "homeScore": 4,
+      "awayScore": 1,
+      "venue": "世预赛",
+      "competition": "World Cup Qualifier"
+    }
+  ],
+  "英格兰-加纳": [
+    {
+      "date": "2011-03-29",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "英格兰-法国": [
+    {
+      "date": "2022-12-10",
+      "homeScore": 1,
+      "awayScore": 2,
+      "venue": "世界杯1/4决赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "2017-06-13",
+      "homeScore": 3,
+      "awayScore": 2,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2015-11-17",
+      "homeScore": 2,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2012-06-11",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "欧洲杯小组赛",
+      "competition": "UEFA Euro"
+    },
+    {
+      "date": "2010-11-17",
+      "homeScore": 1,
+      "awayScore": 2,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "荷兰-日本": [
+    {
+      "date": "2014-06-19",
+      "homeScore": 5,
+      "awayScore": 1,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "2009-09-05",
+      "homeScore": 3,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "1998-06-20",
+      "homeScore": 2,
+      "awayScore": 1,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "1994-07-09",
+      "homeScore": 2,
+      "awayScore": 0,
+      "venue": "世界杯1/8决赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "1978-06-07",
+      "homeScore": 1,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ],
+  "荷兰-瑞典": [
+    {
+      "date": "2018-10-16",
+      "homeScore": 3,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2017-10-10",
+      "homeScore": 2,
+      "awayScore": 0,
+      "venue": "世预赛",
+      "competition": "World Cup Qualifier"
+    },
+    {
+      "date": "2016-09-06",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "世预赛",
+      "competition": "World Cup Qualifier"
+    },
+    {
+      "date": "2011-10-11",
+      "homeScore": 2,
+      "awayScore": 3,
+      "venue": "欧预赛",
+      "competition": "UEFA Euro Qualifier"
+    },
+    {
+      "date": "2010-10-12",
+      "homeScore": 4,
+      "awayScore": 1,
+      "venue": "欧预赛",
+      "competition": "UEFA Euro Qualifier"
+    }
+  ],
+  "葡萄牙-Uzbekistan": [],
+  "葡萄牙-刚果(金)": [],
+  "葡萄牙-荷兰": [
+    {
+      "date": "2019-06-09",
+      "homeScore": 1,
+      "awayScore": 0,
+      "venue": "欧国联决赛",
+      "competition": "UEFA Nations League Final"
+    },
+    {
+      "date": "2018-03-26",
+      "homeScore": 0,
+      "awayScore": 3,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2012-06-17",
+      "homeScore": 2,
+      "awayScore": 1,
+      "venue": "欧洲杯小组赛",
+      "competition": "UEFA Euro"
+    },
+    {
+      "date": "2006-06-25",
+      "homeScore": 1,
+      "awayScore": 0,
+      "venue": "世界杯1/8决赛",
+      "competition": "FIFA World Cup Round of 16"
+    },
+    {
+      "date": "2004-06-30",
+      "homeScore": 2,
+      "awayScore": 1,
+      "venue": "欧洲杯半决赛",
+      "competition": "UEFA Euro Semi-final"
+    }
   ],
   "西班牙-佛得角": [],
-  "乌拉圭-佛得角": [],
-  "新西兰-埃及": [],
-  "挪威-塞内加尔": [],
-  "奥地利-Jordan": [
-    {"date":"2014-05-30","homeScore":1,"awayScore":1,"venue":"友谊赛","competition":"Friendly"}
+  "西班牙-沙特阿拉伯": [
+    {
+      "date": "2012-09-07",
+      "homeScore": 5,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2010-05-29",
+      "homeScore": 3,
+      "awayScore": 2,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2006-06-23",
+      "homeScore": 1,
+      "awayScore": 0,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    }
+  ],
+  "西班牙-葡萄牙": [
+    {
+      "date": "2022-06-02",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "欧国联",
+      "competition": "UEFA Nations League"
+    },
+    {
+      "date": "2020-10-07",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2018-06-15",
+      "homeScore": 3,
+      "awayScore": 3,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "2012-06-27",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "欧洲杯半决赛",
+      "competition": "UEFA Euro Semi-final"
+    },
+    {
+      "date": "2010-06-29",
+      "homeScore": 1,
+      "awayScore": 0,
+      "venue": "世界杯1/8决赛",
+      "competition": "FIFA World Cup Round of 16"
+    }
+  ],
+  "阿根廷-奥地利": [
+    {
+      "date": "2015-06-13",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2007-09-11",
+      "homeScore": 4,
+      "awayScore": 2,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2001-04-25",
+      "homeScore": 2,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "1990-06-13",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "1978-06-21",
+      "homeScore": 3,
+      "awayScore": 2,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    }
+  ],
+  "阿根廷-巴西": [
+    {
+      "date": "2025-03-25",
+      "homeScore": 4,
+      "awayScore": 1,
+      "venue": "世预赛",
+      "competition": "World Cup Qualifier"
+    },
+    {
+      "date": "2023-11-21",
+      "homeScore": 0,
+      "awayScore": 1,
+      "venue": "世预赛",
+      "competition": "World Cup Qualifier"
+    },
+    {
+      "date": "2021-11-16",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "世预赛",
+      "competition": "World Cup Qualifier"
+    },
+    {
+      "date": "2021-07-10",
+      "homeScore": 1,
+      "awayScore": 0,
+      "venue": "美洲杯决赛",
+      "competition": "Copa America Final"
+    },
+    {
+      "date": "2019-07-02",
+      "homeScore": 2,
+      "awayScore": 0,
+      "venue": "美洲杯半决赛",
+      "competition": "Copa America Semi-final"
+    }
+  ],
+  "阿根廷-沙特阿拉伯": [
+    {
+      "date": "2022-11-22",
+      "homeScore": 1,
+      "awayScore": 2,
+      "venue": "世界杯小组赛",
+      "competition": "FIFA World Cup"
+    },
+    {
+      "date": "2012-11-14",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "1992-10-20",
+      "homeScore": 3,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "1988-07-10",
+      "homeScore": 2,
+      "awayScore": 2,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
   ],
   "阿根廷-阿尔及利亚": [
-    {"date":"2014-06-30","homeScore":1,"awayScore":0,"venue":"世界杯1/8决赛","competition":"FIFA World Cup Round of 16"},
-    {"date":"2007-06-05","homeScore":4,"awayScore":3,"venue":"友谊赛","competition":"Friendly"},
-    {"date":"1992-10-14","homeScore":1,"awayScore":1,"venue":"友谊赛","competition":"Friendly"}
+    {
+      "date": "2014-06-30",
+      "homeScore": 1,
+      "awayScore": 0,
+      "venue": "世界杯1/8决赛",
+      "competition": "FIFA World Cup Round of 16"
+    },
+    {
+      "date": "2007-06-05",
+      "homeScore": 4,
+      "awayScore": 3,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "1992-10-14",
+      "homeScore": 1,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
   ],
-  "法国-伊拉克": [],
-  "海地-苏格兰": [],
-  "德国-库拉索": [],
-  "海地-苏格兰": []
+  "韩国-捷克": [
+    {
+      "date": "2016-06-05",
+      "homeScore": 2,
+      "awayScore": 1,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2011-02-09",
+      "homeScore": 0,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    },
+    {
+      "date": "2001-01-24",
+      "homeScore": 1,
+      "awayScore": 0,
+      "venue": "友谊赛",
+      "competition": "Friendly"
+    }
+  ]
 }
