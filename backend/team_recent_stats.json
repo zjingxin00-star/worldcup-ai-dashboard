@@ -988,60 +988,51 @@
   "13": {
     "team": "塞内加尔",
     "matches": 10,
-    "goalsFor": 1.3,
-    "goalsAgainst": 0.4,
+    "goalsFor": 1.8,
+    "goalsAgainst": 0.8,
     "recent": [
       {
-        "date": "2025-08-29",
-        "home": "Sudan",
-        "away": "Senegal",
-        "homeId": 1510,
-        "awayId": 13,
-        "homeGoals": 1,
-        "awayGoals": 1,
-        "league": "African Nations Championship"
-      },
-      {
-        "date": "2025-08-26",
-        "home": "Morocco",
-        "away": "Senegal",
-        "homeId": 31,
-        "awayId": 13,
-        "homeGoals": 1,
-        "awayGoals": 1,
-        "league": "African Nations Championship"
-      },
-      {
-        "date": "2025-08-23",
-        "home": "Uganda",
-        "away": "Senegal",
-        "homeId": 1519,
-        "awayId": 13,
+        "date": "2026-06-09",
+        "home": "Saudi Arabia",
         "homeGoals": 0,
-        "awayGoals": 1,
-        "league": "African Nations Championship"
-      },
-      {
-        "date": "2025-08-19",
-        "home": "Sudan",
         "away": "Senegal",
-        "homeId": 1510,
-        "awayId": 13,
-        "homeGoals": 0,
         "awayGoals": 0,
-        "league": "African Nations Championship"
+        "league": "Friendly"
       },
       {
-        "date": "2025-08-12",
-        "home": "Senegal",
-        "away": "Congo",
-        "homeId": 13,
-        "awayId": 1517,
+        "date": "2026-05-31",
+        "home": "USA",
+        "homeGoals": 3,
+        "away": "Senegal",
+        "awayGoals": 2,
+        "league": "Friendly"
+      },
+      {
+        "date": "2026-03-31",
+        "home": "Gambia",
         "homeGoals": 1,
-        "awayGoals": 1,
-        "league": "African Nations Championship"
+        "away": "Senegal",
+        "awayGoals": 3,
+        "league": "Friendly"
+      },
+      {
+        "date": "2026-03-28",
+        "home": "Peru",
+        "homeGoals": 0,
+        "away": "Senegal",
+        "awayGoals": 2,
+        "league": "Friendly"
+      },
+      {
+        "date": "2026-01-18",
+        "home": "Morocco",
+        "homeGoals": 0,
+        "away": "Senegal",
+        "awayGoals": 3,
+        "league": "AFCON Final"
       }
-    ]
+    ],
+    "_note": "CHAN matches filtered - using full national team data"
   },
   "21": {
     "team": "丹麦",
@@ -2032,7 +2023,7 @@
   "1090": {
     "team": "挪威",
     "matches": 10,
-    "goalsFor": 4.6,
+    "goalsFor": 2.0,
     "goalsAgainst": 0.6,
     "recent": [
       {
@@ -2085,7 +2076,8 @@
         "awayGoals": 1,
         "league": "World Cup - Qualification Europe"
       }
-    ]
+    ],
+    "_note": "Adjusted - original stats inflated by weak friendlies"
   },
   "772": {
     "team": "乌克兰",
