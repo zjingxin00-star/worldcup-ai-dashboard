@@ -30,11 +30,16 @@ OPENFOOTBALL_URL = (
     "https://raw.githubusercontent.com/openfootball/worldcup.json/"
     "master/2026/worldcup.json"
 )
-# GitHub API 备用（raw 域名偶尔 DNS 失败）
 OPENFOOTBALL_FALLBACK = (
     "https://api.github.com/repos/openfootball/worldcup.json/"
     "contents/2026/worldcup.json"
 )
+OPENFOOTBALL_CDN = (
+    "https://cdn.jsdelivr.net/gh/openfootball/worldcup.json@"
+    "master/2026/worldcup.json"
+)
+# 本地缓存（离线可用）
+CACHE_FILE = os.path.join(os.path.dirname(__file__), "worldcup_2026_cache.json")
 
 # ---------------------------------------------------------------------------
 # 队名中英文映射 (48 支参赛队)
@@ -282,18 +287,34 @@ def fetch_real_matches(limit: int = 20) -> list:
     从 OpenFootball 抓取真实 2026 世界杯赛程
     返回前 `limit` 场比赛（按日期排序，优先小组赛第一轮）
     """
-    raw_data = None
-    for url in [OPENFOOTBALL_URL, OPENFOOTBALL_FALLBACK]:
+    # 1. 本地缓存（最快）
+    if os.path.exists(CACHE_FILE):
         try:
-            hdrs = {"User-Agent": "WorldCupDashboard/1.0"}
-            if "api.github.com" in url:
-                hdrs["Accept"] = "application/vnd.github.v3.raw"
-            req = Request(url, headers=hdrs)
-            with urlopen(req, timeout=20) as resp:
-                raw_data = resp.read().decode("utf-8")
-            break
-        except Exception as e:
-            print(f"[scraper] {url[:50]}... failed: {e}")
+            with open(CACHE_FILE, "r", encoding="utf-8") as f:
+                raw_data = f.read()
+            print("[scraper] Using local cache")
+        except Exception:
+            raw_data = None
+
+    # 2. CDN / GitHub
+    if not raw_data:
+        for url in [OPENFOOTBALL_CDN, OPENFOOTBALL_URL, OPENFOOTBALL_FALLBACK]:
+            try:
+                hdrs = {"User-Agent": "WorldCupDashboard/1.0"}
+                if "api.github.com" in url:
+                    hdrs["Accept"] = "application/vnd.github.v3.raw"
+                req = Request(url, headers=hdrs)
+                with urlopen(req, timeout=20) as resp:
+                    raw_data = resp.read().decode("utf-8")
+                # 保存缓存
+                try:
+                    with open(CACHE_FILE, "w", encoding="utf-8") as f:
+                        f.write(raw_data)
+                except Exception:
+                    pass
+                break
+            except Exception as e:
+                print(f"[scraper] {url[:50]}... failed: {e}")
 
     if not raw_data:
         print("[scraper] All OpenFootball sources failed")

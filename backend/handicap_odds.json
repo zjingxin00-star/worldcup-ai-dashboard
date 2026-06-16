@@ -38,5 +38,15 @@
     "handicapHomeOdds": 2.18,
     "handicapDrawOdds": 3.2,
     "handicapAwayOdds": 2.8
+  },
+  "17": {
+    "handicapHomeOdds": 2.12,
+    "handicapDrawOdds": 3.45,
+    "handicapAwayOdds": 2.72
+  },
+  "18": {
+    "handicapHomeOdds": 2.35,
+    "handicapDrawOdds": 4,
+    "handicapAwayOdds": 1.97
   }
 }
