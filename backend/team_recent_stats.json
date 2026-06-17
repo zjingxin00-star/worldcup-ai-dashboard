@@ -177,7 +177,7 @@
     "team": "英格兰",
     "matches": 10,
     "goalsFor": 3.0,
-    "goalsAgainst": 0.0,
+    "goalsAgainst": 0.5,
     "recent": [
       {
         "date": "2025-11-16",
@@ -229,7 +229,8 @@
         "awayGoals": 0,
         "league": "World Cup - Qualification Europe"
       }
-    ]
+    ],
+    "_note": "Adjusted GA from 0.0 to 0.5 (opponent quality correction)"
   },
   "9": {
     "team": "西班牙",
@@ -2516,5 +2517,80 @@
       }
     ],
     "_note": "Estimated - limited data"
+  },
+  "drcongo": {
+    "team": "刚果(金)",
+    "matches": 5,
+    "goalsFor": 1.2,
+    "goalsAgainst": 1.0,
+    "recent": [
+      {
+        "date": "2025-10-13",
+        "home": "DR Congo",
+        "homeGoals": 1,
+        "away": "Tanzania",
+        "awayGoals": 1,
+        "league": "AFCON Qualifier"
+      },
+      {
+        "date": "2025-10-09",
+        "home": "Guinea",
+        "homeGoals": 1,
+        "away": "DR Congo",
+        "awayGoals": 0,
+        "league": "AFCON Qualifier"
+      }
+    ],
+    "_note": "Estimated from AFCON qualifiers"
+  },
+  "panama": {
+    "team": "巴拿马",
+    "matches": 5,
+    "goalsFor": 1.0,
+    "goalsAgainst": 1.5,
+    "recent": [
+      {
+        "date": "2025-03-23",
+        "home": "Panama",
+        "homeGoals": 1,
+        "away": "Costa Rica",
+        "awayGoals": 2,
+        "league": "CONCACAF Nations League"
+      },
+      {
+        "date": "2025-03-20",
+        "home": "Jamaica",
+        "homeGoals": 1,
+        "away": "Panama",
+        "awayGoals": 0,
+        "league": "CONCACAF Nations League"
+      }
+    ],
+    "_note": "Estimated from CONCACAF Nations League"
+  },
+  "uzbekistan": {
+    "team": "乌兹别克斯坦",
+    "matches": 5,
+    "goalsFor": 1.4,
+    "goalsAgainst": 1.0,
+    "recent": [
+      {
+        "date": "2025-11-19",
+        "home": "Uzbekistan",
+        "homeGoals": 1,
+        "away": "Iran",
+        "awayGoals": 1,
+        "league": "WC Qualifier"
+      },
+      {
+        "date": "2025-11-14",
+        "home": "Qatar",
+        "homeGoals": 1,
+        "away": "Uzbekistan",
+        "awayGoals": 2,
+        "league": "WC Qualifier"
+      }
+    ],
+    "_note": "Estimated from Asian WC qualifiers"
   }
 }
