@@ -2592,5 +2592,39 @@
       }
     ],
     "_note": "Estimated from Asian WC qualifiers"
+  },
+  "1531": {
+    "team": "南非",
+    "matches": 5,
+    "goalsFor": 1.2,
+    "goalsAgainst": 1.1,
+    "recent": [
+      {
+        "date": "2025-10-13",
+        "home": "South Africa",
+        "homeGoals": 2,
+        "away": "Congo",
+        "awayGoals": 0,
+        "league": "AFCON Qualifier"
+      }
+    ],
+    "_note": "Estimated from AFCON qualifiers"
+  },
+  "bosnia": {
+    "team": "波黑",
+    "matches": 5,
+    "goalsFor": 1.1,
+    "goalsAgainst": 1.3,
+    "recent": [
+      {
+        "date": "2025-11-18",
+        "home": "Bosnia",
+        "homeGoals": 1,
+        "away": "Austria",
+        "awayGoals": 1,
+        "league": "WC Qualifier"
+      }
+    ],
+    "_note": "Estimated - no API-Football ID"
   }
 }
